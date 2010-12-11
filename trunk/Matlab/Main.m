@@ -4,8 +4,14 @@ function main(args)
 	photex_db = dir(directory);
 	% start at 3 to omit directories '.' and '..'	
 	photex_db = photex_db(3:end);
-	PseudoRandomSampling(directory, photex_db)
-%	RandomSubSampling(directory, photex_db)
+%	PseudoRandomSampling(directory, photex_db)
+
+	fprintf('Number of materials: %d\n', length(photex_db));
+	fprintf('Generating datasets...\n');
+	[T1, T2, T3, T4, TestData] = RandomSubSampling(directory, photex_db);
+	
+	TrainCodebook(T4, directory);
+	
 end
 	
 function PseudoRandomSampling(directory, photex_db)
@@ -37,7 +43,7 @@ function PseudoRandomSampling(directory, photex_db)
 	end
 %	PrintStrings(clean_data);
 %	GenerateTextures(T1(1:4), directory, 1, 256, 1, 1);
-	GenerateTextures(T1(49:52), directory, 1, 256, 1, 1);
+%	GenerateTextures(T1(49:52), directory, 1, 256, 1, 1);
 %	GenerateTextures(T1(37:39), directory, 1, 256, 1);
 %	GenerateTextures(T1(241:260), directory, 1, 256, 1);
 % 	GenerateTextures(T1(49:51), directory, 1, 256, 1)
@@ -45,12 +51,10 @@ function PseudoRandomSampling(directory, photex_db)
 end
 
 
-function RandomSubSampling(directory, photex_db)
+function [T1, T2, T3, T4, TestData] = RandomSubSampling(directory, photex_db)
 	dbSize = length(photex_db);
 
-	%%%%%%%%%%%%%%% Construct training sets and test set %%%%%%%%%%%%%%%
-	
-	
+	%%%%%%%%%%%%%%% Construct training sets and test set %%%%%%%%%%%%%%%	
 	noInstances	= 40;
 	sizeT1		= 20;
 	sizeT2		= 10;
@@ -126,14 +130,12 @@ function RandomSubSampling(directory, photex_db)
 	end
 
 %	GenerateTextures(T1(241:260), directory, 1, 256, 0)
-	GenerateTextures(T3(1:4), directory, 1, 256, 1, 1)
-	
+%	GenerateTextures(T3(1:4), directory, 1, 256, 1, 1)	
 %	PrintStrings(T1)
 %	PrintStrings(T2)
 %	PrintStrings(T3)
 %	PrintStrings(T4)
 %	PrintStrings(TestData)
-
 end
 
 function [trainIdx testIdx] = SplitSet(data, nr)
