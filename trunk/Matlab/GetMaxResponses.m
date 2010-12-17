@@ -1,19 +1,13 @@
-function UnitTestMaxResponse(verbose)
-% UnitTestMaxResponse
+function GetMaxResponses(image, directory,verbose)
+% GetMaxResponses
 %
 % Output the maximum response of the MR8 filter bank: 
 % 2 anisotropic filters with 6 orientations on 3 scales
 % and a gaussian and laplacian of gaussian filters give
 % a total of 38 responses. 
-% The maximum response at each scale over the 6 orientations
-% is returned giving a total of 8 responses.
-
-	image = '1.acd.0.30.0.bmp';
-	directory = '../Photex/';
-
-
-
-	%PrintStrings(data);
+% For a given image, the maximum response at each scale 
+% over the 6 orientations is returned giving a total of 
+% 8 responses.
 
 	fprintf('Processing image: %s\n', image);
 	fprintf('\tCalculate responses...\n');
