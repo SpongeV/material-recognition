@@ -1,16 +1,59 @@
-function main(args)
+function d =main(args)
 	close all;
-	directory = '../Photex/';
-	photex_db = dir(directory);
+
+	photex_directory		= '../Photex/';
+	texton_train_directory	= '../textons_train/';
+	texton_test_directory	= '../textons_test/';
+
+	
+	photex_db = dir(photex_directory);
 	% start at 3 to omit directories '.' and '..'	
 	photex_db = photex_db(3:end);
 %	PseudoRandomSampling(directory, photex_db)
 
-	fprintf('Number of materials: %d\n', length(photex_db));
-	fprintf('Generating datasets...\n');
-	[T1, T2, T3, T4, TestData] = RandomSubSampling(directory, photex_db);
+
+	%% STEP 1: Generate train/test sets
+	if args(1) == 1
+		fprintf('Number of materials: %d\n', length(photex_db));
+		fprintf('Generating datasets...\n');
+		[T1, T2, T3, T4, TestData] = RandomSubSampling(photex_directory, photex_db);
+		save T1.mat T1
+		save T2.mat T2
+		save T3.mat T3
+		save T4.mat T4
+		save TestData.mat TestData
+
+		[cl, cb] = SplitSet(length(T1),length(T1)/2);
+		T1CL = T1(cl);	% train data used for clustering
+		T1CB = T1(cb);	% train data used for constructing histograms
+		save T1CL.mat T1CL
+		save T1CB.mat T1CB
+		
+	%% STEP 2: Get responses of train  data and store them on disk
+	elseif (args(1) == 2)
+		load T1CL.mat T1CL
+		GenerateRespones(T1CL, photex_directory, texton_train_directory, 1);
+	%% STEP 3: Cluster responses and construct histograms for training
+	elseif (args(1) == 3)
+		load T1CB.mat T1CB
+		texton_train = dir(texton_train_directory);
+		% start at 3 to omit directories '.' and '..'	
+		texton_train = texton_train(3:end);
+		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), 18);
+		[SVMTrainData SVMTrainLabels] = ConstructHistograms(photex_directory, T1CB, clusters);
+		save SVMTrainData.mat SVMTrainData
+		save SVMTrainLabels.mat SVMTrainLabels
+	elseif (args(1) == 4)
+		load TestData.mat
+		texton_train = dir(texton_train_directory);
+		% start at 3 to omit directories '.' and '..'	
+		texton_train = texton_train(3:end);
+		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), 18);
+		[SVMTestData SVMTestLabels] = ConstructHistograms(photex_directory, TestData, clusters);
+		save SVMTestData.mat SVMTestData
+		save SVMTestLabels.mat SVMTestLabels
+	end
 	
-	TrainCodebook(T4, directory);
 	
 end
 	
@@ -62,7 +105,7 @@ function [T1, T2, T3, T4, TestData] = RandomSubSampling(directory, photex_db)
 	sizeT4		= 3;
 	
 	% split 40 instances into a set of 20 and a set of 
-	[T1train TestSet] = SplitSet(40,20);
+	[T1train TestSet]   = SplitSet(40,20);
 	[T2train]			= SplitSet(20,10);
 	[T3train]			= SplitSet(20,4);
 	[T4train]			= SplitSet(20,3);

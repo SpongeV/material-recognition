@@ -1,4 +1,4 @@
-function GetMaxResponses(image, directory,verbose)
+function [max_responses, dim1, dim2] = GetMaxResponses(image, directory, target_dir, write, verbose)
 % GetMaxResponses
 %
 % Output the maximum response of the MR8 filter bank: 
@@ -20,11 +20,13 @@ function GetMaxResponses(image, directory,verbose)
 	% construct the MR sets
 	F = makeRFSfilters;
 
-	tic;
 	% allocate memory
 	conv_img = conv2(img(:,:,1),F(:,:,1),'valid');
 	responses = zeros(size(conv_img,1),size(conv_img,2),size(F,3));
 	max_responses = zeros(size(conv_img,1),size(conv_img,2), 8);
+	
+	dim1 = size(conv_img,1);
+	dim2 = size(conv_img,2);
 	
 	for i=1:size(F,3)
 		conv_img = conv2(img(:,:,1),F(:,:,i),'valid');
@@ -46,10 +48,17 @@ function GetMaxResponses(image, directory,verbose)
 		max_responses(:,:,i) = responses(:,:,ii+idx);
 		ii = ii + 6;
 	end
-	toc;
 
 	max_responses(:,:,7) = responses(:,:,37);
 	max_responses(:,:,8) = responses(:,:,38);
+	
+	% write away the texton images
+	if (write == 1)
+		for i=1:size(max_responses,3)
+			name = strcat(target_dir,int2str(i),'.',image);
+			imwrite(max_responses(:,:,i),name,'bmp');
+		end
+	end
 	
 	if (verbose==1)
 		% display max_responses
