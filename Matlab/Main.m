@@ -5,6 +5,7 @@ function d =main(args)
 	texton_train_directory	= '../textons_train/';
 	texton_test_directory	= '../textons_test/';
 
+	no_clusters = 200;
 	
 	photex_db = dir(photex_directory);
 	% start at 3 to omit directories '.' and '..'	
@@ -39,24 +40,62 @@ function d =main(args)
 		texton_train = dir(texton_train_directory);
 		% start at 3 to omit directories '.' and '..'	
 		texton_train = texton_train(3:end);
-		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), 18);
+		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), no_clusters);
 		[SVMTrainData SVMTrainLabels] = ConstructHistograms(photex_directory, T1CB, clusters);
+		save Clusters.mat clusters
 		save SVMTrainData.mat SVMTrainData
 		save SVMTrainLabels.mat SVMTrainLabels
 	elseif (args(1) == 4)
 		load TestData.mat
-		texton_train = dir(texton_train_directory);
-		% start at 3 to omit directories '.' and '..'	
-		texton_train = texton_train(3:end);
-		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), 18);
+		load clusters.mat
 		[SVMTestData SVMTestLabels] = ConstructHistograms(photex_directory, TestData, clusters);
 		save SVMTestData.mat SVMTestData
 		save SVMTestLabels.mat SVMTestLabels
+	elseif (args(1) == 5)
+		%SVMClassify();
+		KNNClassify();
 	end
 	
 	
 end
 	
+function SVMClassify()
+	load SVMTrainData.mat
+	load SVMTrainLabels.mat
+	load SVMTestData.mat
+	load SVMTestLabels.mat
+    model = svmtrain(double(SVMTrainLabels'), double(SVMTrainData),'-t 3 -q -b 1');
+    [pred, a ,scores] = svmpredict(double(SVMTestLabels'), double(SVMTestData), model, '-b 1');
+	[SVMTestLabels' pred]
+end
+
+function KNNClassify()
+	load clusters.mat
+	load SVMTrainData.mat
+	load SVMTrainLabels.mat
+	load SVMTestData.mat
+	load SVMTestLabels.mat
+	train_labels = one_of_n_encoding(SVMTrainData, clusters, SVMTrainLabels);
+	test_labels  = one_of_n_encoding(SVMTestData, clusters, SVMTestLabels);
+	
+	k = 1;
+	nin  = size(SVMTrainData, 2);
+	nout = size(SVMTrainData, 2);
+	net = knn(nin, nout, k, SVMTrainData, train_labels);
+	[Y, T] = knnfwd(net, SVMTestData);
+
+	[CM, R] = confmat(Y, test_labels);            %% why Y? why not tstSetLbls?
+	tstAccur = R(1)
+	tstError = (1.0 - (tstAccur * 0.01))
+end
+
+function encoding = one_of_n_encoding(data, clusters, labels)
+	encoding = zeros(size(data, 1), size(clusters,1));
+	for i=1:length(labels)
+		encoding(i, labels(i)) = 1;
+	end
+end
+
 function PseudoRandomSampling(directory, photex_db)
 	dbSize = length(photex_db);
 	T1idx = 1;
