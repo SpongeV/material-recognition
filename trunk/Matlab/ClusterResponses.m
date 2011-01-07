@@ -15,7 +15,7 @@ function clusters = ClusterResponses(directory, texton_db, clusterNr)
 		fprintf('img: %d s1: %d s2: %d\n', i, size(g,1), size(g,2));
 	end
 	
-	[labels a, clusters] = kmeansj(double(g(1:400,:)),clusterNr);
+	[labels a, clusters] = kmeansj(double(g(1:1440,:)),clusterNr);
 	
     for i=1:size(clusters,1)
         clusters(i,:) = clusters(i,:) ./ norm(clusters(i,:));
