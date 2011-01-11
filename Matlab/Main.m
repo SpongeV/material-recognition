@@ -5,7 +5,7 @@ function d =main(args)
 	texton_train_directory	= '../textons_train/';
 	texton_test_directory	= '../textons_test/';
 
-	no_clusters = 200;
+	no_clusters = 600;
 	
 	photex_db = dir(photex_directory);
 	% start at 3 to omit directories '.' and '..'	
@@ -24,8 +24,11 @@ function d =main(args)
 		save T4.mat T4
 		save TestData.mat TestData
 
-		[cl, cb] = SplitSet(length(T1),length(T1)/2);
+		
+% 		[cl, cb] = SplitSet(length(T1),length(T1)/4);
+		[cl, cb] = SplitSet2(T1);
 		T1CL = T1(cl);	% train data used for clustering
+% 		PrintStrings(T1CL)
 		T1CB = T1(cb);	% train data used for constructing histograms
 		save T1CL.mat T1CL
 		save T1CB.mat T1CB
@@ -40,14 +43,15 @@ function d =main(args)
 		texton_train = dir(texton_train_directory);
 		% start at 3 to omit directories '.' and '..'	
 		texton_train = texton_train(3:end);
-		clusters = ClusterResponses(texton_train_directory, texton_train(1:1440), no_clusters);
+		texton_train = texton_train(1:end-1);
+		clusters = ClusterResponses(texton_train_directory, texton_train, no_clusters);
 		[SVMTrainData SVMTrainLabels] = ConstructHistograms(photex_directory, T1CB, clusters);
 		save Clusters.mat clusters
 		save SVMTrainData.mat SVMTrainData
 		save SVMTrainLabels.mat SVMTrainLabels
 	elseif (args(1) == 4)
 		load TestData.mat
-		load clusters.mat
+		load Clusters.mat
 		[SVMTestData SVMTestLabels] = ConstructHistograms(photex_directory, TestData, clusters);
 		save SVMTestData.mat SVMTestData
 		save SVMTestLabels.mat SVMTestLabels
@@ -55,8 +59,6 @@ function d =main(args)
 		%SVMClassify();
 		KNNClassify();
 	end
-	
-	
 end
 	
 function SVMClassify()
@@ -70,7 +72,7 @@ function SVMClassify()
 end
 
 function KNNClassify()
-	load clusters.mat
+	load Clusters.mat
 	load SVMTrainData.mat
 	load SVMTrainLabels.mat
 	load SVMTestData.mat
@@ -81,6 +83,7 @@ function KNNClassify()
 	k = 1;
 	nin  = size(SVMTrainData, 2);
 	nout = size(SVMTrainData, 2);
+	nout = size(clusters, 1);
 	net = knn(nin, nout, k, SVMTrainData, train_labels);
 	[Y, T] = knnfwd(net, SVMTestData);
 
@@ -225,6 +228,18 @@ function [trainIdx testIdx] = SplitSet(data, nr)
 	trainIdx = idx(1:nr);
 	testIdx  = idx(nr+1:end);
 end
+
+function [trainIdx testIdx] = SplitSet2(data)
+	trainIdx = [];
+	testIdx = [];
+	for i=1:18
+		randIdx = randperm(20)+((i-1)*20);
+		trainIdx = [trainIdx, randIdx(1:10)];
+		testIdx = [testIdx, randIdx(11:end)];
+	end
+end
+
+
 
 function out = HasTilt(parts, tilts)
 	out = 0;
