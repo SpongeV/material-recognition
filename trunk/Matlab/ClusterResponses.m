@@ -10,12 +10,12 @@ function clusters = ClusterResponses(directory, texton_db, clusterNr)
 	
 	dbSize = length(texton_db);
 	for i=1:dbSize
+		fprintf('img: %d s1: %d s2: %d name: %s\n', i, size(g,1), size(g,2), strcat(directory, texton_db(i).name));
 		texton = imread(strcat(directory, texton_db(i).name));
 		g(i,:) = texton(:)';
-		fprintf('img: %d s1: %d s2: %d\n', i, size(g,1), size(g,2));
 	end
 	
-	[labels a, clusters] = kmeansj(double(g(1:1440,:)),clusterNr);
+	[labels a, clusters] = kmeansj(double(g),clusterNr);
 	
     for i=1:size(clusters,1)
         clusters(i,:) = clusters(i,:) ./ norm(clusters(i,:));
