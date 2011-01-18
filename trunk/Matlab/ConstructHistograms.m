@@ -4,6 +4,7 @@ function [histograms labels] = ConstructHistograms(directory, data, clusters)
 	for i=1:length(data)
 		h = QuantizeImage(directory, data{i}, clusters);
 		histograms(i,:) = h;
+		s = sum(h(:))
 		parts = strsplit('.', data{i});
 		parts(2)
 		labels(i) = ConvertLabel(char(parts(2)))

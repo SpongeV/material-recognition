@@ -3,14 +3,14 @@ function h = QuantizeImage(directory, image_name, clusters)
 
 	%% normalize responses and put them in vectors
 	for i=1:size(max_responses,3)
-		texton = max_responses(:,:,i);
-		textons(i,:) = texton(:) ./ norm(texton(:));
+		response = max_responses(:,:,i);
+		responses(i,:) = response(:);% ./ norm(response(:));
 	end
 
 	%% for each texton, calculate euclidian distance to all clusters and
 	%% get the cluster with closest distance
-	for i=1:size(textons,1)
-		distances = distm(clusters,double(textons(i,:)));
+	for i=1:size(responses,1)
+		distances = distm(clusters,double(responses(i,:)));
 		[closest idx] = min(distances);
 		idxs(i) = idx;
 	end
