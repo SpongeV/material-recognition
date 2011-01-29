@@ -1,7 +1,7 @@
 function [histograms labels] = ConstructHistograms(directory, data, clusters)
 
 
-	for i=1:length(data)
+	for i=1:1%length(data)
 		h = QuantizeImage(directory, data{i}, clusters);
 		histograms(i,:) = h;
 		s = sum(h(:))

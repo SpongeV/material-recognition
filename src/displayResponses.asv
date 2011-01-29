@@ -1,0 +1,36 @@
+function displayResponses()
+
+
+
+r1 = load('../responses/aaa/0.aaa.0.30.0.4.mat');
+r2 = load('../responses/abj/0.abj.0.30.0.4.mat');
+r3 = load('../responses/acd/1.acd.0.30.0.4.mat');
+r4 = load('../responses/ace/1.ace.0.30.0.4.mat');
+r5 = load('../responses/adg/2.adg.0.30.0.4.mat');
+r6 = load('../responses/adh/2.adh.0.30.0.4.mat');
+
+
+subplot(2,3,1); imshow(r1.img_struct.img,[]);
+subplot(2,3,2); imshow(r2.img_struct.img,[]);
+subplot(2,3,3); imshow(r3.img_struct.img,[]);
+subplot(2,3,4); imshow(r4.img_struct.img,[]);
+subplot(2,3,5); imshow(r5.img_struct.img,[]);
+subplot(2,3,6); imshow(r6.img_struct.img,[]);
+
+
+end
+
+
+function textonHistogram = unitConstructHistogram(data, directory, clusterNr)
+
+	responses = loadResponses(directory, data{i}, img_nr);
+	textonHistogram = zeros(nTextons,1);
+
+	npix = size(responses,1);
+
+	for u = 1:npix
+		tmp = sum((dictionary-ones(nTextons,1)*responses(u,:)).^2,2);
+		[mindist,index] = min(tmp);
+		 textonHistogram(index) = textonHistogram(index)+1.0/npix;
+	end
+end
