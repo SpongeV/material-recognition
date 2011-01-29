@@ -89,10 +89,10 @@ end
 
 
 function labeledPix = unitConstructHistogram(directory, data, clusterNr)
-	load Dictionary2.mat
+	load Dictionary3.mat
 
 	img_nr = 8;
-	nTextons	= size(dictionary2,1);
+	nTextons	= size(dictionary,1);
 
 	responses = loadResponses(directory, data, img_nr);
 	textonHistogram = zeros(nTextons,1);
@@ -100,7 +100,7 @@ function labeledPix = unitConstructHistogram(directory, data, clusterNr)
 	npix = size(responses,1);
 
 	for u = 1:npix
-		tmp = sum((dictionary2-ones(nTextons,1)*responses(u,:)).^2,2);
+		tmp = sum((dictionary-ones(nTextons,1)*responses(u,:)).^2,2);
 		[mindist,index] = min(tmp);
 % 		textonHistogram(index) = textonHistogram(index)+1.0;%/npix;
 		labeledPix(u) = index;
