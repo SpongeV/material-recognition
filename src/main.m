@@ -8,12 +8,12 @@ function main(args)
 	close all;
 	photex_dir		= '../photex/';
 	responses_dir	= '../responses/';
-	clusterNr		= 50;
-	
+	clusterNr		= 100;
+
 	photex_db = dir(photex_dir);
-	% omit directories '.' and '..'	
+	% omit directories '.' and '..'
 	photex_db = photex_db(3:end);
-	
+
 	% Generate all responses
 	if args(1) == 1
 		fprintf('Number of materials: %d\n', length(photex_db));
@@ -37,7 +37,7 @@ function main(args)
 	elseif args(1) == 4
 		load T1.mat
 		load TD.mat
-		load Dictionary.mat
+		load Dictionary3.mat
 		
 		[train_hists, train_labels] = constructHistograms(T1, responses_dir, dictionary);
 		[test_hists, test_labels] = constructHistograms(TD, responses_dir, dictionary);
@@ -64,17 +64,17 @@ function NN_Classify()
 	
 	for i=1:size(test_hists,2)
 		test_hist = test_hists(:,i);
-        mindist = 1.0;
+        mindist = 1.0e+200;
 		for j=1:20%size(train_hists,1)
 			trainHists = double(train_hists(:,(j*20)-19:j*20));
-			trainHists = trainHists*100;
+			trainHists = trainHists;
 % 			train_labels((j*20)-19:j*20)
  			
 			nModels = size(trainHists,2);
 
 			targetHist = double(ones(nModels,1)*test_hist');
 			targetHist = targetHist;
-			ss = sum((trainHists-targetHist').^2 ./ (trainHists+targetHist'+0.000000001), 2);
+			ss = sum((trainHists-targetHist').^2)% ./ (trainHists+targetHist'+0.000000001), 2);
  			[distance,index] = min(ss);
             if (distance < mindist)
                 mindist = distance;
