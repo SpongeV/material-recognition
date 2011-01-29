@@ -1,0 +1,60 @@
+function h = unitTestConstructHist()
+
+	imglist = { '0.aaa.0.30.0.bmp', ...
+				'0.aab.0.30.0.bmp', ...
+				'0.aaj.0.30.0.bmp', ...
+				'0.aam.0.30.0.bmp', ...
+				'0.aan.0.30.0.bmp', ...
+				'0.aao.0.30.0.bmp', ...
+				'0.aar.0.30.0.bmp', ...
+				'0.aas.0.30.0.bmp', ...
+				'0.aba.0.30.0.bmp', ...
+				'0.abj.0.30.0.bmp',
+
+	
+	for 
+	
+	h1 = unitConstructHistogram('../responses/', img1, 10);
+	subplot(4,5,1); hist(h1,200); drawnow;
+	h2 = unitConstructHistogram('../responses/', img2, 10);
+	subplot(4,5,2); hist(h2,200); drawnow;
+	h3 = unitConstructHistogram('../responses/', img3, 10);
+	subplot(4,5,3); hist(h3,200); drawnow;
+	h4 = unitConstructHistogram('../responses/', img4, 10);
+	subplot(4,5,4); hist(h4,200); drawnow;
+	h5 = unitConstructHistogram('../responses/', img5, 10);
+	subplot(4,5,5); hist(h5,200); drawnow;
+	h6 = unitConstructHistogram('../responses/', img6, 10);
+	subplot(4,5,6); hist(h6,200); drawnow;
+	h7 = unitConstructHistogram('../responses/', img6, 10);
+	subplot(4,5,6); hist(h6,200); drawnow;
+	h8 = unitConstructHistogram('../responses/', img6, 10);
+	subplot(4,5,6); hist(h6,200); drawnow;
+	h9 = unitConstructHistogram('../responses/', img6, 10);
+	subplot(4,5,6); hist(h6,200); drawnow;
+	h10 = unitConstructHistogram('../responses/', img6, 10);
+	subplot(4,5,6); hist(h6,200); drawnow;
+	
+	h = [h1 h2 h3 h4 h5 h6];
+	
+end
+
+
+function labeledPix = unitConstructHistogram(directory, data, clusterNr)
+	load Dictionary.mat
+
+	img_nr = 8;
+	nTextons	= size(dictionary,1);
+
+	responses = loadResponses(directory, data, img_nr);
+	textonHistogram = zeros(nTextons,1);
+
+	npix = size(responses,1);
+
+	for u = 1:npix
+		tmp = sum((dictionary-ones(nTextons,1)*responses(u,:)).^2,2);
+		[mindist,index] = min(tmp);
+% 		textonHistogram(index) = textonHistogram(index)+1.0;%/npix;
+		labeledPix(u) = index;
+	end
+end
