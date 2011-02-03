@@ -74,17 +74,23 @@ function NN_Classify()
 
 			targetHist = double(ones(nModels,1)*test_hist');
 			targetHist = targetHist;
-			ss = sum((trainHists-targetHist').^2)% ./ (trainHists+targetHist'+0.000000001), 2);
+			ss = sum((trainHists-targetHist').^2);% ./ (trainHists+targetHist'+0.000000001), 2);
  			[distance,index] = min(ss);
             if (distance < mindist)
                 mindist = distance;
 				theLabel = train_labels((j*20)-19:j*20);
                 class(i) = theLabel(1);
-            end;
+			end
 % 			fprintf('distance: %d class: %d\n',distance,class(i));
 		end
 	end
   	[class' test_labels']
+	
+	p = class == test_labels;
+
+	performance = sum(p)/size(test_labels,2)
+	
+	
 end
 
 
