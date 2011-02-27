@@ -1,8 +1,9 @@
-function [T1, T2, T3, T4, TestData] = randomSubSampling(directory, photex_db)
+function [T0, T1, T2, T3, T4, TestData] = randomSubSampling(directory, photex_db)
 	dbSize = length(photex_db);
 
 	%%%%%%%%%%%%%%% Construct training sets and test set %%%%%%%%%%%%%%%	
-	noInstances	= 40;
+	numSamples	  = 20;
+	numConditions = 40;
 	sizeT1		= 20;
 	sizeT2		= 10;
 	sizeT3		= 4;
@@ -13,7 +14,8 @@ function [T1, T2, T3, T4, TestData] = randomSubSampling(directory, photex_db)
 	[T2train]			= SplitSet(20,10);
 	[T3train]			= SplitSet(20,4);
 	[T4train]			= SplitSet(20,3);
-	
+
+	T0idx = 1;
 	T1idx = 1;
 	T2idx = 1;
 	T3idx = 1;
@@ -21,6 +23,8 @@ function [T1, T2, T3, T4, TestData] = randomSubSampling(directory, photex_db)
 	TestIdx = 1;
 	
 	% init cells
+	T0{numSamples * numConditions} = 0;
+
 	T1{sizeT1 * dbSize} = 0;
 	T2{sizeT2 * dbSize} = 0;
 	T3{sizeT3 * dbSize} = 0;
@@ -48,6 +52,11 @@ function [T1, T2, T3, T4, TestData] = randomSubSampling(directory, photex_db)
 %			length(clean_data)
 
 			% Construct Test Set
+			for j=1:length(clean_data)
+				T0{T0idx} = clean_data{j};
+				T0idx = T0idx+1;
+			end
+			
 			for j=1:length(TestSet)
 				TestData{TestIdx} = clean_data{TestSet(j)};
 				TestIdx = TestIdx+1;
