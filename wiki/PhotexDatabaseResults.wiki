@@ -2,4 +2,11 @@ State-of-the-art classification results for the Photex database
 
 = Results =
 
-|| table || cells ||
+<table>
+<tr>
+<td>Train
+</td>
+<td>
+</td>Test
+</tr>
+</table>
