@@ -3,5 +3,5 @@ State-of-the-art classification results for the Photex database
 = Results =
 
 
-|| TrainSet   ||
-|| T1 || 96% ||
+|| Trainset   || Accuracy ||
+|| T1         || 96%      ||
