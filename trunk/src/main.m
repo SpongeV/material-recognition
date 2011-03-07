@@ -28,6 +28,8 @@ function main(args)
 		fprintf('Generating datasets...\n');
 		[T0, T1, T2, T3, T4, TD] = randomSubSampling(photex_dir, photex_db);
 		save T0.mat T0
+		% the datasets below are created for the Texton Dictionary
+		% experiment.
 		save T1.mat T1
 		save T2.mat T2
 		save T3.mat T3
