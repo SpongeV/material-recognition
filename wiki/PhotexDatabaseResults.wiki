@@ -3,5 +3,8 @@ State-of-the-art classification results for the Photex database
 = Results =
 
 
-|| Trainset   || Accuracy ||
-|| T1         || 96%      ||
+|| Trainset   || Accuracy1 || Accuracy2 ||
+|| T1         || 96.00%    ||           ||
+|| T4         || 82.75%    ||           ||
+|| G1         || 72.00%    ||           ||
+|| G4         || 68.25%    ||           ||
