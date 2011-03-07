@@ -2,8 +2,8 @@ State-of-the-art classification results for the Photex database
 
 = Results =
 
-* Accuracy1 - results from the paper Texture Classification With Minimal Training Images (Targhi, 2009)
-* Accuracy2 - current accuracy in replicated experiment
+#  Accuracy1 - results from the paper Texture Classification With Minimal Training Images (Targhi, 2009)
+#  Accuracy2 - current accuracy in replicated experiment
 
 || Trainset   || Accuracy1 || Accuracy2 ||
 || T1         || 96.00%    ||           ||
