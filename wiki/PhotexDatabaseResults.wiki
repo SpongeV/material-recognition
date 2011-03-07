@@ -7,7 +7,7 @@ Explanation:
   * Accuracy2 - current accuracy in replicated experiment
 
 || Trainset   || Accuracy1 || Accuracy2 ||
-|| T1         || 96.00%    ||           ||
+|| T1         || 96.00%    || 90.38%    ||
 || T4         || 82.75%    ||           ||
 || G1         || 72.00%    ||           ||
 || G4         || 68.25%    ||           ||
