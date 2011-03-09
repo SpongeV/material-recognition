@@ -1,4 +1,4 @@
-function irr = LambertShading(normal, albedo, light)
+function irr = lambertShading(normal, albedo, light)
 
 	irr = 0;
 	ambient_coeff = 0;
