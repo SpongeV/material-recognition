@@ -57,7 +57,7 @@ function main(args)
 				fprintf('img nr: %d texture class: %d, ' ,i*j, i); 
 				img_name = T0{ (i*conditions-(conditions-1))+(j-1) };
 				parts = strsplit('.', img_name);
-				
+
 				fprintf('condition: %s\n', img_name);
 				responses = loadResponses(responses_dir, img_name, img_nr);
 				marginals{j} = generateMarginals(responses', 25);
@@ -84,7 +84,7 @@ function main(args)
 	elseif args(1) == 5
 		load marginalsSet.mat
 		startSet = 1;
-		numSets = 100;
+		numSets = 10;
 		numSamples = 20;
 		numConditions = 40;
 		

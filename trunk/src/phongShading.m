@@ -1,4 +1,4 @@
-function ill = PhongShading(normal, albedo, lightDir, viewDir)
+function ill = phongShading(normal, albedo, lightDir, viewDir)
 	% PhongShading - derived from Computer Graphics: Principle & Practice
 	% (p. 729)
 	% normal   - normal of the surface at intersection point
