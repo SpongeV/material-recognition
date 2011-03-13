@@ -96,19 +96,34 @@ function main(args)
 		% eigenValues 11: 90.2585% acc
 		% eigenValues 12: 90.2585% acc
 		% eigenValues 13: 90.5750% acc
-		numEigenValues = 13;
+		numEigenValues = 1;
 
 		totalAverageAccuracy = 0;
 		totalAASquared       = 0;
 
+% 		for kk = 1:100
+% 			numEigenValues = 7;
+% % 			numEigenValues = numEigenValues + 1;
+% 			totalAverageAccuracy = 0;
+% 			totalAASquared       = 0;
+		
 		for ss = startSet:startSet + numSets - 1,
 			currAccuracy = 0;
 
-% 			trainingSet = trainingSets{ss};
-% 			testSet     = testSets{ss};
+
+			
+			
+			% Targhi Experiment T1
+% 			randomSet = randperm(numConditions);
+% 			trainingSet = randomSet(1:2:length(randomSet));
+% 			testSet		= randomSet(2:2:length(randomSet));
+
+			% Targhi Experiment
 			randomSet = randperm(numConditions);
-			trainingSet = randomSet(1:2:length(randomSet));
+			T1Set		= randomSet(1:2:length(randomSet));
+			trainingSet = T1Set(1:3);
 			testSet		= randomSet(2:2:length(randomSet));
+			
 			
 % 			trainingSet = 2:2:numConditions;
 % 			testSet = 1:2:numConditions;
@@ -172,6 +187,7 @@ function main(args)
 
 			disp(['    AVERAGE ACCURACY for ', num2str(sn), ' sets: ', num2str(aaMean), '% +- ', num2str(aaStd)]);
 		end
+% 		end
 		
 	elseif args(1) == 10
 		load T1.mat

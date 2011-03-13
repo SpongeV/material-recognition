@@ -13,6 +13,7 @@ Although less descriptive than joint conditional distributions, the dependencies
 
 2. Constructing an Euclidean Space
 
+In order to perform statistical analysis on the marginal distributions, the distributions are mapped to points in Euclidean space. 
 3. Preliminaries
 
 4. Gaussian Bayes Classification
