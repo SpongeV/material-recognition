@@ -1,0 +1,141 @@
+\documentclass[a4paper,oneside]{book}
+\usepackage{caption}
+\usepackage{a4wide}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{ifpdf}
+\usepackage{graphicx}
+\usepackage{color} %colors in text
+\usepackage{textcomp} % 
+\usepackage[T1]{pbsi} %hand writting nice 
+\usepackage[T1]{fontenc} %more fonts
+\usepackage{mathrsfs} % letters for math
+\usepackage{amsmath} % math formulas
+\usepackage[all]{xy} % for drawing
+\usepackage{listings}
+\usepackage{amssymb}
+%\usepackage[parfill]{parskip}
+\definecolor{gray}{rgb}{0.7,0.7,0.7} 
+\usepackage{enumerate} %for enumerate
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage[dvipdfm]{hyperref}
+\usepackage{multicol}
+\usepackage{sectsty}
+\usepackage{multirow}
+%\ifpdf
+%\usepackage[pdftex,
+%            pagebackref=true,
+%            colorlinks=true,
+%            linkcolor=blue,
+%            unicode
+%           ]{hyperref}
+%\else
+%\usepackage[ps2pdf,
+%            pagebackref=true,
+%            colorlinks=true,
+%            linkcolor=blue,
+%            unicode
+%           ]{hyperref}
+%\usepackage{pspicture}
+%\fi
+\usepackage[utf8]{inputenc}
+\makeindex
+\setcounter{tocdepth}{3}
+%\usepackage[light,condensed,math]{kurier}
+\renewcommand{\thechapter}{\Roman{chapter}}
+%DEFINE NEW COMMANDS_________________________________________________________
+\newcommand{\clearemptydoublepage}{%
+  \newpage{\pagestyle{empty}\cleardoublepage}%
+}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\fade}[1]{\textcolor{gray}{\textbf{#1}}}
+\newcommand{\myemph}[1]{{\normalfont\emph{#1}}}
+
+\newcommand{\tit}{\textit}
+
+%____________________________________________________________________________
+\begin{document}
+	%THE TITLE PAGE & STUFF_________________________________________________________________
+	%\fontfamily{arial}\selectfont
+	%\fontfamily{courier-ttf}\selectfont
+	%\fontfamily{comicsans}\selectfont
+	%\fontfamily{franklingothic}\selectfont
+	%\fontfamily{impact}\selectfont Impact
+	%\fontfamily{palatino-ttf}\selectfont
+	%\fontfamily{sylfaen}\selectfont 
+	%\fontfamily{tahoma}\selectfont
+	%\fontfamily{times-ttf}\selectfont 
+	%\fontfamily{trebuchet}\selectfont 
+	%\fontfamily{verdana}\selectfont 
+	\fontfamily{georgia}\selectfont\normalsize
+
+	\hypersetup{pageanchor=false}
+	\begin{titlepage}
+	\begin{figure}[!hbtp]
+		\begin{flushright}
+			\epsfig{file=images/uva.eps, width=0.3\linewidth}
+		\end{flushright}
+	\end{figure}
+	\vspace*{2cm}
+	\begin{center}
+	\rule{\linewidth}{1px}\\[10pt]
+	\Huge{Texture Synthesis for Material Classification}
+	\rule{\linewidth}{1px}\\[10pt]
+	\vspace*{1cm}
+	\large{Master\rq s Thesis in Artificial Intelligence -- Intelligent Systems}
+	\large
+	\vspace*{4cm}
+	\begin{multicols}{2}
+		\begin{flushleft}
+			{\emph{Author:}\\
+			Jasper van Turnhout\\
+			\textit{jturnhou@science.uva.nl}\\ 
+			Student number: 0312649}  
+		\end{flushleft}
+		\begin{flushleft}
+			{\emph{Supervisors:}\\
+			\href{mailto:Th.Gevers@uva.nl}{Prof. dr. Theo Gevers}\\
+			\href{mailto:geusebroekuva.nl}{Dr. Jan-Mark Geusebroek}\\
+			Informatics Institute, Faculty of Science, University of Amsterdam\\
+			}
+		\end{flushleft}
+	\end{multicols}
+	\end{center}
+	\vspace*{6cm}
+	\end{titlepage}
+	%ABSTRACT PAGE____________________________________________________________________________
+	\thispagestyle{empty}
+	\section*{Abstract}
+		Research description comes here
+	%CONTENT PAGE____________________________________________________________________________
+	\newpage
+	\pagenumbering{roman}
+	\tableofcontents
+	%CHAPTERS & SUB-CHAPTERS____________________________________________________________________
+	\newpage
+	\pagenumbering{arabic}
+	\hypersetup{pageanchor=true}
+	\chapter{Introduction}
+	\input{intro/intro}
+	\chapter{Related work}
+	\input{related/relatedWork}
+	\chapter{Approach}
+	\input{approach/approach}
+	%___________________________________________________________________________________________
+ 	\nocite{*}
+	\bibliographystyle{plain}
+	\bibliography{bibtex}
+	\printindex
+\end{document}
+

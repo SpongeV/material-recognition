@@ -1,0 +1,64 @@
+\hypertarget{RelatedWork}{
+\section{Varma \& Zisserman}\label{VarmaZisserman}
+%\label{Textons}\index{Textons@{Texton Dictionary}}}
+}
+
+In earlier research on the topic of material recognition, a lot of focus was on the albedo variation on top of a flat surface. More recently, this focus has shifted towards surface normals, which cause the 3D effects we perceive. Photometric stereo based classification algorithms have been developed to capture these features.
+The need for larger texture databases that captures the variety in viewpoint and illumination resulted in the creation of the CUReT database (Dana et al, 1999). Dana and Nayar developed parametric models based on surface roughness and correlation lenghts which were tested against the CUReT database. However, in their research, no significant results were reported.
+
+Leung and Malik (2001) were the first to introduce the texton modeling method...
+
+\begin{itemize}
+	\item{CUReT Database}
+	\item{Texton Dictionary}
+	\item{Filter banks (LM, MR8, Schmid)}
+	\item{Chi-squared distance}
+\end{itemize}
+
+\section{Broadhurst}\label{Broadhurst}
+\begin{itemize}
+	\item{CUReT Database}
+	\item{eqi-count histograms}
+	\item{MR8 filter bank}
+	\item{Mallow distance}
+	\item{multivariate Gaussian classifier}
+\end{itemize}
+
+
+In his article, Broadhurst presents a parametric approach to estimate the likelihood of homogeneously textured images. His work extends the framework proposed by Levina (PhD thesis, 2002) by using a Gaussian Bayes classifier instead of a 1-NN classifier. To model each texture class, he uses multivariate Gaussian distributions to model the intra-class variability of each marginal histogram. This is done by mapping the joint marginal histograms into Euclidean space and applying PCA [to obtain the eigenvalues and expected projection error for each class].
+Marginal distributions of each filter response are estimated by using non-parametric histograms. There are several advantages to this:
+	1.This approach eliminates effectively the need to use a texton dictionary as proposed by Varma \& Zisserman (2004). The use of such dictionary would limit the generalization of a texture class and also needs clustering in high-dimensional spaces.
+	2. Marginal distributions can be estimated accurately, while joint distributions often suffer from the curse of dimensionality.
+Although less descriptive than joint conditional distributions, the dependencies among filter responses are captured by estimating the joint intra-class variation of the marginals. This approach increases the descriptive power of the marginal distributions while still maintaining the computational efficiency. The method is applied to the MR8 filter bank (described in Varma \& Zisserman).
+
+In order to perform statistical analysis on the marginal distributions, the distributions are mapped to points in Euclidean space. 
+Responses are represented as marginal histograms [as described in another paper, look this up]. The Mallow Distance is used to measure distribution similarity in the Euclidean space. The Mallow Distance used for comparing two continuous one-dimensional distributions is given by [insert formula]. To compare discrete distributions, consider two equi-count histograms x and y with n bins and the average value of each bin stored. Consider these values sorted in order [n values are sorted]. x and y can be represented as vectors x and y. The Mallows distance between these vectors is given by: [insert formula]. The described representation maps histograms to points in Euclidean space with distances corresponding to M2 histogram distances.
+
+Experiments are run on samples from the CUReT database, which consists of 61 texture classes with each 205 different viewing and illumination conditions. Each class experiences 3D effect such as interreflections, speculars and shadowing, which gives a large intra-class variability, but the database is sparse in its rotation and scaling conditions. In a preprocessing step, the images are converted to gray-scale and are processed to have zero-mean and unit-variance to get intensity invariance. The MR8 filter bank is used to gain rotationally invariant features by using the maximum responses over the orientations.
+Levinka has developed a framework for classification using filter banks, marginal histograms, the Mallow distance and a 1NN classifier. The 1-NN classifier requires a distance measure between two sets of marginal distributions. Broadhurst defines this to be the product of the M2 marginal distances described in section 2. The variation of marginal distributions can be measured jointly or independently. A joint 1-NN classifier measures the distance between a target image and all the training images as the distance between each set of marginals. The target image is then classified using the closest training image. For an independent 1-NN classifier, the minimum M2 distance between each target marginal and each class is computed. The total distance to a class is defined as the product of each minimum marginal distance.
+
+
+
+4. Gaussian Bayes Classification
+
+(skip the Markov Random Field parts as they are not in the scope of the thesis)
+
+\section{Targhi}\label{Targhi}
+\begin{itemize}
+	\item{PhoTex database}
+	\item{ALOT database}
+	\item{Photometric Stereo}
+	\item{Lambertian reflection}
+	\item{Broadhurst experiment}
+\end{itemize}
+
+\section{Reflection Models}
+\begin{itemize}
+	\item{Lambertian}
+	\item{Phong, Blinn-Phong}
+	\item{Ward}
+	\item{Lafortune}
+	\item{Microfacets}
+	\item{Cook-Torrance}
+	\item{Oren-Nayar}
+\end{itemize}
