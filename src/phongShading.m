@@ -1,4 +1,4 @@
-function ill = phongShading(normal, albedo, lightDir, viewDir)
+function ill = phongShading(normal, albedo, light_dir, view_dir)
 	% PhongShading - derived from Computer Graphics: Principle & Practice
 	% (p. 729)
 	% normal   - normal of the surface at intersection point
@@ -6,6 +6,15 @@ function ill = phongShading(normal, albedo, lightDir, viewDir)
 	% lightDir - the direction of the light source
 	% viewDir  - the direction of the viewer
 
+	lightDir = [cos(double(light_dir(2)))*sin(double(light_dir(1))), ...
+			sin(double(light_dir(2)))*cos(double(light_dir(1))), ...
+			cos(double(light_dir(1)))];	
+
+	viewDir = [cos(double(view_dir(2)))*sin(double(view_dir(1))), ...
+			sin(double(view_dir(2)))*cos(double(view_dir(1))), ...
+			cos(double(view_dir(1)))];		
+	viewDir = viewDir/norm(viewDir);
+	
 	normal = normal(:)';
 	N = normal/norm(normal);
 	L = lightDir/norm(lightDir);
@@ -15,7 +24,7 @@ function ill = phongShading(normal, albedo, lightDir, viewDir)
 	diffuse_coeff = 1.0;
 	
 	lightColor = 1.0;
-	alpha = 1;
+	alpha = 4;
 	
 	d1 = dot(L,N);
 
@@ -24,7 +33,7 @@ function ill = phongShading(normal, albedo, lightDir, viewDir)
 	R = 2 .* N .* d1 - L;
 	d2 = dot(R,V);
 	
-	specularReflectionCoeff = 1.0;
+	specularReflectionCoeff = 0.01;
 	specularColor = 1.0;
 	if (specularReflectionCoeff > 0.0)
 		if (d2 > 0.0)
