@@ -4,6 +4,7 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
 	% allocate matrix for images
 	parts = strsplit('.',im{1});
 	img = imcrop(imread(strcat(dir,parts{2},'/',im{1})), [156 156 200 200]);
+% 	img = imread(strcat(dir,parts{2},'/',im{1}));
 	imsize = size(img);
 	
 	images = zeros(imsize(1), imsize(2), length(im));

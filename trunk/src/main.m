@@ -50,11 +50,12 @@ function main(args)
 
 		numSamples = length(T0);
 		marginalsSet = cell(1, classes);
-		
+		counter = 1;
 		for i=1:classes %nr of textures%length(data)
 			marginals = cell(1, conditions);
 			for j=1:conditions
-				fprintf('img nr: %d texture class: %d, ' ,i*j, i); 
+				fprintf('img nr: %d texture class: %d, ' ,counter, i);
+				counter = counter + 1;
 				img_name = T0{ (i*conditions-(conditions-1))+(j-1) };
 				parts = strsplit('.', img_name);
 
@@ -96,7 +97,7 @@ function main(args)
 		% eigenValues 11: 90.2585% acc
 		% eigenValues 12: 90.2585% acc
 		% eigenValues 13: 90.5750% acc
-		numEigenValues = 1;
+		numEigenValues = 13;
 
 		totalAverageAccuracy = 0;
 		totalAASquared       = 0;
@@ -121,13 +122,12 @@ function main(args)
 			% Targhi Experiment
 			randomSet = randperm(numConditions);
 			T1Set		= randomSet(1:2:length(randomSet));
-			trainingSet = T1Set(1:3);
+			trainingSet = T1Set(1:end);
 			testSet		= randomSet(2:2:length(randomSet));
-			
-			
+
 % 			trainingSet = 2:2:numConditions;
 % 			testSet = 1:2:numConditions;
-			
+
 			fprintf('DEB: trainingSet size: %d testSet size: %d\n', length(trainingSet), length(testSet));
 
 		%JMG:  limit trainingsamples
@@ -170,6 +170,8 @@ function main(args)
 		%gaussianModels.sampleEigValues{1}
 		%gaussianModels.sampleEigVectors{1}
 		%gaussianModels.sampleLogDetVar{1}
+		
+			save gaussianModels.mat gaussianModels
 
 			%CLASSIFICATION
 			currAccuracy = doClassification(gaussianModels, testMarginalsSet);
