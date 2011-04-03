@@ -1,0 +1,25 @@
+\hypertarget{empericalModels}{
+}
+\begin{itemize}
+	\item{Lambertian}
+	\item{Phong, Blinn-Phong}
+	\item{Ward}
+	\item{Lafortune}
+\end{itemize}
+
+\noindent For the texture synthesis of the materials, various local reflection \footnote[1]{Another type of reflection model is that of global illumination models. These are beyond the scope of this thesis.} models can be used. This chapter will outline the emperical models
+
+These models capture reflectance behaviour using mathematical models without using any basic laws of physics. Such models are widely used for their simplicity and because they can be controlled by setting only a small set of parameters to obtain desired results.
+
+	\section{Lambertian reflectance}\label{Lambertian}
+		One of the most used emperical models is the Lambertian reflectance model. In computer graphics, this model is mainly used to model diffuse reflectance, ie. the reflecion of light from diffuse surfaces, and because the reflection does not have to be recomputed when the view changes, it is widely used in interactive applications. 
+
+Most \todo(diffuse?) materials are deviating from Lambertian for angles of view or incidence greater than 60 degrees \cite{DigitalModeling}. Another shortcoming of Lambertian reflectance is that it does not include the observation of speculars on materials. For these reasons the model is insufficient to synthesize materials with a more glossy nature since they will need the speculars to be present. 
+
+
+
+
+
+	\section{Phong Reflectance}\label{Phong}
+		Phong reflection here...
+
