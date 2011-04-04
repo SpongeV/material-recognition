@@ -34,7 +34,7 @@ function irr = reflectance_OrenNayar(normal, albedo, light_dir, view_dir)
 	% sigma is the parameter to control the roughness of the surface; 0 is
 	% a flat surface (converging to Lambertian), 1 is for a very rough
 	% surface.
-	sigma = 1.0;
+	sigma = 0.3;
 	A = 1 - (sigma^2 / (2 * (sigma^2 + 0.33)));
 	B = (0.45 * sigma^2) / (sigma^2 + 0.09);
 
@@ -44,5 +44,6 @@ function irr = reflectance_OrenNayar(normal, albedo, light_dir, view_dir)
 % 	irr = albedo * (A + B * max(0, cos(rad_i - rad_o))*sin(alpha)*tan(beta'));
 
 	irr = albedo * cos(light_dir(1)) * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
+% 	irr = albedo * cos_theta_i * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
 
 end

@@ -14,5 +14,5 @@ function irr = reflectance_Lambertian(normal, albedo, light_dir)
 	end
 	
 	irr = (ambient_coeff + diffuse_coeff * shade) * albedo;
-		
+	
 end
