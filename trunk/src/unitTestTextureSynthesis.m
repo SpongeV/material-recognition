@@ -2,7 +2,7 @@ function unitTestTextureSynthesis()
 % 	close all;
 	im = {};
 
-	angle = 75;
+	angle = 30;
 	
 % 	directory = '../Photex/';
 % 	im{1} = '0.aaa.0.30.0.bmp'
@@ -43,7 +43,7 @@ function unitTestTextureSynthesis()
 	for i=1:size(albedo,1)
 		for j=1:size(albedo,2)
 			irr1 = reflectance_Lambertian(normals(i,j,:), albedo(i,j), [angle 180]);
-			irr2 = phongShading(normals(i,j,:), albedo(i,j), [angle 180], [0 0]);
+			irr2 = reflectance_Phong(normals(i,j,:), albedo(i,j), [angle 180], [0 0]);
 			irr3 = reflectance_OrenNayar(normals(i,j,:), albedo(i,j), [angle 180], [0 0]);
 			synthesized_img1(i,j) = irr1;
 			synthesized_img2(i,j) = irr2;
@@ -51,13 +51,15 @@ function unitTestTextureSynthesis()
 		end
 	end
 	
-	
+	synthesized_img1 = synthesized_img1 / max(synthesized_img1(:));
+	synthesized_img2 = synthesized_img2 / max(synthesized_img2(:));
+	synthesized_img3 = synthesized_img3 / max(synthesized_img3(:));
 	
 	figure; 
-	subplot(2,2,1); imshow(original_image,[]);
-	subplot(2,2,2); imshow(synthesized_img1,[]);
-	subplot(2,2,3); imshow(synthesized_img2,[]);
-	subplot(2,2,4); imshow(synthesized_img3,[]);
+	subplot(2,2,1); imshow(original_image);
+	subplot(2,2,2); imshow(synthesized_img1);
+	subplot(2,2,3); imshow(synthesized_img2);
+	subplot(2,2,4); imshow(synthesized_img3);
 end
 
 % shafer reflection model
