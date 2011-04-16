@@ -6,13 +6,17 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir)
 	% lightDir - the direction of the light source
 	% viewDir  - the direction of the viewer
 
-	lightDir = [cos(double(light_dir(2)))*sin(double(light_dir(1))), ...
-			sin(double(light_dir(2)))*cos(double(light_dir(1))), ...
-			cos(double(light_dir(1)))];	
+	
+	light_dir	= deg2rad(light_dir);
+	view_dir	= deg2rad(view_dir);
+	
+	lightDir	= [cos(double(light_dir(2)))*sin(double(light_dir(1))), ...
+				   sin(double(light_dir(2)))*sin(double(light_dir(1))), ...
+				   cos(double(light_dir(1)))];	
 
-	viewDir = [cos(double(view_dir(2)))*sin(double(view_dir(1))), ...
-			sin(double(view_dir(2)))*cos(double(view_dir(1))), ...
-			cos(double(view_dir(1)))];		
+	viewDir		= [cos(double(view_dir(2)))*sin(double(view_dir(1))), ...
+				   sin(double(view_dir(2)))*sin(double(view_dir(1))), ...
+				   cos(double(view_dir(1)))];		
 	viewDir = viewDir/norm(viewDir);
 	
 	normal = normal(:)';
@@ -28,12 +32,12 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir)
 	
 	d1 = dot(L,N);
 
-	ill = (albedo*diffuse_coeff * lightColor * min(1.0, max(0.0, d1)));
+	ill = (albedo * diffuse_coeff * lightColor * min(1.0, max(0.0, d1)));
 	
 	R = 2 .* N .* d1 - L;
 	d2 = dot(R,V);
 	
-	specularReflectionCoeff = 0.01;
+	specularReflectionCoeff = 0.00;
 	specularColor = 1.0;
 	if (specularReflectionCoeff > 0.0)
 		if (d2 > 0.0)
