@@ -8,6 +8,9 @@ function irr = reflectance_OrenNayar(normal, albedo, light_dir, view_dir)
 	% viewDir  - the direction of the viewer
 	%				[slant tilt] or [polar_angle azimuth]
 
+	light_dir = deg2rad(light_dir);
+	
+	
 	lightDir = [cos(double(light_dir(2)))*sin(double(light_dir(1))), ...
 				sin(double(light_dir(2)))*cos(double(light_dir(1))), ...
 				cos(double(light_dir(1)))];	
@@ -43,7 +46,7 @@ function irr = reflectance_OrenNayar(normal, albedo, light_dir, view_dir)
 
 % 	irr = albedo * (A + B * max(0, cos(rad_i - rad_o))*sin(alpha)*tan(beta'));
 
-	irr = albedo * cos(light_dir(1)) * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
-% 	irr = albedo * cos_theta_i * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
+% 	irr = albedo * cos(light_dir(1)) * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
+	irr = albedo * cos_theta_i * (A + B * max(0, cos(light_dir(2) - view_dir(2)))*sin(alpha)*tan(beta')) * L_i;
 
 end
