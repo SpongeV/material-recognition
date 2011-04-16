@@ -114,9 +114,9 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
 		check = (diff_p(1:end,1:end-1) - diff_q(1:end-1,1:end)).^2;
 		figure;	imshow(check);
 		
-	    [x y]=meshgrid(0.1:0.1:imsize/10,0.1:0.1:imsize/10);	
-	    z = -1*zQ;
-		figure;
-		quiver3(x,y,z,normals(:,1),normals(:,2),normals(:,3));
+% 	    [x y]=meshgrid(0.1:0.1:imsize/10,0.1:0.1:imsize/10);	
+% 	    z = -1*zQ;
+% 		figure;
+% 		quiver3(x,y,z,normals(:,1),normals(:,2),normals(:,3));
 	end
 end
