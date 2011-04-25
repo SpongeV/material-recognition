@@ -8,7 +8,7 @@ function main(args)
 	close all;
 	photex_dir		= '../photex/';
 	responses_dir	= '../responses/';
-	marginal_dir	= '../marginals/';
+	marginal_dir	= '../marginals_original/';
 	clusterNr		= 100;
 
 	photex_db = dir(photex_dir);
@@ -26,22 +26,23 @@ function main(args)
 	elseif args(1) == 2
 		fprintf('Number of materials: %d\n', length(photex_db));
 		fprintf('Generating datasets...\n');
-		[T0, T1, T2, T3, T4, TD] = randomSubSampling(photex_dir, photex_db);
+% 		[T0, T1, T2, T3, T4, TD] = randomSubSampling(photex_dir, photex_db);
+		[T0, T1_idx, T2_idx, T3_idx, T4_idx, TD_idx] = pseudoRandomSubSampling(photex_dir);
 		save T0.mat T0
 		% the datasets below are created for the Texton Dictionary
 		% experiment.
-		save T1.mat T1
-		save T2.mat T2
-		save T3.mat T3
-		save T4.mat T4
-		save TD.mat TD
+		save T1_idx.mat T1_idx
+		save T2_idx.mat T2_idx
+		save T3_idx.mat T3_idx
+		save T4_idx.mat T4_idx
+		save TD_idx.mat TD_idx
 	elseif args(1) == 3
 		load T0.mat
 % 		generateDictionary(T1, responses_dir, clusterNr);
 
 
 		fprintf('Generating marginals\n');
-		% HARDCODED: number of texture classes (18), number of images per class (10),
+		% HARDCODED: number of texture classes (20), number of images per class (10),
 		% number of maximum image responses (mr=8)
 
 		classes		= 20;
@@ -85,7 +86,7 @@ function main(args)
 	elseif args(1) == 5
 		load marginalsSet.mat
 		startSet = 1;
-		numSets = 10;
+		numSets = 5;
 		numSamples = 20;
 		numConditions = 40;
 		
@@ -119,15 +120,21 @@ function main(args)
 % 			trainingSet = randomSet(1:2:length(randomSet));
 % 			testSet		= randomSet(2:2:length(randomSet));
 
-			% Targhi Experiment
-			randomSet = randperm(numConditions);
-			T1Set		= randomSet(1:2:length(randomSet));
-			trainingSet = T1Set(1:end);
-			testSet		= randomSet(2:2:length(randomSet));
+%%			% Targhi Experiment
+			% get the samples random
+% 			randomSet   = randperm(numConditions);
+% 			T1Set		= randomSet(1:2:length(randomSet));
+% 			trainingSet = T1Set(1:end);
+% 			testSet		= randomSet(2:2:length(randomSet));
+
+			% get the samples uniformly distributed over hemisphere
+			[pseudoRandomTrain pseudoRandomTest] = pseudoRandomSubSamplingBroadhurst(photex_dir); 
+			trainingSet = pseudoRandomTrain(1:20);
+			testSet		= pseudoRandomTest;
 
 % 			trainingSet = 2:2:numConditions;
 % 			testSet = 1:2:numConditions;
-
+%%
 			fprintf('DEB: trainingSet size: %d testSet size: %d\n', length(trainingSet), length(testSet));
 
 		%JMG:  limit trainingsamples
