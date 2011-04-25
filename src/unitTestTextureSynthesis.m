@@ -13,10 +13,10 @@ function unitTestTextureSynthesis(angle, azimuth)
 % 	im{3} = '0.aaa.0.30.180.bmp'
 % 	im{4} = '0.aaa.0.30.270.bmp'
 
-	im{1} = '1.acd.0.60.30.bmp'
-	im{2} = '1.acd.0.60.120.bmp'
-	im{3} = '1.acd.0.60.210.bmp'
-	im{4} = '1.acd.0.60.300.bmp'
+	im{1} = '1.acd.0.75.30.bmp'
+	im{2} = '1.acd.0.75.120.bmp'
+	im{3} = '1.acd.0.75.210.bmp'
+	im{4} = '1.acd.0.75.300.bmp'
 
 % 	im{1} = '2.adg.0.30.0.bmp'
 % 	im{2} = '2.adg.0.30.90.bmp'
@@ -36,7 +36,7 @@ function unitTestTextureSynthesis(angle, azimuth)
 % 	im{3} = '3.vm63.0.75.180.bmp'
 % 	im{4} = '3.vm63.0.75.270.bmp'
 % 
-	[albedo, normals] = PhotometricStereo(im, directory, 0, 1);
+	[albedo, normals] = PhotometricStereo(im, directory, 0, 0);
 	
 	parts = strsplit('.',im{3});
 	original_image = imcrop(imread(strcat(directory,parts{2},'/',im{no})), [156 156 200 200]);
@@ -47,7 +47,6 @@ function unitTestTextureSynthesis(angle, azimuth)
 			synthesized_img1 = zeros(size(albedo));
 			synthesized_img2 = zeros(size(albedo));
 			synthesized_img3 = zeros(size(albedo));
-
 
 			for i=1:size(albedo,1)
 				for j=1:size(albedo,2)
@@ -65,10 +64,12 @@ function unitTestTextureSynthesis(angle, azimuth)
 % 			synthesized_img3 = synthesized_img3 / max(synthesized_img3(:));
 
 			figure; 
-			subplot(2,2,1); imshow(original_image);
-			subplot(2,2,2); imshow(synthesized_img1,[]);
-			subplot(2,2,3); imshow(synthesized_img2,[]);
-			subplot(2,2,4); imshow(synthesized_img3,[]);
+			subplot(2,3,1); imshow(original_image);
+			subplot(2,3,2); imshow(synthesized_img1);
+			subplot(2,3,3); imshow(synthesized_img2);
+			subplot(2,3,4); imshow(synthesized_img3);
+			subplot(2,3,5); imshow(synthesized_img1 - synthesized_img3);
+			subplot(2,3,6); imshow(synthesized_img2 - synthesized_img3);
 		end
 	end
 end
