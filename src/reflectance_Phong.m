@@ -1,4 +1,4 @@
-function ill = reflectance_Phong(normal, albedo, light_dir, view_dir)
+function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material)
 	% PhongShading - derived from Computer Graphics: Principle & Practice
 	% (p. 729)
 	% normal   - normal of the surface at intersection point
@@ -37,7 +37,7 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir)
 	R = 2 .* N .* d1 - L;
 	d2 = dot(R,V);
 	
-	specularReflectionCoeff = 0.00;
+	specularReflectionCoeff = material_coefficient(material);
 	specularColor = 1.0;
 	if (specularReflectionCoeff > 0.0)
 		if (d2 > 0.0)
@@ -45,4 +45,16 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir)
 		end
 	end
 	
+end
+
+function coeff = material_coefficient(material)
+	% define a lookup table for the specular reflection coefficient for the 20 materials
+	coeff = 0.0;
+	if material == 'aaa'
+		coeff = 0.1;
+	elseif material == 'aab'
+		coeff = 0.1;
+	elseif material == 'adg'
+		coeff = 0.05;
+	end
 end

@@ -22,10 +22,13 @@ function [max_responses, dim1, dim2] = getMaxResponses(image, directory, target_
 	parts = strsplit('.', image);
 	image_dir = strcat(directory, parts{2}, '/' ,image);
 	
-	% crop image to a region of 200x200 in the center of the image
+	% crop image to a region of 200x200 in the center of the image if
+	% necessary
 	img = imread(image_dir);
 	img = img(:,:,1);
-	img = imcrop(img, [156 156 200 200]);
+	if size(img,1) > 500
+		img = imcrop(img, [156 156 200 200]);
+	end
 	img = im2double(img);
 	% normalize image intensity to zero-mean and unit standard deviation
  	img = (img-mean(img(:)))/var(img(:));
