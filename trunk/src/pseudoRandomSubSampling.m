@@ -69,14 +69,17 @@ function [T0, T1_idx, T2_idx, T3_idx, T4_idx, Test_idx] = pseudoRandomSubSamplin
 	end
 
 
-	max(T2_idx)
-	max(T3_idx)
-	max(T4_idx)
-
-	min(T2_idx)
-	min(T3_idx)
-	min(T4_idx)
-
+% 	max(T2_idx)
+% 	max(T3_idx)
+% 	max(T4_idx)
+% 
+% 	min(T2_idx)
+% 	min(T3_idx)
+% 	min(T4_idx)
+% 
+% 	size(T2_idx)
+% 	size(T3_idx)
+% 	size(T4_idx)
 	
 	T2_idx = T1_idx(T2_idx);
 	T3_idx = T1_idx(T3_idx);

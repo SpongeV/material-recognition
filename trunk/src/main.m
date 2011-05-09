@@ -5,23 +5,94 @@ function main(args)
 %		args = 1 generates responses for all imagse of all textures using
 %		the MR8 filter bank. For each image, 8 responses are recorded.
 %
+%		args = 2 generate indices for sampling from the photex database.
+%		Targhi's experiment samples pseudorandomly: azimuth is constrained
+%		to be distributed uniformly over the hemisphere.
+
+
 	close all;
-	photex_dir		= '../photex/';
-	responses_dir	= '../responses/';
-	marginal_dir	= '../marginals_original/';
+
+%% image directories
+	photex_dir			= '../photex/';
+	% 5 repetitions of the experiment
+	image_Lambertian3_1			= '../DB_LAMBERTIAN3_1/';
+	image_Lambertian4_1			= '../DB_LAMBERTIAN4_1/';
+	image_Lambertian10_1		= '../DB_LAMBERTIAN10_1/';
+	image_Lambertian20_1		= '../DB_LAMBERTIAN20_1/';
+
+	lambertian20_2_dir			= '../DB_LAMBERTIAN20_2/';
+	lambertian20_3_dir			= '../DB_LAMBERTIAN20_3/';
+	lambertian20_4_dir			= '../DB_LAMBERTIAN20_4/';
+	lambertian20_5_dir			= '../DB_LAMBERTIAN20_5/';
+
+	image_OrenNayar4_1			= '../DB_ORENNAYAR4_1/';
+	image_OrenNayar20_1			= '../DB_ORENNAYAR20_1/';
+
+	image_OrenNayar20_2			= '../DB_ORENNAYAR20_2/';
+	image_OrenNayar20_3			= '../DB_ORENNAYAR20_3/';
+	image_OrenNayar20_4			= '../DB_ORENNAYAR20_4/';
+	image_OrenNayar20_5			= '../DB_ORENNAYAR20_5/';
+	
+	image_dir = image_Lambertian4_1;
+
+%% response directories	
+	responses_original			= '../responses_original/';
+	
+	responses_Lambertian4_1		= '../responses_Lambertian4_1/';
+	responses_Lambertian20_1	= '../responses_Lambertian20_1/';
+
+	responses_Lambertian20_2	= '../responses_Lambertian20_2/';
+	responses_Lambertian20_3	= '../responses_Lambertian20_3/';
+	responses_Lambertian20_4	= '../responses_Lambertian20_4/';
+	responses_Lambertian20_5	= '../responses_Lambertian20_5/';
+
+	responses_OrenNayar4_1		= '../responses_OrenNayar4_1/';
+	responses_OrenNayar20_1		= '../responses_OrenNayar20_1/';
+
+	responses_OrenNayar20_2		= '../responses_OrenNayar20_2/';
+	responses_OrenNayar20_3		= '../responses_OrenNayar20_3/';
+	responses_OrenNayar20_4		= '../responses_OrenNayar20_4/';
+	responses_OrenNayar20_5		= '../responses_OrenNayar20_5/';
+
+	responses_dir				= responses_Lambertian4_1;
+
+%% marginal directories
+	marginal_original		= '../marginals_original/';
+	
+	marginal_Lambertian4_1	= '../marginals_Lambertian4_1/';
+	marginal_Lambertian20_1	= '../marginals_Lambertian20_1/';
+
+	marginal_Lambertian20_2	= '../marginals_Lambertian20_2/';
+	marginal_Lambertian20_3	= '../marginals_Lambertian20_3/';
+	marginal_Lambertian20_4	= '../marginals_Lambertian20_4/';
+	marginal_Lambertian20_5	= '../marginals_Lambertian20_5/';
+	
+	marginal_OrenNayar4_1	= '../marginals_OrenNayar4_1/';
+	marginal_OrenNayar20_1	= '../marginals_OrenNayar20_1/';
+
+	marginal_OrenNayar20_2	= '../marginals_OrenNayar20_2/';
+	marginal_OrenNayar20_3	= '../marginals_OrenNayar20_3/';
+	marginal_OrenNayar20_4	= '../marginals_OrenNayar20_4/';
+	marginal_OrenNayar20_5	= '../marginals_OrenNayar20_5/';
+
+	marginal_dir			= marginal_Lambertian4_1;
+
+	% clusterNr defined for texton dictionary
 	clusterNr		= 100;
 
-	photex_db = dir(photex_dir);
+	photex_db = dir(image_dir);
 	% omit directories '.' and '..'
 	photex_db = photex_db(3:end);
 
+	
+	
 	% Generate all responses
 	if args(1) == 1
 		fprintf('Number of materials: %d\n', length(photex_db));
 		fprintf('Generating responses...\n');
 		tic;
-		data = getNames(photex_db, photex_dir);
-		generateResponses(data, photex_dir, responses_dir, 1);
+		data = getNames(photex_db, image_dir);
+		generateResponses(data, image_dir, responses_dir, 1);
 		toc;
 	elseif args(1) == 2
 		fprintf('Number of materials: %d\n', length(photex_db));
@@ -36,6 +107,17 @@ function main(args)
 		save T3_idx.mat T3_idx
 		save T4_idx.mat T4_idx
 		save TD_idx.mat TD_idx
+		
+		T1 = T0(T1_idx);
+		T2 = T0(T2_idx);
+		T3 = T0(T3_idx);
+		T4 = T0(T4_idx);
+		
+		save T1.mat T1
+		save T2.mat T2
+		save T3.mat T3
+		save T4.mat T4
+		
 	elseif args(1) == 3
 		load T0.mat
 % 		generateDictionary(T1, responses_dir, clusterNr);
@@ -76,7 +158,7 @@ function main(args)
 			marginalsSet{i} = marginals;
 		end
 
-		save marginalsSet.mat marginalsSet
+		save marginals_original.mat marginalsSet
 		
 	elseif args(1) == 4
 		load marginalsSet.mat
@@ -84,9 +166,13 @@ function main(args)
 		generateFigures(marginalsSet, graphMaterial);
 
 	elseif args(1) == 5
-		load marginalsSet.mat
+		% experiment 1
+		set_original	= load('experiment1/marginals_Original.mat');
+% 		set_synthesized = load('experiment1/marginals_Lambertian20_1.mat');
+		set_synthesized = load('experiment1/marginals_Lambertian4_1.mat');
+		
 		startSet = 1;
-		numSets = 5;
+		numSets = 50;
 		numSamples = 20;
 		numConditions = 40;
 		
@@ -115,7 +201,7 @@ function main(args)
 
 			
 			
-			% Targhi Experiment T1
+%%			% Broadhurst Experiment
 % 			randomSet = randperm(numConditions);
 % 			trainingSet = randomSet(1:2:length(randomSet));
 % 			testSet		= randomSet(2:2:length(randomSet));
@@ -146,12 +232,14 @@ function main(args)
 			numTraining = length(trainingSet);
 			numTest     = length(testSet);
 
-			disp(['Set ', num2str(ss), ' (', num2str(numTraining), ' training samples, ', num2str(numEigenValues), ' eigenmodes, ', num2str(size(marginalsSet{1}{1},1)), ' filters):']);
+			disp(['Set ', num2str(ss), ' (', num2str(numTraining), ' training samples, ', num2str(numEigenValues), ' eigenmodes, ', num2str(size(set_synthesized.marginalsSet{1}{1},1)), ' filters):']);
 
 			trainingMarginalsSet = cell(1, numSamples);
 			testMarginalsSet     = cell(1, numSamples);
 			for s = 1:numSamples,
+				marginalsSet = set_synthesized.marginalsSet;
 				trainingMarginalsSet{s} = marginalsSet{s}(trainingSet);
+				marginalsSet = set_original.marginalsSet;
 				testMarginalsSet{s}     = marginalsSet{s}(testSet);
 			end
 

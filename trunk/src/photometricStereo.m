@@ -20,7 +20,10 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
 	for i=1:length(im)
 		parts = strsplit('.',im{i});
 		img = imread(strcat(dir,parts{2},'/',im{i}));
-		img = imcrop(img,[156 156 200 200]);
+
+		if size(img,1) > 500
+			img = imcrop(img,[156 156 200 200]);
+		end
 		% convert image to [0 1] intensities
 		img = double(rgb2gray(img))/255;
 		images(:,:,i) = img;
