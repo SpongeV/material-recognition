@@ -52,7 +52,7 @@
 \makeindex
 \setcounter{tocdepth}{3}
 %\usepackage[light,condensed,math]{kurier}
-\renewcommand{\thechapter}{\Roman{chapter}}
+%\renewcommand{\thechapter}{\Roman{chapter}}
 %DEFINE NEW COMMANDS_________________________________________________________
 \newcommand{\clearemptydoublepage}{%
   \newpage{\pagestyle{empty}\cleardoublepage}%
@@ -61,7 +61,6 @@
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{#1}}}
 \newcommand{\fade}[1]{\textcolor{gray}{\textbf{#1}}}
 \newcommand{\myemph}[1]{{\normalfont\emph{#1}}}
-
 \newcommand{\tit}{\textit}
 
 %____________________________________________________________________________
@@ -134,6 +133,8 @@
 	\input{approach/approach}
 	\chapter{Emperical Models}
 	\input{empericalModels/empericalModels}
+	\chapter{Physical Models}
+	\input{physicalModels/physicalModels}
 	%___________________________________________________________________________________________
  	\nocite{*}
 	\bibliographystyle{plain}
