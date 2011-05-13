@@ -1,4 +1,4 @@
-function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material)
+function ill = reflectance_BlinnPhong(normal, albedo, light_dir, view_dir, material)
 	% PhongShading - derived from Computer Graphics: Principle & Practice
 	% (p. 729)
 	% normal   - normal of the surface at intersection point
@@ -35,8 +35,12 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material)
 
 	ill = (albedo * diffuse_coeff * lightColor * min(1.0, max(0.0, d1)));
 	
-	R = 2 .* N .* d1 - L;
-	d2 = dot(R,V);
+	
+	H = (L + V) / norm(L + V);
+	d2 = dot(H, N);
+% 	R = 2 .* N .* d1 - L;
+% 	d2 = dot(R,V);
+
 	
 	specularReflectionCoeff = coeff(2);
 	specularColor = 1.0;
