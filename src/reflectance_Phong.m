@@ -1,4 +1,4 @@
-function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material)
+function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material, alpha)
 	% PhongShading - derived from Computer Graphics: Principle & Practice
 	% (p. 729)
 	% normal   - normal of the surface at intersection point
@@ -28,7 +28,7 @@ function ill = reflectance_Phong(normal, albedo, light_dir, view_dir, material)
 	diffuse_coeff = 1.0;
 	
 	lightColor = 1.0;
-	alpha = 4;
+% 	alpha = alpha_coefficient(material);
 	
 	d1 = dot(L,N);
 
@@ -49,12 +49,92 @@ end
 
 function coeff = material_coefficient(material)
 	% define a lookup table for the specular reflection coefficient for the 20 materials
-	coeff = 0.0;
+	coeff = 0.1;
+	if material == 'aaa'
+		coeff = 0.0001;
+	elseif material == 'aab'
+		coeff = 0.1;
+	elseif material == 'aaj'
+		coeff = 0.07;
+	elseif material == 'aam'
+		coeff = 0.10;
+	elseif material == 'aan'
+		coeff = 0.10;
+	elseif material == 'aao'
+		coeff = 0.10;
+	elseif material == 'aar'
+		coeff = 0.10;
+	elseif material == 'aas'
+		coeff = 0.10;
+	elseif material == 'aba'
+		coeff = 0.05;
+	elseif material == 'abj'
+		coeff = 0.05;
+	elseif material == 'abk'
+		coeff = 0.05;
+	elseif material == 'acc'
+		coeff = 0.05;
+	elseif material == 'acd'
+		coeff = 0.05;
+	elseif material == 'ace'
+		coeff = 0.05;
+	elseif material == 'adb'
+		coeff = 0.05;
+	elseif material == 'adc'
+		coeff = 0.05;
+	elseif material == 'add'
+		coeff = 0.05;
+	elseif material == 'ade'
+		coeff = 0.0;
+	elseif material == 'adg'
+		coeff = 0.05;
+	elseif material == 'adh'
+		coeff = 0.03;
+	end
+end
+
+function coeff = alpha_coefficient(material)
+	% define a lookup table for the specular reflection coefficient for the 20 materials
+	coeff = 0.1;
 	if material == 'aaa'
 		coeff = 0.1;
 	elseif material == 'aab'
 		coeff = 0.1;
+	elseif material == 'aaj'
+		coeff = 0.07;
+	elseif material == 'aam'
+		coeff = 0.10;
+	elseif material == 'aan'
+		coeff = 0.10;
+	elseif material == 'aao'
+		coeff = 0.10;
+	elseif material == 'aar'
+		coeff = 0.10;
+	elseif material == 'aas'
+		coeff = 0.10;
+	elseif material == 'aba'
+		coeff = 0.05;
+	elseif material == 'abj'
+		coeff = 0.05;
+	elseif material == 'abk'
+		coeff = 0.05;
+	elseif material == 'acc'
+		coeff = 0.05;
+	elseif material == 'acd'
+		coeff = 0.05;
+	elseif material == 'ace'
+		coeff = 0.05;
+	elseif material == 'adb'
+		coeff = 0.05;
+	elseif material == 'adc'
+		coeff = 0.05;
+	elseif material == 'add'
+		coeff = 0.05;
+	elseif material == 'ade'
+		coeff = 2.5;
 	elseif material == 'adg'
 		coeff = 0.05;
+	elseif material == 'adh'
+		coeff = 0.03;
 	end
 end

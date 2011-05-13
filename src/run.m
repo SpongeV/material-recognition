@@ -1,4 +1,4 @@
-function main(args)
+function run(args)
 % MAIN Main file of the Texture Classification Project
 %		
 %	main(args)
@@ -20,20 +20,29 @@ function main(args)
 	image_Lambertian10_1		= '../DB_LAMBERTIAN10_1/';
 	image_Lambertian20_1		= '../DB_LAMBERTIAN20_1/';
 
-	lambertian20_2_dir			= '../DB_LAMBERTIAN20_2/';
-	lambertian20_3_dir			= '../DB_LAMBERTIAN20_3/';
-	lambertian20_4_dir			= '../DB_LAMBERTIAN20_4/';
-	lambertian20_5_dir			= '../DB_LAMBERTIAN20_5/';
 
 	image_OrenNayar4_1			= '../DB_ORENNAYAR4_1/';
 	image_OrenNayar20_1			= '../DB_ORENNAYAR20_1/';
 
+	image_Phong20_1				= '../DB_PHONG20_1/';
+	image_Phong4_1				= '../DB_PHONG4_1/';
+
+	
+	lambertian20_2_dir			= '../DB_LAMBERTIAN20_2/';
+	lambertian20_3_dir			= '../DB_LAMBERTIAN20_3/';
+	lambertian20_4_dir			= '../DB_LAMBERTIAN20_4/';
+	lambertian20_5_dir			= '../DB_LAMBERTIAN20_5/';
+	
 	image_OrenNayar20_2			= '../DB_ORENNAYAR20_2/';
 	image_OrenNayar20_3			= '../DB_ORENNAYAR20_3/';
 	image_OrenNayar20_4			= '../DB_ORENNAYAR20_4/';
 	image_OrenNayar20_5			= '../DB_ORENNAYAR20_5/';
 	
-	image_dir = image_Lambertian4_1;
+	image_Phong_TT				= '../DB_PHONG_TT/';
+	image_Lambertian_TT			= '../DB_LAMBERTIAN_TT/';
+	
+	
+	image_dir = image_Phong4_1;
 
 %% response directories	
 	responses_original			= '../responses_original/';
@@ -41,20 +50,26 @@ function main(args)
 	responses_Lambertian4_1		= '../responses_Lambertian4_1/';
 	responses_Lambertian20_1	= '../responses_Lambertian20_1/';
 
-	responses_Lambertian20_2	= '../responses_Lambertian20_2/';
-	responses_Lambertian20_3	= '../responses_Lambertian20_3/';
-	responses_Lambertian20_4	= '../responses_Lambertian20_4/';
-	responses_Lambertian20_5	= '../responses_Lambertian20_5/';
+	responses_Phong4_1			= '../responses_Phong4_1/';
+	responses_Phong20_1			= '../responses_Phong20_1/';
 
 	responses_OrenNayar4_1		= '../responses_OrenNayar4_1/';
 	responses_OrenNayar20_1		= '../responses_OrenNayar20_1/';
 
+	responses_Phong_TT			= '../responses_Phong_TT/';
+
+	
+	responses_Lambertian20_2	= '../responses_Lambertian20_2/';
+	responses_Lambertian20_3	= '../responses_Lambertian20_3/';
+	responses_Lambertian20_4	= '../responses_Lambertian20_4/';
+	responses_Lambertian20_5	= '../responses_Lambertian20_5/';
+	
 	responses_OrenNayar20_2		= '../responses_OrenNayar20_2/';
 	responses_OrenNayar20_3		= '../responses_OrenNayar20_3/';
 	responses_OrenNayar20_4		= '../responses_OrenNayar20_4/';
 	responses_OrenNayar20_5		= '../responses_OrenNayar20_5/';
 
-	responses_dir				= responses_Lambertian4_1;
+	responses_dir				= responses_Phong_TT;
 
 %% marginal directories
 	marginal_original		= '../marginals_original/';
@@ -62,20 +77,26 @@ function main(args)
 	marginal_Lambertian4_1	= '../marginals_Lambertian4_1/';
 	marginal_Lambertian20_1	= '../marginals_Lambertian20_1/';
 
+	marginal_Phong4_1		= '../marginals_Phong4_1/';
+	marginal_Phong20_1		= '../marginals_Phong20_1/';
+
+	marginal_OrenNayar4_1	= '../marginals_OrenNayar4_1/';
+	marginal_OrenNayar20_1	= '../marginals_OrenNayar20_1/';
+
+	marginal_Phong_TT		= '../marginals_Phong_TT/';
+
+	
 	marginal_Lambertian20_2	= '../marginals_Lambertian20_2/';
 	marginal_Lambertian20_3	= '../marginals_Lambertian20_3/';
 	marginal_Lambertian20_4	= '../marginals_Lambertian20_4/';
 	marginal_Lambertian20_5	= '../marginals_Lambertian20_5/';
-	
-	marginal_OrenNayar4_1	= '../marginals_OrenNayar4_1/';
-	marginal_OrenNayar20_1	= '../marginals_OrenNayar20_1/';
 
 	marginal_OrenNayar20_2	= '../marginals_OrenNayar20_2/';
 	marginal_OrenNayar20_3	= '../marginals_OrenNayar20_3/';
 	marginal_OrenNayar20_4	= '../marginals_OrenNayar20_4/';
 	marginal_OrenNayar20_5	= '../marginals_OrenNayar20_5/';
 
-	marginal_dir			= marginal_Lambertian4_1;
+	marginal_dir			= marginal_Phong_TT;
 
 	% clusterNr defined for texton dictionary
 	clusterNr		= 100;
@@ -168,8 +189,15 @@ function main(args)
 	elseif args(1) == 5
 		% experiment 1
 		set_original	= load('experiment1/marginals_Original.mat');
+% 		set_synthesized = load('experiment1/marginals_Lambertian4_1.mat');
 % 		set_synthesized = load('experiment1/marginals_Lambertian20_1.mat');
-		set_synthesized = load('experiment1/marginals_Lambertian4_1.mat');
+		set_synthesized = load('experiment1/marginals_Phong20_1.mat');
+
+		% experiment TT
+% 		set_original	= load('experimentTT/marginals_Original.mat');
+% 		set_synthesized = load('experimentTT/marginals_Phong_TT.mat');
+
+		
 		
 		startSet = 1;
 		numSets = 50;
