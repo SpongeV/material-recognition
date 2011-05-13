@@ -33,7 +33,7 @@ function irr = reflectance_OrenNayar(normal, albedo, light_dir, view_dir)
 	beta  = min(view_dir(1), light_dir(1));
 
 	L_i		= 0.5;
-	sigma	= 0.2;
+	sigma	= 0.5;
 	sigma_sqr = sigma^2;
 	albedo = albedo;
 	
@@ -85,7 +85,9 @@ end
 function sigma = material_sigma(material)
 	% define a lookup table for sigma for the 20 materials
 	sigma = 0.0;
-	if material == 'adg'
+	if material == 'aam'
+		sigma = 0.4;
+	elseif material == 'adg'
 		sigma = 0.0;
 	end
 end

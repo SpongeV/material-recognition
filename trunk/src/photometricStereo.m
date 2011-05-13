@@ -1,10 +1,12 @@
-function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
+function [albedo, normals] = photometricStereo(im, dir, s, verbose)
 	%PrintStrings(images)
 
 	% allocate matrix for images
 	parts = strsplit('.',im{1});
-	img = imcrop(imread(strcat(dir,parts{2},'/',im{1})), [156 156 200 200]);
-% 	img = imread(strcat(dir,parts{2},'/',im{1}));
+	img = imread(strcat(dir,parts{2},'/',im{1}));
+	if size(img,1) > 500
+		img = imcrop(img, [156 156 200 200]);
+	end
 	imsize = size(img);
 	
 	images = zeros(imsize(1), imsize(2), length(im));
@@ -44,12 +46,12 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
 	end
 
 %	imshow(images(:,:,1))
-    p=double(zeros(imsize,imsize));
-    q=double(zeros(imsize,imsize));
+    p=double(zeros(imsize));
+    q=double(zeros(imsize));
 
 
 	for n=1:imsize
-        for m=1:imsize
+		for m=1:imsize
 			% stack pixel values of all images at (i,j)
 			i = images(n,m,:);
 			i = i(:);
@@ -63,7 +65,8 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
             else
                 % solve the linear system of I*i=I*V*g with g unknown
                 % using a numerical approach
-                g=linsolve(I*V,I*i);
+				opts.RECT = true;
+                g=linsolve(I*V,I*i, opts);
 			end
 
 			% reconstruct surface albedo
@@ -71,8 +74,9 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
             % calculate normal
             N=g/albedo(n,m);
             % store normal
+% 			N = replaceInf(N);
 			normals(n,m,:) = N;
-
+			
 			% calculate the derivatives in both x and y direction
             p(n,m)=N(1)/N(3);
             q(n,m)=N(2)/N(3);
@@ -83,11 +87,13 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
             if p(n,m) == -inf || p(n,m) == inf || isnan(p(n,m))
                 p(n,m)=0;
             end
-			
 		end
 	end
 
-    zQ=double(zeros(imsize,imsize));
+	
+% 	normals = smoothNormals(normals);
+	
+    zQ=double(zeros(imsize));
     prevQ=0;
     firstVal=0;
     for m=1:imsize
@@ -121,5 +127,34 @@ function [albedo, normals] = PhotometricStereo(im, dir, s, verbose)
 % 	    z = -1*zQ;
 % 		figure;
 % 		quiver3(x,y,z,normals(:,1),normals(:,2),normals(:,3));
+	end
+end
+
+function normals = smoothNormals(normals)
+	nsize = size(normals);
+	for i=2:nsize(1)-1
+		for j=2:nsize(2)-1
+% 			normals(i,j,:) = 0.5 .* ((normals(i+1,j,:) - normals(i,j,:)).^2 + ...
+% 							  (normals(i,j+1,:) - normals(i,j,:)).^2 + ...
+% 							  (normals(i,j,:)   - normals(i-1,j,:)).^2 + ...
+% 							  (normals(i,j,:)   - normals(i,j-1,:)).^2 ...
+% 						  );
+			normals(i,j,:) = (normals(i+1,j,:) + normals(i,j+1,:) + ...
+							  normals(i-1,j,:).^2 + normals(i,j-1,:) + ...
+							  normals(i+1,j+1,:) + normals(i-1,j+1,:) + ...
+							  normals(i-1,j+1,:).^2 + normals(i-1,j-1,:))./ 8;
+% 			fprintf('INDEX %d %d\n', i, j);
+% 			fprintf('%d %d %d %d\n', normals(i+1,j,:), normals(i,j+1,:), normals(i-1,j,:), normals(i,j-1,:));
+		end
+	end
+end
+
+function v = replaceInf(v)
+	if (v(1) == Inf || v(1) == -Inf) 
+		v(1) = 0;
+	elseif (v(2) == Inf || v(2) == -Inf) 
+		v(2) = 0;
+	elseif (v(3) == Inf || v(3) == -Inf) 
+		v(3) = 0;
 	end
 end

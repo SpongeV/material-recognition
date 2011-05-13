@@ -21,7 +21,7 @@ function [max_responses, dim1, dim2] = getMaxResponses(image, directory, target_
 	% allocate memory
 	parts = strsplit('.', image);
 	image_dir = strcat(directory, parts{2}, '/' ,image);
-	
+
 	% crop image to a region of 200x200 in the center of the image if
 	% necessary
 	img = imread(image_dir);
@@ -31,8 +31,8 @@ function [max_responses, dim1, dim2] = getMaxResponses(image, directory, target_
 	end
 	img = im2double(img);
 	% normalize image intensity to zero-mean and unit standard deviation
- 	img = (img-mean(img(:)))/var(img(:));
-	
+	img = (img-mean(img(:)))/std(img(:));
+
 	% construct the MR sets
 	F = makeRFSfilters;
 
