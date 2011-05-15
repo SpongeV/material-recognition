@@ -1,4 +1,4 @@
-function run(args, photex_dir, image_dir, responses_dir, marginal_dir)
+function run(args, photex_dir, image_dir, responses_dir, marginal_dir, test_set, train_set)
 	photex_db = dir(image_dir);
 	% omit directories '.' and '..'
 	photex_db = photex_db(3:end);
@@ -87,26 +87,15 @@ function run(args, photex_dir, image_dir, responses_dir, marginal_dir)
 		generateFigures(marginalsSet, graphMaterial);
 
 	elseif args(1) == 5
-		% experiment 1
-		set_original	= load('experiment1/marginals_Original.mat');
-% 		set_synthesized = load('experiment1/marginals_Lambertian4_1.mat');
-% 		set_synthesized = load('experiment1/marginals_Lambertian20_1.mat');
-		set_synthesized = load('experiment1/marginals_Phong20_1.mat');
-
-		% experiment TT
-% 		set_original	= load('experimentTT/marginals_Original.mat');
-% 		set_synthesized = load('experimentTT/marginals_Phong_TT.mat');
-
-		
+		set_original	= load(test_set);
+		set_synthesized = load(train_set);
 		
 		startSet = 1;
-		numSets = 50;
+		numSets = 100;
 		numSamples = 20;
 		numConditions = 40;
 		
 		%Here is one of the arbitrary parameters of the setup.
-		
-		
 		% numSets		: 100 
 		% eigenValues 10: 90.2585% acc
 		% eigenValues 11: 90.2585% acc
@@ -136,15 +125,15 @@ function run(args, photex_dir, image_dir, responses_dir, marginal_dir)
 
 %%			% Targhi Experiment
 			% get the samples random
-% 			randomSet   = randperm(numConditions);
-% 			T1Set		= randomSet(1:2:length(randomSet));
-% 			trainingSet = T1Set(1:end);
-% 			testSet		= randomSet(2:2:length(randomSet));
+			randomSet   = randperm(numConditions);
+			T1Set		= randomSet(1:2:length(randomSet));
+			trainingSet = T1Set(1:end);
+			testSet		= randomSet(2:2:length(randomSet));
 
 			% get the samples uniformly distributed over hemisphere
-			[pseudoRandomTrain pseudoRandomTest] = pseudoRandomSubSamplingBroadhurst(photex_dir); 
-			trainingSet = pseudoRandomTrain(1:20);
-			testSet		= pseudoRandomTest;
+% 			[pseudoRandomTrain pseudoRandomTest] = pseudoRandomSubSamplingBroadhurst(photex_dir); 
+% 			trainingSet = pseudoRandomTrain(1:20);
+% 			testSet		= pseudoRandomTest;
 
 % 			trainingSet = 2:2:numConditions;
 % 			testSet = 1:2:numConditions;

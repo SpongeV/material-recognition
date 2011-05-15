@@ -101,5 +101,17 @@ function [ output_args ] = main( args )
 
 
 	
-	run(args, photex_dir, image_dir, responses_dir, marginal_dir);
+% 	run(5, photex_dir, photex_dir, '../responses_original/', '../marginals_original/', ...
+% 		'experiment1/marginals_original.mat', 'experiment1/marginals_original.mat');
+
+% 	run(5, photex_dir, '../DB_LAMBERTIAN20_1/', '../responses_Lambertian20_1/', '../marginals_Lambertian20_1/', ...
+% 			'experiment1/marginals_original.mat', 'experiment1/marginals_Lambertian20_1.mat');
+
+	run(5, photex_dir, '../DB_PHONG20_1/', '../responses_Phong20_1/', '../marginals_Phong20_1/', ...
+		'experiment1/marginals_Original.mat', 'experiment1/marginals_Phong20_1.mat');
+
+% 	createSynthesizedDatabase();
+% 
+% 	run(1, photex_dir, '../DB_PHONG4_1/', '../responses_Phong4_1/', '../marginals_Phong4_1/', ...
+% 		'experiment1/marginals_Original.mat', 'experiment1/marginals_Phong4_1.mat');
 end
