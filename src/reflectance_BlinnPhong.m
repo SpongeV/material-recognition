@@ -66,40 +66,55 @@ function coeff = material_coefficients(material)
 		coeff(1) = 0.010;
 		coeff(2) = 0.001;
 	elseif material == 'aam'
-		coeff = 0.10;
+		coeff(1) = 0.020;
+		coeff(2) = 0.001;
 	elseif material == 'aan'
-		coeff = 0.10;
+		coeff(1) = 10.0;
+		coeff(2) = 0.001;
 	elseif material == 'aao'
-		coeff = 0.10;
+		coeff(1) = 0.01;
+		coeff(2) = 0.001;
 	elseif material == 'aar'
-		coeff = 0.10;
+		coeff(1) = 10.0;
+		coeff(2) = 0.001;
 	elseif material == 'aas'
-		coeff = 0.10;
+		coeff(1) = 0.010;
+		coeff(2) = 0.001;
 	elseif material == 'aba'
-		coeff = 0.05;
+		coeff(1) = 10.010;
+		coeff(2) = 0.001;
 	elseif material == 'abj'
-		coeff = 0.05;
+		coeff(1) = 10.0;
+		coeff(2) = 0.001;
 	elseif material == 'abk'
-		coeff = 0.05;
+		coeff(1) = 0.010;
+		coeff(2) = 0.001;
 	elseif material == 'acc'
-		coeff = 0.05;
+		coeff(1) = 10.0;
+		coeff(2) = 0.001;
 	elseif material == 'acd'
-		coeff = 0.05;
+		coeff(1) = 10.0;
+		coeff(2) = 0.001;
 	elseif material == 'ace'
-		coeff = 0.05;
+		coeff(1) = 0.010;
+		coeff(2) = 0.001;
 	elseif material == 'adb'
-		coeff = 0.05;
+		coeff(1) = 40.0;
+		coeff(2) = 0.001;
 	elseif material == 'adc'
-		coeff = 0.05;
+		coeff(1) = 40.0;
+		coeff(2) = 0.001;
 	elseif material == 'add'
-		coeff = 0.05;
+		coeff(1) = 50.0;
+		coeff(2) = 0.001;
 	elseif material == 'ade'
-		coeff = 0.0;
+		coeff(1) = 40.0;
+		coeff(2) = 0.001;
 	elseif material == 'adg'
-		coeff = 0.05;
+		coeff(1) = 40.0;
+		coeff(2) = 0.001;
 	elseif material == 'adh'
-		coeff = 0.03;
+		coeff(1) = 40.0;
+		coeff(2) = 0.001;
 	end
 end
-
-

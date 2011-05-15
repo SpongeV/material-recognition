@@ -15,119 +15,125 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 	% unitTestTextureSynthesis([30 45 60 75], [0 90 180 270],0);
 	
 	% PHONG: 8 / 16
-% 	im{1} = '0.aaa.0.30.0.bmp';
-% 	im{2} = '0.aaa.0.30.90.bmp';
-% 	im{3} = '0.aaa.0.30.180.bmp';
-% 	im{4} = '0.aaa.0.30.270.bmp';
+% 	im{1} = '0.aaa.0.30.0.bmp'
+% 	im{2} = '0.aaa.0.30.90.bmp'
+% 	im{3} = '0.aaa.0.30.180.bmp'
+% 	im{4} = '0.aaa.0.30.270.bmp'
 
 	% PHONG: 10 / 16
-% 	im{1} = '0.aab.0.30.0.bmp';
-% 	im{2} = '0.aab.0.30.90.bmp';
-% 	im{3} = '0.aab.0.30.180.bmp';
-% 	im{4} = '0.aab.0.30.270.bmp';
+% 	im{1} = '0.aab.0.30.0.bmp'
+% 	im{2} = '0.aab.0.30.90.bmp'
+% 	im{3} = '0.aab.0.30.180.bmp'
+% 	im{4} = '0.aab.0.30.270.bmp'
 
-	im{1} = '0.aaj.0.30.0.bmp';
-	im{2} = '0.aaj.0.30.90.bmp';
-	im{3} = '0.aaj.0.30.180.bmp';
-	im{4} = '0.aaj.0.30.270.bmp';
-
-	%% IMPROVED WITH PHONG
+	% PHONG: 4 / 16
+% 	im{1} = '0.aaj.0.30.0.bmp'
+% 	im{2} = '0.aaj.0.30.90.bmp'
+% 	im{3} = '0.aaj.0.30.180.bmp'
+% 	im{4} = '0.aaj.0.30.270.bmp'
+	
+	% PHONG: 8 / 16
 % 	im{1} = '0.aam.0.30.0.bmp'
 % 	im{2} = '0.aam.0.30.90.bmp'
 % 	im{3} = '0.aam.0.30.180.bmp'
 % 	im{4} = '0.aam.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 11 / 16
 % 	im{1} = '0.aan.0.30.0.bmp'
 % 	im{2} = '0.aan.0.30.90.bmp'
 % 	im{3} = '0.aan.0.30.180.bmp'
 % 	im{4} = '0.aan.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 8 / 16
 % 	im{1} = '0.aao.0.30.0.bmp'
 % 	im{2} = '0.aao.0.30.90.bmp'
 % 	im{3} = '0.aao.0.30.180.bmp'
 % 	im{4} = '0.aao.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 8 / 16
 % 	im{1} = '0.aar.0.30.0.bmp'
 % 	im{2} = '0.aar.0.30.90.bmp'
 % 	im{3} = '0.aar.0.30.180.bmp'
 % 	im{4} = '0.aar.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 10 / 16
 % 	im{1} = '0.aas.0.30.0.bmp'
 % 	im{2} = '0.aas.0.30.90.bmp'
 % 	im{3} = '0.aas.0.30.180.bmp'
 % 	im{4} = '0.aas.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 9 / 16
 % 	im{1} = '0.aba.0.30.0.bmp'
 % 	im{2} = '0.aba.0.30.90.bmp'
 % 	im{3} = '0.aba.0.30.180.bmp'
 % 	im{4} = '0.aba.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 10 / 16
 % 	im{1} = '0.abj.0.30.0.bmp'
 % 	im{2} = '0.abj.0.30.90.bmp'
 % 	im{3} = '0.abj.0.30.180.bmp'
 % 	im{4} = '0.abj.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 12 / 16
 % 	im{1} = '0.abk.0.30.0.bmp'
 % 	im{2} = '0.abk.0.30.90.bmp'
 % 	im{3} = '0.abk.0.30.180.bmp'
 % 	im{4} = '0.abk.0.30.270.bmp'
 	
-	%% IMPROVED WITH PHONG
+	% PHONG: 13 / 16
 % 	im{1} = '1.acc.0.30.0.bmp'
 % 	im{2} = '1.acc.0.30.90.bmp'
 % 	im{3} = '1.acc.0.30.180.bmp'
 % 	im{4} = '1.acc.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 8 / 16
 % 	im{1} = '1.acd.0.30.0.bmp'
 % 	im{2} = '1.acd.0.30.90.bmp'
 % 	im{3} = '1.acd.0.30.180.bmp'
 % 	im{4} = '1.acd.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 8 / 16
 % 	im{1} = '1.ace.0.30.0.bmp'
 % 	im{2} = '1.ace.0.30.90.bmp'
 % 	im{3} = '1.ace.0.30.180.bmp'
 % 	im{4} = '1.ace.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+	% PHONG: 8 / 16
 % 	im{1} = '1.adb.0.30.0.bmp'
 % 	im{2} = '1.adb.0.30.90.bmp'
 % 	im{3} = '1.adb.0.30.180.bmp'
 % 	im{4} = '1.adb.0.30.270.bmp'
 
-	%% IMPROVED WITH PHONG
+
+	% PHONG: 12 / 16
 % 	im{1} = '1.adc.0.30.0.bmp'
 % 	im{2} = '1.adc.0.30.90.bmp'
 % 	im{3} = '1.adc.0.30.180.bmp'
 % 	im{4} = '1.adc.0.30.270.bmp'
 
+	% PHONG: 10 / 16
 % 	im{1} = '1.add.0.30.0.bmp'
 % 	im{2} = '1.add.0.30.90.bmp'
 % 	im{3} = '1.add.0.30.180.bmp'
 % 	im{4} = '1.add.0.30.270.bmp'
 
-% 	im{1} = '1.ade.0.30.0.bmp';
-% 	im{2} = '1.ade.0.30.90.bmp';
-% 	im{3} = '1.ade.0.30.180.bmp';
-% 	im{4} = '1.ade.0.30.270.bmp';
+	% PHONG: 10 / 16
+% 	im{1} = '1.ade.0.30.0.bmp'
+% 	im{2} = '1.ade.0.30.90.bmp'
+% 	im{3} = '1.ade.0.30.180.bmp'
+% 	im{4} = '1.ade.0.30.270.bmp'
 	
+	% PHONG: 11 / 16
 % 	im{1} = '2.adg.0.30.0.bmp'
 % 	im{2} = '2.adg.0.30.90.bmp'
 % 	im{3} = '2.adg.0.30.180.bmp'
 % 	im{4} = '2.adg.0.30.270.bmp'
 
-% 	im{1} = '2.adh.0.30.0.bmp'
-% 	im{2} = '2.adh.0.30.90.bmp'
-% 	im{3} = '2.adh.0.30.180.bmp'
-% 	im{4} = '2.adh.0.30.270.bmp'
+	% PHONG: 7 / 16
+	im{1} = '2.adh.0.30.0.bmp'
+	im{2} = '2.adh.0.30.90.bmp'
+	im{3} = '2.adh.0.30.180.bmp'
+	im{4} = '2.adh.0.30.270.bmp'
 
 
 %% FULL PHOTEX DATABASE EXAMPLES
@@ -165,7 +171,8 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 			for i=1:size(albedo,1)
 				for j=1:size(albedo,2)
 					irr1 = reflectance_Lambertian(	normals(i,j,:), albedo(i,j), [n m]);
-					irr2 = reflectance_BlinnPhong(		normals(i,j,:), albedo(i,j), [n m], [0 0], parts{2});
+					irr2 = reflectance_Phong(		normals(i,j,:), albedo(i,j), [n m], [0 0], parts{2});
+% 					irr2 = reflectance_BlinnPhong(	normals(i,j,:), albedo(i,j), [n m], [0 0], parts{2});
 % 					irr3 = reflectance_OrenNayar(	normals(i,j,:), albedo(i,j), [n m], [0 0]);
 					synthesized_img1(i,j) = irr1;
 					synthesized_img2(i,j) = irr2;
