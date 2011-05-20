@@ -1,4 +1,4 @@
-function [T1_idx Test_idx] = pseudoRandomSubSamplingBroadhurst(directory)
+function [T1_idx Test_idx] = pseudoRandomSubSamplingTarghi(directory)
 	photex_db = dir(directory);
 	photex_db = photex_db(3:end);
 	dbSize = length(photex_db);
