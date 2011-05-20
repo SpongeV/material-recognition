@@ -87,11 +87,15 @@ function run(args, photex_dir, image_dir, responses_dir, marginal_dir, test_set,
 		generateFigures(marginalsSet, graphMaterial);
 
 	elseif args(1) == 5
+		load T0
+		load T1_idx
+		load TD_idx
+		
 		set_original	= load(test_set);
 		set_synthesized = load(train_set);
 		
 		startSet = 1;
-		numSets = 100;
+		numSets = 1;
 		numSamples = 20;
 		numConditions = 40;
 		
@@ -125,18 +129,22 @@ function run(args, photex_dir, image_dir, responses_dir, marginal_dir, test_set,
 
 %%			% Targhi Experiment
 			% get the samples random
-			randomSet   = randperm(numConditions);
-			T1Set		= randomSet(1:2:length(randomSet));
-			trainingSet = T1Set(1:end);
-			testSet		= randomSet(2:2:length(randomSet));
+% 			randomSet   = randperm(numConditions);
+% 			T1Set		= randomSet(1:2:length(randomSet));
+% 			trainingSet = T1Set(1:end);
+% 			testSet		= randomSet(2:2:length(randomSet));
 
 			% get the samples uniformly distributed over hemisphere
-% 			[pseudoRandomTrain pseudoRandomTest] = pseudoRandomSubSamplingBroadhurst(photex_dir); 
+% 			[pseudoRandomTrain pseudoRandomTest] = pseudoRandomSubSamplingTarghi(photex_dir); 
 % 			trainingSet = pseudoRandomTrain(1:20);
 % 			testSet		= pseudoRandomTest;
 
 % 			trainingSet = 2:2:numConditions;
 % 			testSet = 1:2:numConditions;
+
+			trainingSet = T1_idx;
+			testSet = TD_idx;
+
 %%
 			fprintf('DEB: trainingSet size: %d testSet size: %d\n', length(trainingSet), length(testSet));
 

@@ -9,7 +9,13 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 
 %% TARGHI PHOTEX DATABASE EXAMPLES	
 	directory = '../photex/';
-
+% 	directory = '../src/';
+% 
+% 	im{1} = '0.sph.0.45.45.bmp'
+% 	im{2} = '0.sph.0.45.135.bmp'
+% 	im{3} = '0.sph.0.45.225.bmp'
+% 	im{4} = '0.sph.0.45.315.bmp'
+	
 	% due to the enormous variation in how to test the data, I consider
 	% only a part of the data, and perform PS on the most desirable angles
 	% unitTestTextureSynthesis([30 45 60 75], [0 90 180 270],0);
@@ -87,10 +93,10 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 % 	im{4} = '1.acc.0.30.270.bmp'
 
 	% PHONG: 8 / 16
-% 	im{1} = '1.acd.0.30.0.bmp'
-% 	im{2} = '1.acd.0.30.90.bmp'
-% 	im{3} = '1.acd.0.30.180.bmp'
-% 	im{4} = '1.acd.0.30.270.bmp'
+	im{1} = '1.acd.0.30.0.bmp'
+	im{2} = '1.acd.0.30.90.bmp'
+	im{3} = '1.acd.0.30.180.bmp'
+	im{4} = '1.acd.0.30.270.bmp'
 
 	% PHONG: 8 / 16
 % 	im{1} = '1.ace.0.30.0.bmp'
@@ -130,10 +136,10 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 % 	im{4} = '2.adg.0.30.270.bmp'
 
 	% PHONG: 7 / 16
-	im{1} = '2.adh.0.30.0.bmp'
-	im{2} = '2.adh.0.30.90.bmp'
-	im{3} = '2.adh.0.30.180.bmp'
-	im{4} = '2.adh.0.30.270.bmp'
+% 	im{1} = '2.adh.0.30.0.bmp'
+% 	im{2} = '2.adh.0.30.90.bmp'
+% 	im{3} = '2.adh.0.30.180.bmp'
+% 	im{4} = '2.adh.0.30.270.bmp'
 
 
 %% FULL PHOTEX DATABASE EXAMPLES
@@ -157,9 +163,8 @@ function unitTestTextureSynthesis(angle, azimuth, verbose)
 		for m=azimuth
 
 			parts = strsplit('.',im{3});
-			original_image = imcrop(imread(strcat(directory,parts{2},'/', ... 
-									parts{1},'.',parts{2},'.',parts{3},'.',int2str(n),'.',int2str(m),'.',parts{6})), ... 
-									[156 156 200 200]);
+			original_image = imread(strcat(directory,parts{2},'/', parts{1},'.',parts{2},'.',parts{3},'.',int2str(n),'.',int2str(m),'.',parts{6}));
+			original_image = imcrop(original_image, [156 156 200 200]);
 			original_image = im2double(original_image(:,:,1));
 			original_image = (original_image-mean(original_image(:)))/var(original_image(:));
 

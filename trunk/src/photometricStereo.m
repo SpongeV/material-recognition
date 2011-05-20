@@ -65,8 +65,7 @@ function [albedo, normals] = photometricStereo(im, dir, s, verbose)
             else
                 % solve the linear system of I*i=I*V*g with g unknown
                 % using a numerical approach
-				opts.RECT = true;
-                g=linsolve(I*V,I*i, opts);
+                g=linsolve(I*V,I*i);
 			end
 
 			% reconstruct surface albedo
