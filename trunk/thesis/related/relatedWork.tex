@@ -7,7 +7,16 @@ In earlier research on the topic of material recognition, a lot of focus was on 
 
 The need for larger texture databases that captures the variety in viewpoint and illumination resulted in the creation of the CUReT database \cite{DanaNayar}. Dana and Nayar developed parametric models based on surface roughness and correlation lenghts which were tested against the CUReT database. However, in their research, no significant results were reported \cite{VarmaZisserman}.
 
-Leung and Malik were the first to introduce the texton modeling method to the problem of illumination variation \cite{LeungMalik}. In their research, they introduce the concept of a 2 and 3-dimensional textons based on Gaussian derivative filters. The idea is that these Gaussian filters capture certain properties of a texture on microscale; for example, a point $n(x,y)$ in an image of a texture can correspond to a ridge, bump, groove, spot, etc. A filter-bank of different Gaussian filters can capture these properties in the response of the image applied to such filter. \todo{image} This makes it able to capture the variance of textures under different illuminations using a representable set of filteres.
+Leung and Malik were the first to introduce the texton modeling method to the problem of illumination variation \cite{LeungMalik}. In their research, they introduce the concept of a 2 and 3-dimensional textons based on Gaussian derivative filters. The idea is that these Gaussian filters capture certain properties of a texture on microscale; for example, a point $n(x,y)$ in an image of a texture can correspond to a ridge, bump, groove, spot, etc. A filter-bank of different Gaussian filters can capture these properties in the response of the image applied to such filter. This makes it able to capture the variance of textures under different illuminations using a representable set of filteres.
+
+\begin{figure}[b]
+	\begin{center}
+		\epsfig{file=images/LM.eps, width=0.5\linewidth}
+	\end{center}
+	\caption{\textit{LM filter bank, consisting of an edge, bar and spot filter at multiple orientations and scales. 2 Gaussian derivatives at 6 orientations and 3 scales, 8 Laplacian of Gaussian filters and 4 Gaussian filters give a total of 48 filters in the filter bank.}}
+	\label{fig:LM}
+\end{figure}
+
 
 In the case of a 2D texton, a texture is being characterized by responses obtained by convolving images from this texture with a set of orientation- and spatial-frequency linear filters. As a result, every pixel in an image is now represented as a vector of $N_{fil}$ corresponding response values, where $N_{fil}$ is the number of filters in the filter bank. With the obtained set of vectors size $N_{fil}$, they use a K-means algorithm to find a number of vectors as representable clusters in this vector space. The clusters found by K-means this way are the 2D textons descriptors. These textons represent characteristics such as ridges, bumps, etc. of the texture under a given illumination.
 
@@ -17,13 +26,29 @@ To capture such effects, many images with different illumination variation and v
 
 The set of 3D textons (K-means cluster centers) over all classes will serve as a Texton Dictionary for the construction of histograms. Using the same responses as before, for a training image, a histogram is constructed by assigning every vector corresponding to a pixel in the image to a texton in the dictionary using the $\chi^2$ statistic to measure distance between vector and textons. The histogram is a representation of the image in terms of features, as encoded in the texton dictionary. With this quantization procedure, each texture-class can be represented by a set of histograms. To classify a novel image, responses are computed, a histogram is constructed from the texton dictionary, and a Nearest Neighbor algorithm is applied to find a histogram in the training set closest to it. The function to measure distances between histograms is again $\chi^2$.
 
-Originally, Leung and Malik used a set of 48 Gaussian derivative filters to compute the responses on an image. Varma and Zisserman researched the effect of various filter banks applied \cite{VarmaZisserman}. In their experiments, with a similar setup, they constructed texton dictionaries based on different filter banks and compared them to the filter bank proposed by Leung and Malik. The filter banks used in these experiments were the Schmid (S) set and the Maximum Response (MR) sets. 
+Originally, Leung and Malik used a set of 48 Gaussian derivative filters to compute the responses on an image. Varma and Zisserman researched the effect of various filter banks for the computation of the responses \cite{VarmaZisserman}. In their experiments, with a similar setup, they constructed texton dictionaries based on different filter banks and compared them to the filter bank proposed by Leung and Malik. The filter banks used in these experiments were the Schmid (S) set and the Maximum Response (MR) sets. 
 
-The S set consists of 13 isotropic Gabor-like filters rotationally invariant filters. \todo{image}
+The S set consists of 13 isotropic Gabor-like filters rotationally invariant filters.
 
-The MR sets consist of 38 Gaussian derivative filters: 2 anisotropic filters for edges and bars, on 6 orientations and 3 scales, and 2 isotropic filters, a Gaussian and a Laplacian of a Gaussian filter. They used two version of this set in their experiments. The MR8 set, only the top 8 responses are recorded by taking the maximum response of the anisotropic at each scale over all orientations and taking the responses of both isotropic filters. The MR4 set is a subset of the MR8 set, where the anisotropic filters only occur on a single fixed orientation. \todo{image}
+The MR sets consist of 38 Gaussian derivative filters: 2 anisotropic filters for edges and bars, on 6 orientations and 3 scales, and 2 isotropic filters, a Gaussian and a Laplacian of a Gaussian filter. They used two version of this set in their experiments. The MR8 set, only the top 8 responses are recorded by taking the maximum response of the anisotropic at each scale over all orientations and taking the responses of both isotropic filters. The MR4 set is a subset of the MR8 set, where the anisotropic filters only occur on a single fixed orientation.
 
 The experiments showed a difference in performance for the different filter banks, with the MR8 filter bank giving the best classification rate with respect to the LM set. 
+
+\begin{figure}[t]
+	\begin{center}
+		\epsfig{file=images/S.eps, width=0.5\linewidth}
+	\end{center}
+	\caption{\textit{The Schmid filter bank consists of 13 isotropic rotationally invariant filters.}}
+	\label{fig:S}
+\end{figure}
+
+\begin{figure}[b]
+	\begin{center}
+		\epsfig{file=images/MR.eps, width=0.5\linewidth}
+	\end{center}
+	\caption{\textit{The Maximum Response filter bank consisting of 2 anisotropic edge and bar filters at 6 orientations and 3 scales and 2 isotropic filters, a Gaussian and Laplacian of Gaussian. A total of 38 filters, but only 6 filter responses of the anisotropic filters across orientations and the 2 responses of the isotropic filters are registered.}}
+	\label{fig:MR}
+\end{figure}
 
 \section{Multivariate Gaussian Distributions}\label{sec:MGD}
 A drawback of the texton approach is the need for a construction of the texton dictionary, because it needs clustering in high-dimensional spaces. This poses problems when the number of classes and image data increase as it becomes intractable to compute the clusters. At the same time, the idea of using textons implicates that more data is needed to capture properties correctly.
@@ -56,13 +81,13 @@ In his experiments, the joint marginal based models performed significantly bett
 
 \section{Minimal Training Images}\label{sec:Minimal}
 
-For the construction of models in both methods described in section \ref{sec:Textons} and \ref{sec:MGD}, a lot of image data is required to capture the properties of the material correctly. As one could imagine, this could become difficult when trying to expand the models to more classes.
+For the construction of models in both methods described in section \ref{sec:Textons} and \ref{sec:MGD}, a lot of image data is required to capture the properties of the material. This seriously limits the computed descriptors to the amount of light and view directions available in the training data, thus incapable of generalizing effectively beyond the presented data.
 
 In his research, Targhi's central goal is to reduce the amount of images needed for training and yet still produce the same (or better) classification results. With proper reconstructions of surface albedo and normals, its possible to generate novel image data with arbitrary illumination directions. Using a simple model of photometric stereo, only a small set of original image data is needed for the synthesis of new image data.
 
-For the synthesis of new image data, the Lambertian reflectance model is used. This method effectively simulates diffuse reflection from material as well as self-shadows, but not more complex light phenonema such as speculars or interreflections. 
+For the synthesis of new image data, the Lambertian reflectance model is used. This method effectively simulates diffuse reflection from materials as well as self-shadows, but not more complex light phenonema such as speculars or interreflections. 
 
-Experiments are run on two texture databases which are designed for the purpose of physical based texture recognition; \textit{ALOT} (\textit{Amsterdam Library of Textures}) and \textit{PhoTex}, a library of photometric image data for texture recognition. The training and testing of the classifier is done by replicating the experiments of Broadhurst. Details on Photex will be outlined in section \ref{sec:}. The experimental setup will be described in more detail in section \ref{sec:Experiments}.
+Experiments are run on two texture databases which are designed for the purpose of physical based texture classification; \textit{ALOT} (\textit{Amsterdam Library of Textures}) and \textit{PhoTex}, a library of photometric image data for texture recognition. The training and testing of the classifier is done by replicating the experiments of Broadhurst. Details on Photex will be outlined in section \ref{sec:PhoTex}. The experimental setup will be described in more detail in section \ref{sec:Experiments}.
 
-Targhi reported improvement over state-of-the-art results of classification on both databases by augmenting the training data with synthesized data using a minimal amount of images needed for photometric stereo. Using only the Lambertian reflectance model for synthesis, expected is that its application is limited to a set of diffuse materials. More sophisticated reflection models will enhance the quality of synthesized image data, as well as making it possible to incorporate certain illumination phenomena such as speculars and interreflections.
+Targhi reported improvement over state-of-the-art results of classification on both databases by augmenting the training data with synthesized data using a minimal amount of images needed for photometric stereo. Using only the Lambertian reflectance model for synthesis, expected is that its application is constrained to a set of diffuse materials. More sophisticated reflection models could enhance the quality of synthesized image data, as well as making it possible to incorporate certain illumination phenomena such as speculars and interreflections and therefore extending the range of materials to be synthesized.
 
