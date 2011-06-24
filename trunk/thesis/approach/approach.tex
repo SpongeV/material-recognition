@@ -85,7 +85,7 @@ Regions that lay completely in shadow could potentially pose problems when solvi
 
 \noindent With the surface albedo and normals recovered, it is possible to synthesize images from the materials using reflection models. An important note on this photometric stereo approach, however, is that the Lambertian assumption made to simplify the problem is also a potential bottleneck. Since there are no such properties as specularity incorporated in the Lambertian model, speculars in the image data are treated as diffuse reflections in the recovered surface albedo. This is clearly an issue when using the surface albedo for synthesis using reflection models other than Lambertian, since adding a specular on top of a retrieved specular will only increase the error in image quality with respect to the original image.
 
-To overcome this problem, one could use a RANSAC approach and sample multiple surface albedos from the image data and compare them to detect outliers. However, this would make the comparison with Targhi's experiments difficult when using a minimal amount of training images for texture synthesis.
+To overcome this problem, one could use a RANSAC approach and sample multiple surface albedos of a point on the surface from the image data and compare them to detect outliers. However, this would make the comparison with Targhi's experiments difficult when using a minimal amount of training images for texture synthesis.
 
 Another way to overcome the problem is to construct the training sets in such way that the tilt angles are choses uniform over the hemisphere. With this approach, the perfect configuration of data is used for photometric stereo, and outliers such as speculars in the surface albedo will have small influence.
 
@@ -96,8 +96,6 @@ In this research, the classification method of Broadhurst is adapted as describe
 %Since in the experiments of Broadhurst, the joint-marginal variation gave the best results, 
 
 \section{Reflection Models}\label{sec:ReflectionModels}
-	In previous work on image synthesis done by Targhi as described in section \ref{sec:Minimal}, the synthetic data is being created using the Lambertian reflection model. This model includes self-shadows and diffuse reflection, but no specularity or interreflections. In this research, the application of more complex reflection models is studied.
-\todo{finish}
-
+With the demand of data for the use of material recognition, it is of interest to look in the direction of image synthesis for the automatic creation of novel data. In previous work on image synthesis, done by Targhi as described in section \ref{sec:Minimal}, the synthetic data is being created using the Lambertian reflection model. This model effectively implements self-shadows and diffuse reflection, but not specularity or interreflections. In this research, the application of more complex reflection models is studied. The reflection models can be put roughly into two categories; models based on empirical observations, which are easy to use and have only few parameters to be set but defy basic laws in physics, and models with more physical backgrounds, which are mathematically more complex and have more parameters to be set, but simulate light behavior more realistic. Some of both type of reflection models will be discussed in detail in the next chapters and are used for the experiments.
 
 
