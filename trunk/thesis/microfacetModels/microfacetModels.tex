@@ -1,0 +1,14 @@
+\hypertarget{Physical Models}{
+}
+
+%\begin{itemize}
+%	\item{Lambertian}
+%	\item{Phong, Blinn-Phong}
+%	\item{Ward}
+%	\item{Lafortune}
+%\end{itemize}
+
+\noindent In the previous section, the reflection models were based on emperical observations, which result in non-perfect synthesis when applied. In this section, more complex reflection models for diffuse (and specular) reflection are outlined. These models are based on a roughness model, micro-facets, and were introduced by Torrance and Sparrow \cite{TorranceSparrow}.
+
+\section{Oren-Nayar Reflectance}\label{OrenNayar}
+A big deficiency in approximating the body reflectance under the Lambertian assumption is that its view independent. This results in inaccurate approximations for several real-world objects, as experiments have demonstrated on several rough diffuse surfaces such as plaster, sand and cloth \cite{OrenNayar}. To overcome this deficiency, M. Oren and S.K. Nayar propose a more general reflection model for diffuse surfaces \cite{OrenNayar}.
