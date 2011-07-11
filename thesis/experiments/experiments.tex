@@ -1,13 +1,27 @@
 \hypertarget{experiments}{
 }
 
-%\begin{itemize}
-%	\item{Lambertian}
-%	\item{Phong, Blinn-Phong}
-%	\item{Ward}
-%	\item{Lafortune}
-%\end{itemize}
+\section{Preprocessing}\label{sec:preprocessing}
+The PhoTex database consists of images recorded under a fixed view of point with varying light-source directions, all registered for each image. Since we are interested in reproducing the experiment of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model, we need to select the images he used in his experiment.
 
-\section{Setup}\label{sec:Experiments}
+For the dataset to train and test on, 20 materials are selected from the PhoTex database, which are shown in figure X. Every material consists of 40 images when selecting images from each material for certian slant and tilt for the light source directions. The slant angles that are selected from are $\{30^o, 45^o,60^o,75^o\}$. The images under a slant of $30^o$ have four different tilts, $\{0^o, 90^o, 180^o, 270^o\}$. The images with slants $\{45^o,60^o,75^o\}$ have tilts of $\{0^o,30^o,60^o,...,300^o,330^o\}$. All images have a fixed size of $512 \times 512$ pixels.
+
+After rendering new images for the materials and before extracting the features from the materials, the rendered images are set to zero-mean and unit-variance in order to make the features intensity-invariant.
+
+\section{Reflection model parameters}\label{sec:ParameterSetting}
+The reflection models applied in the experiments need certain parameters to be set. However, these parameters aren't given for the materials in the database in case of the microfacet models, and in case of the empirical models there are no known 'good' values for the parameters to be set. To set these values the parameters are estimated using a gradient descent with a sum of squares error estimation. 
+
+Because of the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total, a simplified gradient descend is done. Each parameter will be set to one value out of three within the range of possible values. For example, the roughness of a material could be $m \in \{0.1, 0.5, 0.9\}$, and the shininess constant for Phong reflection could be $\alpha \in \{0.01, 10.0, 50.0\}$. 
+
+By calculating the squared error per-pixel from the original image and the synthesized image, and accumulate the error over all pixels, an estimation of the total error serves as an indicator for the gradient descend. Both images are preprocessed to have zero-mean and unit-variance before the error is calculated, since the features will be extracted from preprocessed images.
+
+The albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^o$ and tilts of $\{0^o, 90^o, 180^o, 270^o\}$. The choice for this configuration of angles over the hemisphere is based on the observation that the albedo gives 
+
+
+
+\section{Experimental Setup}\label{sec:Experiments}
+
+
+
 \section{Results}\label{sec:Results}
 
