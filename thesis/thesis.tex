@@ -64,7 +64,7 @@
 \newcommand{\myemph}[1]{{\normalfont\emph{#1}}}
 \newcommand{\tit}{\textit}
 
-\usepackage[left=4cm, right=4cm, top=4cm, bottom=3.9cm]{geometry}
+\usepackage[left=4cm, right=4cm, top=4cm, bottom=4cm]{geometry}
 %____________________________________________________________________________
 \begin{document}
 	%THE TITLE PAGE & STUFF_________________________________________________________________
@@ -118,7 +118,9 @@
 	%ABSTRACT PAGE____________________________________________________________________________
 	\thispagestyle{empty}
 	\section*{Abstract}
-		Research description comes here
+		In this research, the problem of material classification is addressed. Previous research shows how one can derive features based on Gaussian filter responses from material images and obtain high classification accuracies using simple classifiers such as Nearest Neighbor or Bayes. To model the appearance of material under different illumination conditions a lot of data is needed to obtain satisfactory models. This rises the need for novel data recorded under controlled conditions, which is an intensive task. Rather than recording this novel data, one could synthesize this data using albedo and surface normal recovery from present data. In previous research it has been shown that synthesis using simple Lambertian reflectance results in good accuracy when compared to the real data. In this research, synthesized data is compared in terms of classification accuracy for more complex reflectance models with respect to Lambertian reflectance. Small significant improvements have been reported for the more complex reflectance models, and suggests that future work needs better methods for the recovery of the albedo and surface normals.
+
+
 	%CONTENT PAGE____________________________________________________________________________
 	\newpage
 	\pagenumbering{roman}
@@ -133,12 +135,16 @@
 	\input{related/relatedWork}
 	\chapter{Approach}
 	\input{approach/approach}
+	\chapter{Fundamentals}
+	\input{fundamentals/fundamentals}
 	\chapter{Empirical Models}
 	\input{empiricalModels/empiricalModels1}
 	\chapter{Microfacet Models}
 	\input{microfacetModels/microfacetModels}
 	\chapter{Experiments}
 	\input{experiments/experiments}
+	\chapter{Conclusion}
+	\input{conclusion/conclusion}
 	%___________________________________________________________________________________________
  	\nocite{*}
 	\bibliographystyle{plain}

@@ -20,7 +20,7 @@ thesis.pdf: thesis.tex
 	while egrep -s 'Rerun (LaTeX|to get cross-references right)' thesis.log && [ $$latex_count -gt 0 ] ;\
 	    do \
 	      echo "Rerunning latex...." ;\
-	      pdflatex thesis.tex ;\
+	      latex thesis.tex ;\
 	      latex_count=`expr $$latex_count - 1` ;\
 	    done
 	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.blg *.bbl

@@ -1,9 +1,10 @@
 \hypertarget{Approach}{
 }
-In this section, the data and methods used for the experimental setup are outlined. Due to limited access to data, only the PhoTex database is considered for the experiments. 
+In this section, the data and methods used for the experimental setup are outlined. Due to the unavailability of the ALOT database at the time of this research, only the PhoTex database is considered for the experiments. 
 
 \section{PhoTex Database}\label{sec:PhoTex}
 The PhoTex database is created for physics-based computer vision. It provides excellent photometric data for texture classification, since all image data is  created under controlled conditions. The materials were recorded under a fixed view and different illumination angles. It also provides the materials under a rotated angle, but these images are discarded for the experiments conducted in this research. The most important features of the database for this research are:
+
 \begin{itemize}
 	\item Images are monochromatic.
 	\item Resolution: 512 x 512
@@ -12,19 +13,32 @@ The PhoTex database is created for physics-based computer vision. It provides ex
 
 \noindent The database mainly holds images of rough surfaces, and a few smooth surfaces. For all the image data, the azimuth and zenith angles of the light source are provided (these angles are also mentioned as slant and tilt), making it perfect for photometric stereo algorithms to recover the surface normals and albedo of the materials. The general setup for recording the materials can be seen in figure \ref{fig:PHOTEX_SETUP}. 
 
-The images used in Targhi's experiment are chosen to have a high degree of diffuse reflection properties. All 20 classes are shown in figure X. In order to deal with possible illumination changes of novel data, it is desirable to preprocess the images such that they are intensity invariant by setting the images to zero-mean and unit-variance. 
+Example images are shown in figure \ref{fig:PhoTexExamples} and give an indication of how much material can vary in appearance when observed from different illumination angles.
+
+The images used in Targhi's experiment are chosen to have a high degree of diffuse reflection properties, since he only used the Lambertian reflectance model for image synthesis. In order to deal with possible illumination changes in both original and synthesized data, it is desirable to preprocess the images such that they are intensity invariant by setting the images to zero-mean and unit-variance. 
+
+\begin{figure}[htbp!]
+	\begin{center}
+		\subfigure[aab]{\epsfig{file=images/examples/0.aab.0.30.0.eps, width=0.15\linewidth}}
+		\subfigure[acd]{\epsfig{file=images/examples/1.acd.0.30.0.eps, width=0.15\linewidth}}
+		\subfigure[adh]{\epsfig{file=images/examples/2.adh.0.30.0.eps, width=0.15\linewidth}}
+
+		\subfigure[aab]{\epsfig{file=images/examples/0.aab.0.75.180.eps, width=0.15\linewidth}}
+		\subfigure[acd]{\epsfig{file=images/examples/1.acd.0.75.180.eps, width=0.15\linewidth}}
+		\subfigure[adh]{\epsfig{file=images/examples/2.adh.0.75.180.eps, width=0.15\linewidth}}
+	\end{center}
+	\caption{Example images from the PhoTex database. The upper row is recorded under a slant of $30^o$ and a tilt of $0^o$. The lower row is recorded under a slant of $75^o$ and a tilt of $180^o$.}
+	\label{fig:PhoTexExamples}
+\end{figure}
 
 
-\begin{figure}[t]
+\begin{figure}[htbp!]
 	\begin{center}
 		\epsfig{file=images/photex_setup.eps, width=0.5\linewidth}
 	\end{center}
 	\caption{\textit{Experimental setup of the recording of the PhoTex Database. Courtesy TextureLab @ Heriot-Watt University}}
 	\label{fig:PHOTEX_SETUP}
 \end{figure}
-
-
-http://www.macs.hw.ac.uk/texturelab/
 
 \section{Photometric Stereo}\label{sec:PhotometricStereo}
 The aim of photometric stereo is to estimate at every point of a given object the albedo and surface normal. This is done by using a set of images of this object under different illumination conditions. 
@@ -85,15 +99,19 @@ Regions that lay completely in shadow could potentially pose problems when solvi
 
 \noindent With the surface albedo and normals recovered, it is possible to synthesize images from the materials using reflection models. An important note on this photometric stereo approach, however, is that the Lambertian assumption made to simplify the problem is also a potential bottleneck. Since there are no such properties as specularity incorporated in the Lambertian model, speculars in the image data are treated as diffuse reflections in the recovered surface albedo. This is clearly an issue when using the surface albedo for synthesis using reflection models other than Lambertian, since adding a specular on top of a retrieved specular will only increase the error in image quality with respect to the original image.
 
-To overcome this problem, one could use a RANSAC approach and sample multiple surface albedos of a point on the surface from the image data and compare them to detect outliers. However, this would make the comparison with Targhi's experiments difficult when using a minimal amount of training images for texture synthesis.
+To overcome this problem, one could use a RANSAC approach and sample multiple surface albedo's of a point on the surface from the image data and compare them to detect outliers. However, this would make the comparison with Targhi's experiments difficult when using a minimal amount of training images for texture synthesis.
 
 Another way to overcome the problem is to construct the training sets in such way that the tilt angles are choses uniform over the hemisphere. With this approach, the perfect configuration of data is used for photometric stereo, and outliers such as speculars in the surface albedo will have small influence.
 
 \section{Classification}\label{sec:Classification}
 
-In this research, the classification method of Broadhurst is adapted as described in section \ref{sec:MGD}. For each texture class, the maximum responses from the MR8 filter bank for each image are recorded to get rotationally invariant features. Before convolution, the images are preprocessed to have zero-mean and unit-variance to make the data intensity-invariant.
-\todo{finish}
-%Since in the experiments of Broadhurst, the joint-marginal variation gave the best results, 
+In this research, the classification method of Broadhurst is adapted as described in section \ref{sec:MGD}. 
+
+For each texture class, the maximum responses from the MR8 filter bank for each image are recorded to get rotationally invariant features. Before convolution, the images are preprocessed to have zero-mean and unit-variance to make the data intensity-invariant.
+
+To create a marginal from image responses, the eight maximum responses are transformed into vectors and stacked on top of each other, creating a {\it numFeatures} $\times$ {\it numPixels} matrix. The matrix is sorted in the direction of {\it numPixels}, sorting every response in descending order. For each image, the marginal is defined as a set of histograms, one for each response. Since we know the number of pixels is constant, and the number of bins is defined, the size of the bin is given by {\it numPixels} divided by {\it numBins}. The eqi-count histograms are formed by taking the average pixel value for every set of pixels within the bin. A class is now represented by a set of marginals.
+
+To create more general models for material out of these marginals, PCA is applied on the joint of the marginals. For classification, a novel image is mapped onto the eigenspace of each of the models, and the projection error is computed. The class with the lowest projection error is considered the class to which the novel image belongs to. 
 
 \section{Reflection Models}\label{sec:ReflectionModels}
 With the demand of data to improve models for material recognition, it is of interest to look in the direction of image synthesis for the automatic creation of novel data. In previous work on image synthesis, done by Targhi as described in section \ref{sec:Minimal}, the synthetic data is being created using the Lambertian reflection model. This model effectively implements self-shadows and diffuse reflection, but no specularity or back-scattering of light. In this research, the application of more complex reflection models is studied. The reflection models can be put roughly into two categories; models based on empirical observations, which are easy to use and have only few parameters to be set but defy basic laws in physics, and models with more physical backgrounds, which are mathematically more complex and have more parameters to be set, but simulate light behavior more realistic. Some of both type of reflection models will be discussed in detail in the next chapters and are implemented for the experiments.

@@ -10,7 +10,7 @@
 
 \noindent For the texture synthesis of the materials, various local reflection \footnote[1]{Another set of reflection models are global illumination models. These are beyond the scope of this thesis.} models can be used. This chapter will outline the empirical models used in the process of texture synthesis. These models capture reflectance behaviour using mathematical models without using any basic laws of physics. Such models are widely used for their simplicity and because they can be controlled by setting only a small set of parameters to obtain desired results.
 
-\section{Lambertian reflectance}\label{sec:Lambertian}
+\section{Lambertian reflectance}\label{Lambertian}
 	One of the most used empirical models is Lambertian reflectance. In computer graphics, this model is mainly used to model diffuse reflectance. Surfaces with such properties appear equally bright from all viewing angles because the light is reflected with equal intensity in all directions. The brightness of the surface is only dependent of the angle $\theta$ between the surface normal $\vec{\mathbf{n}}$ and the light source direction $\vec{\mathbf{l}}$ as shown in figure X. We can look at a diffuse surface on microscopic level to understand how this works. 
 
 If we look at \ref{fig:BEAM}, we can see how an incoming light beam projects a differential area $dA$ on the surface. If the surface normal and the light direction are parallel and in the same direction as shown in figure \ref{fig:BEAM}, the energy the area receives and reflects is proportional to $dA$. If the beam is projected on the surface such that it covers a larger area as shown in \ref{fig:BEAM}, the amount of energy reflected from area $dA$ is proportional to $\cos \theta$. The amount of energy reflected per unit area is less on surface 2 compared to surface 1 since the beam covers a larger area. This observation of radiance behaviour is also known as Lambert's Cosine Law. In general, for Lambertian reflectance, the amount of light observed by the viewer is indepenendent of the viewing angle, and is only dependent on the angle of the incidence of the light source. The full equation is given by:
@@ -30,7 +30,7 @@ This model is used effectively for the synthesis of diffuse surfaces and in inte
 
 \begin{figure}[H]
 	\begin{center}
-		\epsfig{file=images/beam_example.eps, width=0.7\linewidth}
+		\epsfig{file=images/beam_example.eps, width=0.5\linewidth}
 	\end{center}
 	\caption{Beam shown in gray, projecting an area on surfaces. The projected area on surface 1 equals $dA$, and on surface 2 equals $\frac{dA}{\cos\theta}$. \tit{Image adapted from Computer Graphics, Principles and Practice \cite{ComputerGraphics}}}
 	\label{fig:BEAM}
@@ -39,13 +39,13 @@ This model is used effectively for the synthesis of diffuse surfaces and in inte
 
 
 
-	\section{Phong Reflectance}\label{sec:Phong}
+	\section{Phong Reflectance}\label{Phong}
 		With the Lambertian assumption of light reflecting equally into all direction, we can expect poor quality synthesis when we're dealing with more glossy/specular surfaces such as metallic, stone and plastic materials. As Bui-Tuong Phong wrote in his article, if the goal in shading a computer-synthesized image is to simulate a real physical object, then the shading model should in some way imitate real physical shading situations \cite{Phong}. Phong reflectance is a popular model, based on the empirical observation of how shiny surfaces can have small specular highlights, and how these observed speculars are related to the view direction of the observer.
 The general idea of Phong reflection is shown in figure \ref{fig:SPECULAR1}. Here we have an incident angle $\theta_i$ and an equal reflection angle $\theta_r$. The angle between $\vec{\mathbf{r}}$ and $\vec{\mathbf{v}}$, $\alpha$, defines how strong a specular is perceived by the observer. If this angle is zero (ie. the reflection- and view-direction are in the same direction), the perceived intensity will be maximal. When this angle increases, the observed intensity of the specular will fall off fast.
 
 \begin{figure}[H]
 	\begin{center}
-		\epsfig{file=images/specular_reflection.eps, width=0.7\linewidth}
+		\epsfig{file=images/specular_reflection.eps, width=0.4\linewidth}
 	\end{center}
 	\caption{Specular reflection. $\theta_i$ is the angle of the incoming light, and is equal to the reflected angle $\theta_r$. $\alpha$ is the angle between the view direction and the reflected light.}
 	\label{fig:SPECULAR1}
@@ -73,7 +73,7 @@ The general idea of Phong reflection is shown in figure \ref{fig:SPECULAR1}. Her
 Here, the parameterse $k_d$ and $k_s$ are constants for diffuse and specular reflection respectively. 
 This formula is simplified such that it doesn't involve more than one light source. More light sources could be incorporated easily by computing the diffuse and specular components for each light source separately and summing these to obtain the total contribution. With respect to the experiments, multiple light sources are not necessary. Also, the components defining colors are left out since we're only concerned about grayscale images in the experiments. The ambient term can be left out as well, since a preprocessing step will make the synthesized images intensity-invariant. A common complaint about the Phong model is that it is completely emperical, and doesn't abide the most basic law in physics - the conservation of energy. Appropriate normalization factors could be applied to constrain the model to this law.
 
-	\section{Blinn-Phong Reflectance}\label{sec:BlinnPhong}
+	\section{Blinn-Phong Reflectance}\label{BlinnPhong}
 		Short after Phong published his model, Blinn proposed an alternative to compute the specular component where the angle $\theta_s$, dot product between the reflection vector and viewing vector, could be replaced by $\theta_h$ \cite{Blinn}. This angle the dot product between the normal of the surface, and the so called halfway-vector $\vec{\mathbf{h}}$. This halfway-vector is the bivector between the light source vector $\vec{\mathbf{l}}$ and the view direction vector $\vec{\mathbf{v}}$, and is computed as:
 
 	\begin{eqnarray*}
@@ -83,10 +83,3 @@ This formula is simplified such that it doesn't involve more than one light sour
 He observed that mirror reflections only occur when the surface normal is aligned with the halfway-vector \cite{DigitalModeling}. When observing a material with glossy/shiny properties, the microscopic structure of the material is never entirely smooth and can be illustrated as microscopic small surfaces. The main normal of the surface is still $\vec{\mathbf{n}}$, but each micro-surface has its own surface normal as well. The distribution of the specular lobe can be expressed as the amount of microfacets with normals aligned with the halfway-vector, with a likelihood related to $\theta_h$.
 
 Replacing $\theta_s$ with $\theta_h$ doesn't give the same reflectance function as with Phong reflection, and as a result it produces slightly different speculars. However, because of computational convenience, Blinn-Phong reflectance is being used in most systems these days.
-
-	\section{Other Models}\label{sec:Other}
-		Many other reflection models exists, and they tend to be variations of Phong reflectance. They deal with the conservation of energy, which wasn't addressed by Phong in his original research. An example of a generalization of Phong reflectance is Lafortune reflectance \cite{Lafortune}. This model can produce a BRDF that consists of multiple lobes, and includes a generalized form of diffuse reflectance. In general, diffuse reflectance doesn't reflect radiance uniform over the hemisphere like in the case of Lambertian reflectance, but may peak into the direction of the surface normal and radiance falls off in directions other than that of the surface normal. The model also includes backscatter, the phenomenom of light reflected into the direction of the light source, and it allows for different configurations for the specular lobe (eg. anisotropic or isotropic).
-
-Another modification of Phong reflectance is Ashikhmin-Shirley Anisotropic Phong reflectance \cite{AshikhminShirley}, which includes a Fresnel term in the equations. The model also deals with conservation of energy and allows for anisotropic specular lobes.
-
-While these models can express more BRDFs than the other models described in this chapter, they do need a lot more parameters to be set. Since these parameters are unknown for the materials in this research, these models are left for future research.

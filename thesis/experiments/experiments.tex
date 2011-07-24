@@ -2,26 +2,73 @@
 }
 
 \section{Preprocessing}\label{sec:preprocessing}
-The PhoTex database consists of images recorded under a fixed view of point with varying light-source directions, all registered for each image. Since we are interested in reproducing the experiment of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model, we need to select the images he used in his experiment.
+	The PhoTex database consists of images recorded under a fixed point of view with varying light-source directions registered for each image. Since we are interested in reproducing some results from the experiment of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model, we need to select the same material classes he used in his experiment. These material classes are shown in figure \ref{fig:PhoTexData}.
 
-For the dataset to train and test on, 20 materials are selected from the PhoTex database, which are shown in figure X. Every material consists of 40 images when selecting images from each material for certian slant and tilt for the light source directions. The slant angles that are selected from are $\{30^o, 45^o,60^o,75^o\}$. The images under a slant of $30^o$ have four different tilts, $\{0^o, 90^o, 180^o, 270^o\}$. The images with slants $\{45^o,60^o,75^o\}$ have tilts of $\{0^o,30^o,60^o,...,300^o,330^o\}$. All images have a fixed size of $512 \times 512$ pixels.
+From each material class, 40 images with certain slant and tilt angles are selected. The selected slant angles are $\{30^o, 45^o,60^o,75^o\}$. The images under a slant of $30^o$ have four different tilts, $\{0^o, 90^o, 180^o, 270^o\}$. The images with slants $\{45^o,60^o,75^o\}$ have tilts of $\{0^o,30^o,60^o,...,300^o,330^o\}$. All images have a fixed size of $512 \times 512$ pixels.
 
 After rendering new images for the materials and before extracting the features from the materials, the rendered images are set to zero-mean and unit-variance in order to make the features intensity-invariant.
 
 \section{Reflection model parameters}\label{sec:ParameterSetting}
-The reflection models applied in the experiments need certain parameters to be set. However, these parameters aren't given for the materials in the database in case of the microfacet models, and in case of the empirical models there are no known 'good' values for the parameters to be set. To set these values the parameters are estimated using a gradient descent with a sum of squares error estimation. 
+The reflection models applied in the experiments need parameters to be set, such as the parameter for the specular lobe size or surface roughness. However, these parameters are not available for the materials in the database in case of the micro-facet models, and in case of the empirical models there are no known 'good' values for the parameters to be set. To set these values the parameters are computed using a gradient descent procedure with a sum of squares error estimation. 
 
-Because of the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total, a simplified gradient descend is done. Each parameter will be set to one value out of three within the range of possible values. For example, the roughness of a material could be $m \in \{0.1, 0.5, 0.9\}$, and the shininess constant for Phong reflection could be $\alpha \in \{0.01, 10.0, 50.0\}$. 
+Because the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total, a simplified gradient descend is done. Each parameter will be set to one value out of three within the range of possible values. For example, the roughness of a material could be $m \in \{0.1, 0.5, 0.9\}$, and the shininess constant for Phong reflection could be $\alpha \in \{0.01, 10.0, 50.0\}$. 
 
 By calculating the squared error per-pixel from the original image and the synthesized image, and accumulate the error over all pixels, an estimation of the total error serves as an indicator for the gradient descend. Both images are preprocessed to have zero-mean and unit-variance before the error is calculated, since the features will be extracted from preprocessed images.
 
-The albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^o$ and tilts of $\{0^o, 90^o, 180^o, 270^o\}$. The choice for this configuration of angles over the hemisphere is based on the observation that the albedo gives 
+The albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^o$ and tilts of $\{0^o, 90^o, 180^o, 270^o\}$. The choice for this configuration of angles over the hemisphere is based on the quality of the surface albedo. Using many images for photometric stereo give rise to many outliers such as speculars in the albedo. With a uniform choice of angles over the hemisphere, these outliers have minimal influence.
 
+\begin{figure}[H]
+	\begin{center}
+		\subfigure[aaa]{\epsfig{file=images/db/aaa.eps, width=0.15\linewidth}}
+		\subfigure[aab]{\epsfig{file=images/db/aab.eps, width=0.15\linewidth}}
+		\subfigure[aaj]{\epsfig{file=images/db/aaj.eps, width=0.15\linewidth}}
+		\subfigure[aam]{\epsfig{file=images/db/aam.eps, width=0.15\linewidth}}
+		\subfigure[aan]{\epsfig{file=images/db/aan.eps, width=0.15\linewidth}}
+
+		\subfigure[aao]{\epsfig{file=images/db/aao.eps, width=0.15\linewidth}}
+		\subfigure[aar]{\epsfig{file=images/db/aar.eps, width=0.15\linewidth}}
+		\subfigure[aas]{\epsfig{file=images/db/aas.eps, width=0.15\linewidth}}
+		\subfigure[aba]{\epsfig{file=images/db/aba.eps, width=0.15\linewidth}}
+		\subfigure[abj]{\epsfig{file=images/db/abj.eps, width=0.15\linewidth}}
+
+		\subfigure[abk]{\epsfig{file=images/db/abk.eps, width=0.15\linewidth}}
+		\subfigure[acc]{\epsfig{file=images/db/acc.eps, width=0.15\linewidth}}
+		\subfigure[acd]{\epsfig{file=images/db/acd.eps, width=0.15\linewidth}}
+		\subfigure[ace]{\epsfig{file=images/db/ace.eps, width=0.15\linewidth}}
+		\subfigure[adb]{\epsfig{file=images/db/adb.eps, width=0.15\linewidth}}
+
+		\subfigure[adc]{\epsfig{file=images/db/adc.eps, width=0.15\linewidth}}
+		\subfigure[add]{\epsfig{file=images/db/add.eps, width=0.15\linewidth}}
+		\subfigure[ade]{\epsfig{file=images/db/ade.eps, width=0.15\linewidth}}
+		\subfigure[adg]{\epsfig{file=images/db/adg.eps, width=0.15\linewidth}}
+		\subfigure[adh]{\epsfig{file=images/db/adh.eps, width=0.15\linewidth}}
+	\end{center}
+	\caption{The material classes taken from the PhoTex database. The example images are registered under a slant of $30^o$ and a tilt of $0^o$.}
+	\label{fig:PhoTexData}
+\end{figure}
 
 
 \section{Experimental Setup}\label{sec:Experiments}
+From the 40 images of each material class, 20 are selected for the training set, and the remaining are selected for the test set. Four different training sets are considered. These training sets are meant to be used for photometric stereo to compute the albedo and surface normals. Listed are the number of images used for this procedure for each class separately:
 
+\begin{itemize}
+	\item{\textit{T1} - the 20 images selected for training initially}
+	\item{\textit{T2} - 10 randomly selected images from \textit{T1}}
+	\item{\textit{T3} - 4 randomly selected images from \textit{T1}}
+	\item{\textit{T4} - 3 randomly selected images from \textit{T1}. The minimum amount of images needed for photometric stereo.}
+\end{itemize}
 
+In Targhi's experiments, he devised different sets of generated data. The first set, $G1$, mimics the images used for photometric stereo. This means that for $T1$, the set $G1$ will consist of 20 images synthesized for each class, all with the light-directions equal to that of the registered directions of the images in $T1$. For $T2$, the set of $G1$ consists of 10 synthesized images for each class, and the same analogy applies for $T3$ and $T4$. This experiment is replicated and similar accuracies were measured.
+
+The exact results from Targhi's experiment are hard to replicate since the quality of the synthesized image data depends strongly on the procedure of photometric stereo and its input. Since he uses a pseudo-random selection procedure to obtain the T1 set, where pseudo-random is defined as selecting slant and tilt angles to be uniform over the hemisphere, it is hard to obtain the same dataset. 
+
+Pseudo-random in this research is defined as follows: for every slant, a number of tilts is available. There are three configurations of tilts possible such that the hemisphere is covered uniformly when using tilts in increments of $90^o$. To select the 20 images for each class, 5 slants are chosen randomly, and for each slant, a configuration of 4 tilts is chosen randomly, making a total of 20. Note that in the case of a slant of $30^o$, there is only 1 configuration possible. 
+
+To test the quality of the synthesized image data, an experiment is conducted where a set of images is used to obtain the albedo and surface normals with photometric stereo. With the albedo and surface normals, the whole PhoTex database will be mimicked using the available light-source directions for each described reflection model. With these synthesized image databases, the marginals are computed, and models are obtained for each class for each reflection model. Using repeated random-subsampling cross validation, the datasets are split in training and test-sets. To measure accuracy, models derived from synthesized images are used for training, and original PhoTex data is used for testing the classifier. 
+
+The general setup for the first and second experiment is shown in figure X.
+
+In a final experiment, training data gets augmented with novel image data until accuracy reaches saturation. This shows how synthesized image data using different reflection models contributes to the issue of material classification.
 
 \section{Results}\label{sec:Results}
 

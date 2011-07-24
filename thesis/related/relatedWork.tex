@@ -5,9 +5,9 @@ In earlier research on the topic of material recognition, a lot of focus was on 
 
 \section{Textons}\label{sec:Textons}
 
-The need for larger texture databases that captures the variety in viewpoint and illumination resulted in the creation of the CUReT database \cite{DanaNayar}. Dana and Nayar developed parametric models based on surface roughness and correlation lenghts which were tested against the CUReT database. However, in their research, no significant results were reported \cite{VarmaZisserman}.
+The need for larger texture databases that captures the variety in viewpoint and illumination resulted in the creation of the CUReT database \cite{DanaNayar}. Dana and Nayar developed parametric models based on surface roughness and correlation lengths which were tested against the CUReT database. However, in their research, no significant results were reported \cite{VarmaZisserman}.
 
-Leung and Malik were the first to introduce the texton modeling method to the problem of illumination variation \cite{LeungMalik}. In their research, they introduce the concept of 2 and 3-dimensional textons based on Gaussian derivative filters. The idea is that these Gaussian filters capture certain properties of a texture on microscale; for example, a point $n(x,y)$ in an image of a texture can correspond to a ridge, bump, groove, spot, etc. A filter-bank of different Gaussian filters can capture these properties in the response of the image applied to such filter. This makes it able to capture the variance of textures under different illuminations using a representable set of filteres.
+Leung and Malik were the first to introduce the texton modeling method to the problem of illumination variation \cite{LeungMalik}. In their research, they introduce the concept of 2 and 3-dimensional textons based on Gaussian derivative filters. The idea is that these Gaussian filters capture certain properties of a texture on microscale; for example, a point $n(x,y)$ in an image of a texture can correspond to a ridge, bump, groove, spot, etc. A filter-bank of different Gaussian filters can capture these properties in the response of the image applied to such filter. This makes it able to capture the variance of textures under different illuminations using a representable set of filters.
 
 \begin{figure}[b]
 	\begin{center}
@@ -51,7 +51,7 @@ The experiments showed a significant difference in performance for the different
 \end{figure}
 
 \section{Multivariate Gaussian Distributions}\label{sec:MGD}
-A drawback of the texton approach is the need for a construction of the texton dictionary, because it needs clustering in high-dimensional spaces. This poses problems when the number of classes and image data increase as it becomes intractable to compute the clusters, but at the same time, the idea of using textons implicates that more data is needed to capture general properties correctly.
+A drawback of the texton approach is the need for a construction of the texton dictionary, because it needs clustering in high-dimensional spaces. This poses problems when the number of classes and image data increase as it becomes intractable to compute the clusters. At the same time, the idea of using textons implicates that more data is needed to capture general properties correctly.
 
 Broadhurst presents a parametric approach to estimate the likelihood of homogeneously textured images \cite{Broadhurst}. His work extends the framework proposed by Levina \cite{Levina} by using a Gaussian Bayes classifier instead of a Nearest Neighbor classifier. To model each texture class, Broadhurst uses multivariate Gaussian distributions to model the intra-class variability of each marginal histogram. This is done by mapping the joint marginal histograms into Euclidean space and applying PCA to obtain eigencomponents for each class.
 
@@ -78,7 +78,7 @@ Experiments are run on samples from the CUReT database, which consists of 61 tex
 
 In his experiments, Broadhurst considers both independent marginal and joint marginal variation for construction of the Gaussian models. 
 
-To construct models based on independent marginal variation, eqi-count histograms for each image their 8 maximum responses are computed. The number of histograms choses in his experiments are 10, 25, 100 and a 1000 bins. After the histograms are computed, PCA is applied to estimate the Gaussian distribution in a lower dimensional subspace for each class and marginal. The number of eigenmodes used differs for the number of bins in the histogram representation, namely 6, 7, 8 and 9 respectively. As a result, a class is represented by 8 Gaussian models with dimensions equal to the respective number of eigenmodes plus one. 
+To construct models based on independent marginal variation, eqi-count histograms for each image their 8 maximum responses are computed. The number of histograms choses in his experiments are 10, 25, 100 and a 1000 bins. After the histograms are computed, PCA is applied to estimate the Gaussian distribution in a lower dimensional subspace for each class and marginal. The number of eigenmodes used differs for the number of bins in the histogram representation, 6, 7, 8 and 9 respectively. As a result, a class is represented by 8 Gaussian models with dimensions equal to the respective number of eigenmodes plus one. 
 
 For the models based on joint marginal variation, the computed marginals for each image are concatenated into 1 long vector. For each class, PCA is applied on these long vectors to estimate the Gaussian distribution in low dimensional subspace. This gives 1 Gaussian model for each class. To classify novel images, a test image is assigned to a class with the maximum likelihood containing that image. Because all priors are equal for each class, this translates into a Bayes classification problem.
 
@@ -90,7 +90,7 @@ For the construction of models in both methods described in section \ref{sec:Tex
 
 In his research, Targhi's central goal is to reduce the amount of images needed for training and yet still produce the same (or better) classification results. With proper reconstructions of surface albedo and normals, its possible to generate novel image data with arbitrary illumination directions. Using a simple model of photometric stereo, only a small set of original image data is needed for the synthesis of new image data.
 
-For the synthesis of new image data, the Lambertian reflectance model is used. This method effectively simulates diffuse reflection from materials as well as self-shadows, but not more complex light phenonema such as speculars or interreflections. 
+For the synthesis of new image data, the Lambertian reflectance model is used. This method effectively simulates diffuse reflection from materials as well as self-shadows, but not more complex light phenomena such as speculars or interreflections. 
 
 Experiments are run on two texture databases which are designed for the purpose of physical based texture classification; \textit{ALOT} (\textit{Amsterdam Library of Textures}) and \textit{PhoTex}, a library of photometric image data for texture recognition. The training and testing of the classifier is done by replicating the experiments of Broadhurst. Details on Photex will be outlined in section \ref{sec:PhoTex}. The experimental setup will be described in more detail in section \ref{sec:Experiments}.
 
