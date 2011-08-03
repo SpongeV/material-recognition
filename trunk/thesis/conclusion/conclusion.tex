@@ -1,0 +1,14 @@
+\hypertarget{conclusion}{
+}
+
+Some points for conclusion:
+\begin{itemize}
+	\item Synthesizing data is a great way to augment training data to improve classification rates
+	\item Different reflection models applied to the problem give small variation in classification rates
+	\item Although a minor improvement, the more physical reflection models for speculars improved over the emperical models. (Blinn-Phong and Cook-Torrance vs. Lambertian and Phong)
+	\item Although physically a better approach, Oren-Nayar performed similar or worse than baseline Lambertian. 
+	\item The above issue can be explained by the Lambertian assumption in the Photometric Stereo procedure
+	\item With the current available datasets for PS, mainly PhoTex, its difficult to do more in-depth analysis of modelling the texture (surface normals, albedo) when only intensity information is present. 
+	\item Additional analysis of the materials of the database could be of use for better estimation of parameters (such as the refraction indices for Fresnel and surface roughness).
+	\item Additional color information could improve 1. the recovery of surface albedo and normals. 2. the quality of synthesized images, since these are directly dependent on 1.
+\end{itemize}
