@@ -41,26 +41,26 @@ The images used in Targhi's experiment are chosen to have a high degree of diffu
 \end{figure}
 
 \section{Photometric Stereo}\label{sec:PhotometricStereo}
-The aim of photometric stereo is to estimate at every point of a given object the albedo and surface normal. This is done by using a set of images of this object under different illumination conditions. 
+The aim of photometric stereo is to estimate at every point of a given object the albedo and surface normal. This is done by using a set of images of this object recorded under different illumination conditions. 
 
-The viewpoint is assumed to be perpendicular to the surface patch that needs to be recovered, and the source light illuminating the surface patch is assumed to be a point light (\textit{eg.} the source is positioned at an infinite distance with as a result give an equal angle of incidence for all points on the surface patch). Using the Lambertian reflection model and assuming there is no global illumination present in the data, the radiosity \textbf{B} at a point $(x, y)$ on the surface can be written as:
-
-	\begin{eqnarray*}
-		\textbf{B}(x,y) = \rho(x,y)\textbf{N}(x,y) \cdot \textbf{V}
-	\end{eqnarray*}
-
-\noindent With $\rho(x,y)$ the albedo at point $(x,y)$, $\textbf{N}(x,y)$ being the surface normal at point $(x,y)$ and $\textbf{V}$ being the source light vector. Both the surface normal and source light vector are unit in length. With the assumption that the camera response is linear to the surface radiosity, the value for a pixel at point $(x,y)$ in the image is equal to the radiance at that point. The above equation can be written as:
+The viewpoint is assumed to be orthogonal to the surface patch that needs to be recovered, and the source light illuminating the surface patch is assumed to be a point light (\textit{eg.} the source is positioned at an infinite distance with as a result give an equal angle of incidence for all points on the surface patch). Using the assumption that the surface patch scatters light perfectly Lambertian and assuming there is no global illumination present in the data, the radiosity \textbf{B} at a point $(x, y)$ on the surface can be written as:
 
 	\begin{eqnarray*}
-		I(x,y) =  \textbf{g}(x,y) \cdot \textbf{V}
+		\textbf{B}(x,y) = \rho(x,y)\textbf{N}(x,y) \cdot \mathcal{V}
 	\end{eqnarray*}
 
-\noindent Where $\textbf{g}(x,y)$ is equal to $\rho(x,y)\textbf{N}(x,y)$ and describes the properties of the surface we want to recover. Given that $\textbf{V}$ is known for the image data, with enough dot products between $\textbf{g}(x,y)$ and $\textbf{V}$, the values for $\textbf{g}$ could be recovered. With known values for $\textbf{g}$, the albedo and surface normals in turn could be recovered.
+\noindent With $\rho(x,y)$ the albedo at point $(x,y)$, $\textbf{N}(x,y)$ being the surface normal at point $(x,y)$ and $\mathcal{V}$ being the source light vector. Both the surface normal and source light vector are unit in length. With the assumption that the camera response is linear to the surface radiosity, the value for a pixel at point $(x,y)$ in the image is equal to the radiance at that point. The above equation can be written as:
+
+	\begin{eqnarray*}
+		I(x,y) =  \textbf{g}(x,y) \cdot \mathcal{V}
+	\end{eqnarray*}
+
+\noindent Where $\textbf{g}(x,y)$ is equal to $\rho(x,y)\textbf{N}(x,y)$ and describes the properties of the surface we want to recover. Given that $\mathcal{V}$ is known for the image data, with enough dot products between $\textbf{g}(x,y)$ and $\mathcal{V}$, the values for $\textbf{g}$ could be recovered. With known values for $\textbf{g}$, the albedo and surface normals in turn could be recovered.
 
 If we have $n$ images all recorded under the same viewing angle with $n$ different light sources with known light source direction, we can construct a matrix where all values $V_i$ are stacked on each other:
 
 	\begin{eqnarray*}
-		\textbf{V} = \begin{pmatrix} V_1^T \\ V_2^T \\ ... \\ V_n^T \end{pmatrix}
+		\mathcal{V} = \begin{pmatrix} V_1^T \\ V_2^T \\ ... \\ V_n^T \end{pmatrix}
 	\end{eqnarray*}
 
 \noindent Then, for each image point in our set of image data, the intensity values are stacked into a vector:
@@ -72,7 +72,7 @@ If we have $n$ images all recorded under the same viewing angle with $n$ differe
 \noindent With the above described vectors, we come to the linear system:
 
 	\begin{eqnarray*}
-		i(x,y) = \textbf{V}\textbf{g}(x,y)
+		i(x,y) = \mathcal{V}\textbf{g}(x,y)
 	\end{eqnarray*}
 
 \noindent This is a linear system that can be solved for $\textbf{g}$ for each point on the surface to be recovered. For the least square solution, 3 or more images are used.
@@ -88,7 +88,7 @@ Regions that lay completely in shadow could potentially pose problems when solvi
 \noindent Assuming there is no ambient illumination, a point in an image which is completely in shadows will give a 0 as a measurement. Multiplying both sides of the equation will rule out those points in the computation:
 
 	\begin{eqnarray*}
-		\Psi(x,y)\textbf{i} = \Psi(x,y)\textbf{V}\textbf{g}(x,y)
+		\Psi(x,y)\textbf{i} = \Psi(x,y)\mathcal{V}\textbf{g}(x,y)
 	\end{eqnarray*}
 
 \noindent Solving the above linear system for $\textbf{g}$ will make it possible to retrieve surface albedo and normals at each point $(x,y)$. Because the surface normal is unit in length, the surface albedo is $|\textbf{g}(x,y)| = \rho(x,y)$. The surface normal can be calculated:
