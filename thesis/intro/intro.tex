@@ -1,17 +1,21 @@
 \hypertarget{MaterialRecognition}{
-%\section{Orientation \& Pose Detection Problems}
-%\label{orientationDetection}\index{orientationDetection@{Orientation \& Pose Detection Problems}}
 \section{Material Recognition}
-\label{MaterialRecognition}%\index{orientationDetection@{Orientation Problem}}
 }
-Explain problem of material recognition.
+In the research field of material recognition, the goal is to develop classification algorithms that can identify various material categories observed in daily life. Examples of such categories are metal, wood, fabric, plastic and glass. Preferably the task of classification is done on a single image of a material surface. This is a difficult task as the variation in appearances is extremely large when considering illumination differences or arbitrary viewpoints. 
 
-\hypertarget{TextureSynthesis}{
+In recent research, material databases have been created that contain the various illumination and viewpoint condition. The difficulty is to obtain robust features out of the image data that cover various aspects of materials such as spatial properties as well as illumination properties. The {\it CuRET} database captures these properties for 60 different material classes with each over 200 different illumination and viewing directions and has been used in the development of texton descriptors to capture all the different material properties. The {\it ALOT} and {\it PhoTex} databases have been used in more physically based experiments where the surface structure is used for development of robust descriptors. In all these experiments, classification rates of 95\% and higher are reported using various methods such as Naive Bayes, Nearest Neighbor and Support Vector Machines. 
+
+It is suggested that the classification rates achieved on these databases are database dependent since none of them can accurately capture the intra-class variety of all known materials in all their observed variety.
+
 \section{Texture Synthesis}
-\label{ReflectionModels}%\index{groupsDetection@{Group Detection Problem}}
-}
-The field of computer graphics has accomplished imagery of great realism over the past few decades. 
+The suggestion that the databases do not capture the intra-class variety for the material classes poses the problem of data shortage. Recording the data is a time-consuming task and still won't be enough to capture all possible illumination and viewing directions. 
 
-Explain novelty and problems with texture synthesis.
+The field of computer graphics has accomplished imagery of great realism over the past few decades, using various models for the simulation of diffuse, glossy or shiny materials. These models use as input for per-pixel generation of an image a surface normal, the surface albedo, a viewing direction and an illumination direction. With proper reconstruction of the surface normals and surface albedo for a material, it is possible to generate an infinite amount of data with varying viewing and illumination directions. Databases such as PhoTex and ALOT were created for physics-based computer vision and with photometric data for each material class available, it is possible to reconstruct the surface normals and surface albedo. 
 
+In earlier research done by Targhi, the synthesis of material images has been used to augment training-sets to a point of saturation where perfect predictions were made \cite{Targhi}. For the synthesis of image data the Lambertian reflection model was used, which limits the synthesis of new data to diffuse materials only since the model does not simulate illumination phenomena such as speculars which are observed on glossy and shiny surfaces.
+
+In this research, the aim is to analyze the effect of more sophisticated reflection models for the use of image synthesis. Combinations of Lambertian reflectance with models for speculars such as Phong, Blinn-Phong and Cook-Torrance, as well as a more sophisticated model for diffuse reflection are implemented for the synthesis of novel images. The synthesized images are tested against the original dataset used in the experiments of Targhi, which were mainly materials with diffuse properties. Another dataset is selected from PhoTex with materials with more glossy/shiny properties.
+
+\section{Overview}
+In the next chapter, some of the state-of-the-art methods and their experiments are outlined. In chapter 3, the database and methods used in this thesis are discussed. In chapter 4, some fundamentals for the reflection models are explained. In chapter 5, a set of empirical reflection models are outlined and in chapter 6 a set of more physical-based reflection models are described. In chapter 7, the experiments and their results are described and the last chapter holds the conclusion and future works.
 
