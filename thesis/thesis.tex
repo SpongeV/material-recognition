@@ -1,5 +1,6 @@
 \documentclass[11pt, a4paper,oneside]{book}
 
+\usepackage{verbatim}
 \usepackage{caption}
 \usepackage{a4wide}
 \usepackage{makeidx}
@@ -85,7 +86,7 @@
 	\begin{titlepage}
 	\begin{figure}[!hbtp]
 		\begin{flushright}
-			\epsfig{file=images/uva.eps, width=0.3\linewidth}
+			\epsfig{file=images/uva.eps, width=0.5\linewidth}
 		\end{flushright}
 	\end{figure}
 	\vspace*{2cm}
@@ -117,10 +118,16 @@
 	\end{titlepage}
 	%ABSTRACT PAGE____________________________________________________________________________
 	\thispagestyle{empty}
-	\section*{Abstract}
-%		\begin{tabular*}{4cm}[c]{l}
-		In this research, the problem of material classification is addressed. Previous research shows how one can derive features based on Gaussian filter responses from material images and obtain high classification accuracies using simple classifiers such as Nearest Neighbor or Bayes. To model the appearance of material under different illumination conditions a lot of data is needed to obtain satisfactory models. This rises the need for novel data recorded under controlled conditions, which is an intensive task. Rather than recording this novel data, one could synthesize this data using albedo and surface normal recovery from present data. In previous research it has been shown that synthesis using simple Lambertian reflectance results in good accuracy when compared to the real data. In this research, synthesized data is compared in terms of classification accuracy for more complex reflectance models with respect to Lambertian reflectance. Small significant improvements have been reported for the more complex reflectance models, and suggests that future work needs better methods for the recovery of the albedo and surface normals.
-%		\end{tabular*}
+	\begin{center}
+		\begin{tabular}{p{10cm}}
+			\section*{Abstract}
+			In this thesis, the problem of material classification is addressed. Previous research shows how one can derive features based on Gaussian filter responses from material images and obtain high classification accuracies using simple classifiers such as Nearest Neighbor or Bayes. To model the appearance of material under different illumination conditions a lot of data is needed to obtain satisfactory models. 
+
+This rises the need for novel data recorded under controlled conditions, which is an intensive task. Rather than recording this novel data, one could synthesize this data using albedo and surface normal recovery from present data. 
+
+In previous research it has been shown that synthesis using simple Lambertian reflectance results in good accuracy when compared to the real data. In this research, synthesized data is compared in terms of classification accuracy for more complex reflectance models with respect to Lambertian reflectance. Small significant improvements have been reported for the more complex reflectance models, and suggests that future work needs better methods for the recovery of the albedo and surface normals.
+		\end{tabular}
+	\end{center}
 
 	%CONTENT PAGE____________________________________________________________________________
 	\newpage

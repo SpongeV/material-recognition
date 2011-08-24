@@ -1,14 +1,30 @@
 \hypertarget{conclusion}{
 }
 
-Some points for conclusion:
-\begin{itemize}
-	\item Synthesizing data is a great way to augment training data to improve classification rates
-	\item Different reflection models applied to the problem give small variation in classification rates
-	\item Although a minor improvement, the more physical reflection models for speculars improved over the emperical models. (Blinn-Phong and Cook-Torrance vs. Lambertian and Phong)
-	\item Although physically a better approach, Oren-Nayar performed similar or worse than baseline Lambertian. 
-	\item The above issue can be explained by the Lambertian assumption in the Photometric Stereo procedure
-	\item With the current available datasets for PS, mainly PhoTex, its difficult to do more in-depth analysis of modelling the texture (surface normals, albedo) when only intensity information is present. 
-	\item Additional analysis of the materials of the database could be of use for better estimation of parameters (such as the refraction indices for Fresnel and surface roughness).
-	\item Additional color information could improve 1. the recovery of surface albedo and normals. 2. the quality of synthesized images, since these are directly dependent on 1.
-\end{itemize}
+%Some points for conclusion:
+%\begin{itemize}
+%	V \item Synthesizing data is a great way to augment training data to improve classification rates
+%	\V item Different reflection models applied to the problem give small variation in classification rates
+%	\V item Although a minor improvement, the more physical reflection models for speculars improved over the empirical models. (Blinn-Phong and Cook-Torrance %vs. Lambertian and Phong)
+%	V \item Although physically a better approach, Oren-Nayar performed similar or worse than baseline Lambertian. 
+%	V \item The above issue can be explained by the Lambertian assumption in the Photometric Stereo procedure
+%	V \item With the current available datasets for PS, mainly PhoTex, its difficult to do more in-depth analysis of modeling the texture (surface normals, %albedo) when only intensity information is present. 
+%	V \item Additional analysis of the materials of the database could be of use for better estimation of parameters (such as the refraction indices for Fresnel and surface roughness).
+%	\item Additional color information could improve 1. the recovery of surface albedo and normals. 2. the quality of synthesized images, since these are directly dependent on 1.
+%\end{itemize}
+
+In this research we investigated how to improve the quality of synthesized image data for material recognition. Recent material databases try to capture the intra-class variation of materials by using different illumination and viewpoint conditions, but the intra-class variation within the material classes is restricted to the database. This constraint seriously limits the research field of material recognition, and manually recording an amount of data to capture the intra-class variation for any material class is a difficult and time-consuming task. However, the synthesis of image data could help to bridge the gap of data sparseness.
+
+Previous research showed that using a simple model for photometric stereo to recover surface normals and surface albedo can be used to synthesize enough data to achieve perfect classification accuracy \cite{Targhi}. However, the model was limited to diffuse materials only since the image synthesis was performed with Lambertian reflectance.
+
+Recovered surface normals and surface albedo from photometric image data can be used as input for various reflection models and these reflection models can be used to simulate BRDF beyond that of Lambertian reflectance. With this setup, image data for the problem of material recognition can be synthesized using arbitrary illumination and viewpoint conditions to simulate diffuse and glossy/shiny material properties. The addition of several reflection models for synthesis can be especially useful for capturing occurrences of materials which are not recorded in material databases and therefore we can increase the intra-class variety of material classes.
+
+In our experiments, the different reflection models are tested on image quality in three experiments on two different datasets. The datasets are designed such that one consists mostly of diffuse materials and the other consists of specular materials. 
+
+On the first dataset, small improvements were measured using reflection models that combined Lambertian reflectance with specular reflectance. Phong reflectance performed similar or worse than the baseline of \cite{Targhi}. The other specular reflection models implemented, Blinn-Phong and Cook-Torrance performed slightly better than the baseline. Both models share the concept of micro-facets and outperform Phong reflectance, suggesting that more physical based reflectance models are useful in this task of image synthesis. The Oren-Nayar reflection model gives mixed results, performing similar or better than the baseline. 
+
+\todo{On the second dataset, ...}
+
+A problem in the setup of the experiment is that of the recovery of surface normals and surface albedo. The quality of these recoveries are directly dependent on the set of photometric image data used in this process. The algorithm for photometric stereo uses the Lambertian assumption to estimate the normals and albedo, and for this reason outliers in image data such as speculars are treated as if they are part of the surface albedo. Methods such as RANSAC or surface normal smoothing are not able to improve the surface normals and surface albedo recovery under the Lambertian assumption. This suggests that more complex methods for photometric stereo that are not constrained to this assumption are needed to improve the quality of recovery. With the current material databases available that allow for photometric stereo, this is a difficult problem since only intensity information is present. 
+
+For future work, additional analysis of materials could be of use for better estimation of parameters, such as the refraction indices for Fresnel and surface roughness parameters for micro-facet models since finding these settings through optimization is computational expensive. The addition of color in material databases with photometric image data could improve the quality of the recovery of surface normals and surface albedo. Methods exists that use models other than the Lambertian assumption. These models are more robust to outliers such as speculars in the photometric image data. With improved surface normals and surface albedo, it is likely that the synthesized image data will improve in quality.
