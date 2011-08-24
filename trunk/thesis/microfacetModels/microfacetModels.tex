@@ -12,14 +12,14 @@ The second method uses distributions of primitive shapes to represent the surfac
 
 Torrance and Sparrow suggested to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane.
 
-\section{Geometric Optics}ImprovedDiffuse
+\section{Geometric Optics}
 The idea of describing the surface as a collection of microfacets is originally developed in the field of optics and radiation transfer. Microfacets with respect to computer graphics has first been addressed by Blinn \cite{Blinn}. He proposed that a model for computer simulation could be composed from the following factors:
 
 \begin{itemize}
 	\item{ The number of microfacets are facing the orientation of the viewing direction, and what is the projected area of the facets into the viewing direction. This is computed by the slope distribution function. }
-	\item{ How much incoming light on a microfacet gets blocked by other microfacets, causing shadows to appear on the blocked microfacet when observing the microfacet from certain angles (see figure X).} 
-	\item{ How much reflected light into the viewing direction gets blocked by other microfacets, causing the amount of radiance reaching the viewer to be smaller than the amount of radiance that gets reflected from the microfacet. This phenomenon is called masking, and is also shown in figure X. }
-	\item{ How much can an unobstructed microfacet reflect? This is mainly dependent on a given reflectance function for the microfacet. This is general is either Lambertian or pure specular. See figure X for an example using pure specular reflectance}
+	\item{ How much can an unobstructed microfacet reflect? This is mainly dependent on a given reflectance function for the microfacet. This is general is either Lambertian or pure specular. See figure \ref{fig:GAF}(a) for an example using pure specular reflectance}
+	\item{ How much incoming light on a microfacet gets blocked by other microfacets, causing shadows to appear on the blocked microfacet when observing the microfacet from certain angles (see figure \ref{fig:GAF}(b)).} 
+	\item{ How much reflected light into the viewing direction gets blocked by other microfacets, causing the amount of radiance reaching the viewer to be smaller than the amount of radiance that gets reflected from the microfacet. This phenomenon is called masking, and is also shown in figure \ref{fig:GAF}(c). }
 \end{itemize}
 
 The shadowing and masking of the microfacets need additional geometric analysis next to the slope distribution. The most common way to deal with this analysis is to assume that the microfacets form V-shaped cavities as shown in the example images. This approach has been challenged since the assumption is inconsistent with the assumption of a random looking surface, but it makes geometric analysis much easier.
