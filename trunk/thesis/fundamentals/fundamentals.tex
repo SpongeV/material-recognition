@@ -1,11 +1,11 @@
 \hypertarget{Fundamentals}{
 }
 
-In this chapter, some fundamentals for local illumination models are explained briefly that will be used in the equations and implementation of the reflection models. Since there is a great deal of literature about the mathematical concepts of radiometry and BRDF, these topics are covered only lightly in this chapter. For a more detailed coverage of the subjects, the reader is advised to look into \cite{RTR} \cite{GlobalIllumination} \cite{DigitalModeling}.
+In this chapter, some fundamentals for local illumination models are explained briefly that will be used in the equations and implementation of the reflection models. Since there is a great deal of literature about the mathematical concepts of radiometry and BRDF, these topics are covered only lightly in this chapter. For a more detailed description of these subjects, the reader is advised to look into \cite{RTR} \cite{GlobalIllumination} \cite{DigitalModeling}.
 
-\section{Radiomety}
+\section{Radiomety}\label{sec:Radiometry}
 
-When dealing with light simulation in the fields of computer graphics or computer vision it is convenient to work with the same quantities as used in the field of optics. The SI unit for energy of a beam of light is Joules, here denoted by $J$. In physically based rendering we are more interested in the transfer of light over time. The rate of energy transfer per unit time is power, defined as watts in the SI system. Power radiated over a period of time is called radiant flux and expressed as: 
+When dealing with light simulation in the fields of computer graphics or computer vision it is convenient to work with the same quantities as used in the field of optics. The SI unit \footnote[1]{SI unit stands for Système international d'unités, or the International System of Units. Its the most commonly used system in science for system of measurement} for energy of a beam of light is Joules, here denoted by $J$. In physically based rendering we are more interested in the transfer of light over time. The rate of energy transfer per unit time is power, defined as watts in the SI system. Power radiated over a period of time is called radiant flux and expressed as: 
 
 		\begin{eqnarray*}
 			\Phi = \Delta J / \Delta t. 
@@ -56,7 +56,7 @@ The BRDF can have many different definitions, resulting in different observed ra
 		\subfigure[ ]{\epsfig{file=images/LambertianReflection.eps, width=0.4\linewidth}}
 		\subfigure[ ]{\epsfig{file=images/GeneralReflection.eps, width=0.4\linewidth}}
 	\end{center}
-	\caption{Two cases of reflection. (a) shows ideal Lambertian reflection and (b) shows general diffuse reflection.}
+	\caption{{\it Two cases of reflection. (a) shows ideal Lambertian reflection and (b) shows general diffuse reflection.}}
 	\label{fig:BRDF}
 \end{figure}
 
@@ -68,10 +68,10 @@ In the previous section, the irradiance in the simplified BRDF and the general s
 	\begin{center}
 		\epsfig{file=images/LambertCosineLaw.eps, width=0.5\linewidth}
 	\end{center}
-	\caption{Beam shown in gray, projecting an area on surfaces. The projected area on surface 1 equals $dA$, and on surface 2 equals $\frac{dA}{\cos\theta}$. \tit{Image adapted from Computer Graphics, Principles and Practice \cite{ComputerGraphics}}}
+	\caption{{\it The beam shown in gray gets projected on an area $dA$ on both surface 1 and surface 2. The area covered by the beam on surface 1 is $dA$, and on surface 2 is $\frac{dA}{\cos\theta}$. \tit{Image adapted from Computer Graphics, Principles and Practice \cite{ComputerGraphics}}}}
 	\label{fig:BEAM}
 \end{figure}
 
-If we look at \ref{fig:BEAM}, we can see how an incoming light beam projects a differential area $dA$ on the surface. If the surface normal and the light direction are parallel and in the same direction as is the case with {\it Surface 1}, the energy the area receives and reflects is proportional to $dA$. If the beam is projected on the surface such that it covers a larger area as is the case with {\it Surface 2}, the amount of energy reflected from area $dA$ is proportional to $\cos \theta$. The amount of energy reflected per unit area is less on {\it Surface 2} compared to {\it Surface 1} since the beam covers a larger area. This observation of radiance behaviour is also known as Lambert's Cosine Law. 
+If we look at figure \ref{fig:BEAM}, we can see how an incoming light beam is projected on an infinitesimal area $dA$ on the surface. If the surface normal and the light direction are parallel and in the same direction as is the case with {\it Surface 1}, the energy received and reflected by the area is proportional to $dA$. If the beam is projected on the surface such that it covers a larger area as is the case with {\it Surface 2}, the amount of energy reflected from area $dA$ is proportional to $\cos \theta$. The amount of energy reflected per unit area is less on {\it Surface 2} compared to {\it Surface 1} since the energy contained by the beam covers a larger area. This observation of radiance behaviour is also known as Lambert's Cosine Law. 
 
 
