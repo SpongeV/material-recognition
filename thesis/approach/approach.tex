@@ -1,42 +1,30 @@
 \hypertarget{Approach}{
 }
-In this section, the data and methods used for the experimental setup are outlined. Due to the unavailability of the ALOT database at the time of this research, only the PhoTex database is considered for the experiments. 
 
-\section{PhoTex Database}\label{sec:PhoTex}
-The PhoTex database is created for physics-based computer vision. It provides excellent photometric data for texture classification, since all image data is  created under controlled conditions. The materials were recorded under a fixed view and different illumination angles. It also provides the materials under a rotated angle, but these images are discarded for the experiments conducted in this research. The most important features of the database for this research are:
+Our goal in this research is to investigate the usage of different reflection models for the generation of novel image data for material classification. For the image synthesis procedure for materials, we need the surface albedo and surface normals. The surface albedo and surface normals can be recovered from image data of a material if the image data is constraint to a few assumptions: the images are recorded orthogonal to the surface, the camera is on a fixed distance for all images and there are different known positions for the light source. In section \ref{sec:PhoTex}, the database used throughout this research is described.
+
+In this chapter, the data and methods used for the experimental setup are outlined. Due to the unavailability of the ALOT database at the time of this research, only the PhoTex database is considered for the experiments.
+
+\section{The PhoTex Database}\label{sec:PhoTex}
+The PhoTex database is created for physics-based computer vision. It provides excellent image data for the recovery of surface albedo and surface normals, since all image data is created under controlled conditions. The materials were recorded under a fixed view and different illumination angles. It also provides the materials under a rotated angle, but these images are discarded for the experiments conducted in this research. The most important features of the database for this research are:
 
 \begin{itemize}
-	\item Images are monochromatic.
-	\item Resolution: 512 x 512
-	\item Fixed and linear gain: images measured under different lighting conditions are comparable. 
+	\item Images are gray scale
+	\item Resolution: 512 x 512 pixels
+	\item The measured intensity in the images is proportional to irradiance (energy leaving the surface, this is explained in more detail in section \ref{sec:Radiometry} 
 \end{itemize}
 
 \noindent The database mainly holds images of rough surfaces, and a few smooth surfaces. For all the image data, the azimuth and zenith angles of the light source are provided (these angles are also mentioned as slant and tilt), making it perfect for photometric stereo algorithms to recover the surface normals and albedo of the materials. The general setup for recording the materials can be seen in figure \ref{fig:PHOTEX_SETUP}. 
 
-Example images are shown in figure \ref{fig:PhoTexExamples} and give an indication of how much material can vary in appearance when observed from different illumination angles.
+The example images shown in figure \ref{fig:PhoTexExamples} --- these examples give an indication of how much the materials can vary in appearance when observed from different illumination angles.
 
 The images used in Targhi's experiment are chosen to have a high degree of diffuse reflection properties, since he only used the Lambertian reflectance model for image synthesis. In order to deal with possible illumination changes in both original and synthesized data, it is desirable to preprocess the images such that they are intensity invariant by setting the images to zero-mean and unit-variance. 
 
 \begin{figure}[htbp!]
 	\begin{center}
-		\subfigure[aab]{\epsfig{file=images/examples/0.aab.0.30.0.eps, width=0.15\linewidth}}
-		\subfigure[acd]{\epsfig{file=images/examples/1.acd.0.30.0.eps, width=0.15\linewidth}}
-		\subfigure[adh]{\epsfig{file=images/examples/2.adh.0.30.0.eps, width=0.15\linewidth}}
-
-		\subfigure[aab]{\epsfig{file=images/examples/0.aab.0.75.180.eps, width=0.15\linewidth}}
-		\subfigure[acd]{\epsfig{file=images/examples/1.acd.0.75.180.eps, width=0.15\linewidth}}
-		\subfigure[adh]{\epsfig{file=images/examples/2.adh.0.75.180.eps, width=0.15\linewidth}}
-	\end{center}
-	\caption{Example images from the PhoTex database. The upper row is recorded under a slant of $30^o$ and a tilt of $0^o$. The lower row is recorded under a slant of $75^o$ and a tilt of $180^o$.}
-	\label{fig:PhoTexExamples}
-\end{figure}
-
-
-\begin{figure}[htbp!]
-	\begin{center}
 		\epsfig{file=images/photex_setup.eps, width=0.5\linewidth}
 	\end{center}
-	\caption{\textit{Experimental setup of the recording of the PhoTex Database. Courtesy TextureLab @ Heriot-Watt University}}
+	\caption{{ \it Experimental setup of the recording of the PhoTex Database. Courtesy TextureLab @ Heriot-Watt University}}
 	\label{fig:PHOTEX_SETUP}
 \end{figure}
 
