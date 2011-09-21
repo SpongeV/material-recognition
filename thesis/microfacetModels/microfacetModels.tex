@@ -1,7 +1,7 @@
 \hypertarget{Microfacet Models}{
 }
 
-\noindent In the previous section, the reflection models were based on empirical observations. Research in optics found that these models deviate from reality in a number of aspects. In this section, a more physically correct class of reflection models will be outlined. They are called \textit{first principles} models because they apply basic laws of physics on a microscopic scale. The interaction of light on this microscopic scale in turn determines how the light gets reflected from the surface. The light interaction could be described by either wave or geometric optics, but only geometric optics based models are discussed in this research.
+\noindent In the previous section, the reflection models were based on empirical observations. Research in optics found that these models deviate from reality in a number of aspects. In this section, a more physically correct class of reflection models will be outlined. They are called {\it first principles} models because they apply basic laws of physics on a microscopic scale. The interaction of light on this microscopic scale in turn determines how the light gets reflected from the surface. The light interaction could be described by either wave or geometric optics, but only geometric optics based models are discussed in this research.
 
 The models described here start by modeling the surface geometry at microscopic scale. Rather than providing an exact description of this structure, the assumption is made that the surface varies randomly in height and orientation of facets. With this assumption, its possible to use statistical models to model surface structures.
 
@@ -10,13 +10,13 @@ There are two possible methods to represent the random surface. Both methods use
 
 The second method uses distributions of primitive shapes to represent the surface. Asserting the assumption $\lambda^2 \ll da \ll dA$, where wavelength of light $\lambda$ is much smaller than the facet area $da$, and the facet area $da$ is much smaller than the area $dA$ (which is a pixel on the surface), geometric optics can be used to derive the reflectance models. 
 
-Torrance and Sparrow suggested to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane.
+Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane. 
 
 \section{Geometric Optics}
 The idea of describing the surface as a collection of microfacets is originally developed in the field of optics and radiation transfer. Microfacets with respect to computer graphics has first been addressed by Blinn \cite{Blinn}. He proposed that a model for computer simulation could be composed from the following factors:
 
 \begin{itemize}
-	\item{ The number of microfacets are facing the orientation of the viewing direction, and what is the projected area of the facets into the viewing direction. This is computed by the slope distribution function. }
+	\item{ The number of microfacets that are facing the orientation of the viewing direction, and what is the projected area of the facets into the viewing direction. This is computed by the slope distribution function. }
 	\item{ How much can an unobstructed microfacet reflect? This is mainly dependent on a given reflectance function for the microfacet. This is general is either Lambertian or pure specular. See figure \ref{fig:GAF}(a) for an example using pure specular reflectance}
 	\item{ How much incoming light on a microfacet gets blocked by other microfacets, causing shadows to appear on the blocked microfacet when observing the microfacet from certain angles (see figure \ref{fig:GAF}(b)).} 
 	\item{ How much reflected light into the viewing direction gets blocked by other microfacets, causing the amount of radiance reaching the viewer to be smaller than the amount of radiance that gets reflected from the microfacet. This phenomenon is called masking, and is also shown in figure \ref{fig:GAF}(c). }
@@ -63,7 +63,7 @@ The factor $G$ in the specular reflection equation accounts for the effect of ma
 
 The three cases are included in the geometrical attenuation factor. For arbitrary light source directions and viewing directions, the three cases that can happen are shown in figure \ref{fig:GAF}.
 
-The first case is that of figure \ref{fig:GAF}a, where no light is obstructed by other microfacets and therefore there is no attenuation. In this case, the attenuation is defined as:
+The first case is that of figure \ref{fig:GAF}a, where no light is obstructed by other microfacets and therefore there is no attenuation. In this case, the attenuation is simply defined as:
 
 	\begin{eqnarray*}
 		G_a = 1
