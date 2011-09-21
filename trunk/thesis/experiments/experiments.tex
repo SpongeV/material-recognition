@@ -107,12 +107,12 @@ The idea behind this experiment is as follows: when one would do this experiment
 
 \section{Results}\label{sec:Results}
 \subsection{Diffuse materials}
-In table \ref{tab:DiffuseResults} the results for experiment A are shown. The results are averaged over 5 repetitions of the experiment. As can be seen, the original image data performs really well when training on one half of the dataset and testing on the other half with an average accuracy of \%95.1525. The accuracy for the synthetic data degrades by almost 15\%. Comparing the reflectance models we have to conclude that there are no significant improvements made
+In table \ref{tab:DiffuseResultsA} the results for experiment A are shown. The results are averaged over 5 repetitions of the experiment. As can be seen, the original image data performs really well when training on one half of the dataset and testing on the other half with an average accuracy of \%95.1525. The accuracy for the synthetic data degrades by almost 15\%. Comparing the reflectance models we have to conclude that no significant improvements are made.
  
 \begin{table}
 	\center
 	\begin{tabular}{l|c|c|c|r}
-	Method 				&	T1 (20) &	T3 (20) &	TT (20)	\\
+	Method 				&	T1  	&	T3 		&	TT	\\
 	\hline
 	Original			&	95.1525	&	95.1525 &	95.1525	\\
 	Lambertian 			&	81.2212	&	79.7950	&	78.8125	\\
@@ -121,13 +121,27 @@ In table \ref{tab:DiffuseResults} the results for experiment A are shown. The re
 	Torrance-Sparrow 	&	81.9465 &	79.8075 &	81.0487	\\
 	Oren-Nayar 			&	82.1475 &	79.8888 &	79.8187	\\
 	\end{tabular}
-	\caption{{\it Average accuracy over 5 repetitions for the diffuse material dataset}}
-	\label{tab:DiffuseResults}
+	\caption{{\it Average accuracy over 5 repetitions for the diffuse material dataset for 20 images in the training set and 20 images in the test set}}
+	\label{tab:DiffuseResultsA}
 \end{table}
 
-The results for experiments T1 and TT are given in figure \ref{fig:results_A}. Although the increase in accuracy compared to the Lambertian accuracy is small, figure \ref{fig:results_A}(a) clearly shows that for dataset T1 the reflectance models with physical backgrounds perform better than both Phong and Lambertian reflectance. For datasets T3 and T4 however, the accuracy drops for all reflectance models to that of the Lambertian reflectance. This can be explained, since these datasets are created by randomly picking images from T1. As a result the slant/tilt angles used for the photometric stereo procedure are not necessarily uniformly distributed, causing big errors in the photometric estimations for the surface normals and surface albedo. The resulting synthesized images are of poor quality and 
+In figure \ref{fig:results_B}, we plotted the accuracy when increasing the number of images until all images from the original dataset are mimicked. Table \ref{tab:DiffuseResultsB} shows the average mean and standard deviation for 40 images in the training set and 20 images (that are not in $T1$) in the test set for the various reflection models.
 
-For the TT dataset, the physical reflectance models for specularity perform consistently better than Lambertian. This suggests that the addition of highlights indeed increase the quality of the synthesized images. However, it is difficult to see whether the addition of speculars on grayscale image correctly adds highlights to the material or balances out error measurements made by photometric stereo.
+\begin{table}
+	\center
+	\begin{tabular}{l|r}
+	Method 				&	T1 		\\
+	\hline
+	Original			&	99.4912	\\
+	Lambertian 			&	85.7313	\\
+	Phong 				&	85.6222	\\
+	Blinn-Phong 		& 	88.4347 \\
+	Torrance-Sparrow 	&	87.8393 \\
+	Oren-Nayar 			&	87.6650 \\
+	\end{tabular}
+	\caption{{\it Average accuracy over 5 repetitions for the diffuse material dataset for 40 images in the training set and 20 images in the test set}}
+	\label{tab:DiffuseResultsB}
+\end{table}
 
 \begin{figure}[H]
 	\begin{center}
@@ -136,8 +150,16 @@ For the TT dataset, the physical reflectance models for specularity perform cons
 		\subfigure[TT dataset]{\epsfig{file=images/results/TT.eps, width=0.75\linewidth}}
 	\end{center}
 	\caption{{\it Results on the T1, T3 and TT dataset for diffuse materials.}}
-	\label{fig:results_A}
+	\label{fig:results_B}
 \end{figure}
+
+
+\begin{comment}
+
+The results for experiments T1 and TT are given in figure \ref{fig:results_A}. Although the increase in accuracy compared to the Lambertian accuracy is small, figure \ref{fig:results_A}(a) clearly shows that for dataset T1 the reflectance models with physical backgrounds perform better than both Phong and Lambertian reflectance. For datasets T3 and T4 however, the accuracy drops for all reflectance models to that of the Lambertian reflectance. This can be explained, since these datasets are created by randomly picking images from T1. As a result the slant/tilt angles used for the photometric stereo procedure are not necessarily uniformly distributed, causing big errors in the photometric estimations for the surface normals and surface albedo. The resulting synthesized images are of poor quality and 
+
+For the TT dataset, the physical reflectance models for specularity perform consistently better than Lambertian. This suggests that the addition of highlights indeed increase the quality of the synthesized images. However, it is difficult to see whether the addition of speculars on grayscale image correctly adds highlights to the material or balances out error measurements made by photometric stereo.
+
 
 \begin{figure}[H]
 	\begin{center}
@@ -147,4 +169,4 @@ For the TT dataset, the physical reflectance models for specularity perform cons
 	\label{fig:results_B}
 \end{figure}
 
-
+\end{comment}
