@@ -41,7 +41,9 @@ The general idea of Phong reflection is shown in figure \ref{fig:SPECULAR1}. Her
 %		L_o = i_a + k_d(\vec{\mathbf{l}} \cdot \vec{\mathbf{n}}) + k_s(\vec{\mathbf{r}} \cdot \vec{\mathbf{v}})^\alpha
 	\end{eqnarray*}
 
-\noindent where $i_a$ is a parameter controlling the ambient lighting, $k_d$ is the diffuse reflection coefficient which is material dependent, $k_s$ is the specular reflection coefficient which is also material dependent. The $\alpha$ parameter,also known as the shininess constant, is used to control the size of the specular lobe; the greater $\alpha$ is, the smaller the size of the specular. The angle $theta_i$ is computed by taking the dot product between $\vec{\mathbf{l}}$ and $\vec{\mathbf{n}}$. Likewise, the angle $\theta_s$ is computed by taking the dot product between $\vec{\mathbf{r}}$ and $\vec{\mathbf{v}}$. Vector $\vec{\mathbf{r}}$ is computed such that its mirrored around the surface normal:
+\noindent where $i_a$ is a parameter controlling the ambient lighting, $k_d$ is the diffuse reflection coefficient which is material dependent, $k_s$ is the specular reflection coefficient which is also material dependent. The $\alpha$ parameter,also known as the shininess constant, is used to control the size of the specular lobe; the greater $\alpha$ is, the smaller the size of the specular. 
+
+The angle $\theta_i$ is computed by taking the dot product between $\vec{\mathbf{l}}$ and $\vec{\mathbf{n}}$. Likewise, the angle $\theta_s$ is computed by taking the dot product between $\vec{\mathbf{r}}$ and $\vec{\mathbf{v}}$. Vector $\vec{\mathbf{r}}$ is computed such that its mirrored around the surface normal:
 
 	\begin{eqnarray*}
 		\vec{\mathbf{r}} = 2 \otimes \vec{\mathbf{n}} \otimes \cos\theta_i - \vec{\mathbf{l}}
@@ -80,4 +82,4 @@ Replacing $\theta_s$ with $\theta_h$ doesn't give the same reflectance function 
 
 Another modification of Phong reflectance is Ashikhmin-Shirley Anisotropic Phong reflectance \cite{AshikhminShirley}, which includes a Fresnel term in the equations. The model also deals with conservation of energy and allows for anisotropic specular lobes.
 
-While these models can express more BRDFs than the other models described in this chapter, they do need a lot more parameters to be set. Since these parameters are unknown for the materials in this research and are expensive to obtain by computation, these models are left for future research.
+While these models can express more BRDFs than the models described in this chapter, they do need a lot more parameters to be set. Since these parameters are unknown for the materials in this research and are expensive to obtain by computation, these models are left for future research.
