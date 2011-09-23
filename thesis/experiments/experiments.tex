@@ -6,7 +6,7 @@ In the experimental stage of this research, two experiments are performed on two
 \section{Preprocessing}\label{sec:preprocessing}
 The {\it PhoTex} database consists of images recorded under a fixed point of view with varying light-source directions registered for each image. For the experiments, two datasets are chosen: a dataset according to the selection made by Targhi and another dataset with shiny properties to extend the experiments for the specular reflection models. 
 
-The diffuse materials have the size After rendering new images for the materials and before extracting the features from the materials, the rendered images are set to zero-mean and unit-variance in order to make the features intensity-invariant. Since the diffuse and glossy/shiny materials have different image sizes, all images are cropped with respect to the center of the image to $200 \times 200$ pixels.
+After rendering new images for the materials and before extracting the features from the materials, the rendered images are set to zero-mean and unit-variance in order to make the features intensity-invariant. Since the diffuse and glossy/shiny materials have different image sizes, all images are cropped with respect to the center of the image to $200 \times 200$ pixels.
 
 \subsection{Diffuse material classes}
 Since we are interested in reproducing some results from the experiments of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model he applied, we need to select the same material classes he used in his experiment. These material classes are shown in figure \ref{fig:PhoTexData}.
@@ -48,7 +48,7 @@ From each material class, 40 images with certain slant and tilt angles are selec
 \subsection{Shiny material classes}
 Because three out of five reflection models simulate specularity only, the previous dataset might not be good enough to measure improvements made by these reflection models. For this reason, a new dataset is selected from the {\it PhoTex} database with more specular properties. 
 
-The material classes selected are shown in figure X. This dataset consists of 10 material classes, recorded under a slant of $75^0$ and tilts of $0^0$ to $350^0$ in increments of $10^0$, giving a total of 36 images for each material class. The material classes are shown in figure \ref{fig:PhoTexData2}.
+The material classes selected are shown in figure \ref{fig:PhoTexData2}. This dataset consists of 10 material classes, recorded under a slant of $75^0$ and tilts of $0^0$ to $350^0$ in increments of $10^0$, giving a total of 36 images for each material class. The material classes are shown in figure \ref{fig:PhoTexData2}.
 
 %\begin{comment}
 \begin{figure}[h]
@@ -77,37 +77,36 @@ The reflection models used in the process of synthesis need material dependent p
 			Err(A,A') = \sum_{i=1}^n (a_i - a_i')^2
 		\end{eqnarray*}
  
-Where $A$ is the original image from the {\it PhoTex} database, and $A'$ is the synthesized image. By calculating the squared error per-pixel from the original image and the synthesized image, and accumulate the error over all pixels, an estimation of the total error serves as an indicator for the gradient descend. Both images are preprocessed to have zero-mean and unit-variance before the error is calculated, since the features will be extracted from preprocessed images.
+Where $A$ is the original image from the {\it PhoTex} database, and $A'$ is the synthesized image that mimics the original image. By calculating the squared per-pixel error from the original image and the synthetic image, and accumulate this error over all pixels we find the error of the synthetic image with respect to the original image. Accumulating this error over a set of synthetic images with its respective set of original images will give an estimation of the total error for a given parameter configuration. By accumulating the error over sets of images instead of using just one image for the parameter estimation, we hope to avoid potential local minima in the gradient descend. Both synthetic and original image are preprocessed to have zero-mean and unit-variance before the error is calculated, since the features will be extracted from such preprocessed images.
 
-Because the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total, a simplified gradient descend is done. Each parameter is estimated using a defined range of possible values. For the microfacet models, the roughness of a material is $m \in \{0.1, 0.3, 0.5, 0.7, 0.9\}$ and the Fresnel coefficient is $R_f \in \{0.01, 0.03, 0.05, 0.07, 0.09\}$. The shininess constant for Phong and Blinn-Phong reflection is from $\alpha \in \{0.001, 0.01, 1.0, 5.0 10.0, 40.0\}$, and the specular reflection coefficient us from $k_s \in \{0.001 0.01 0.1 0.5 1.0\}$. 
+Because the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total and the error for gradient descend needs to be computed over sets of images, a simplified gradient descend is done. Each parameter is estimated using a defined range of possible values. For the microfacet models, the roughness of a material is $m \in \{0.1, 0.3, 0.5, 0.7, 0.9\}$ and the Fresnel coefficient is $R_f \in \{0.01, 0.03, 0.05, 0.07, 0.09\}$. The shininess constant for Phong and Blinn-Phong reflection is from $\alpha \in \{0.001, 0.01, 1.0, 5.0 10.0, 40.0\}$, and the specular reflection coefficient us from $k_s \in \{0.001 0.01 0.1 0.25 0.5 0.75 1.0\}$. 
 
 The surface albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^0$ and tilts of $\{0^0, 90^0, 180^0, 270^0\}$. The choice for this configuration of angles over the hemisphere is based on the quality of the recovered surface albedo since a non-uniform configuration of tilts gives rise to specularity in the surface albedo. With a uniform choice of angles over the hemisphere, these outliers have minimal influence.
-
 
 \section{Experimental Setup}\label{sec:Experiments}
 In this section, two experiments are described that will be applied on both the diffuse and glossy/shiny dataset. Three different training sets are considered. These training sets are meant to be used for photometric stereo to compute the surface albedo and surface normals. Listed are the training sets for this procedure and are taken from each class separately:
 
 \begin{itemize}
-	\item{\textit{T1} - the 20 images selected for training initially, as proposed by Targhi}
-	\item{\textit{T3} - 4 randomly selected images from \textit{T1}, as proposed by Targhi}
-	\item{\textit{TT} - the 4 images used for finding parameters, as described in section \ref{sec:ParameterSetting}}
+	\item{\textit{T1} - 20 images {\it pseudo-randomly} selected, as proposed by Targhi}
+	\item{\textit{T3} - 4 images randomly selected from \textit{T1}, as proposed by Targhi}
+	\item{\textit{TT} - the 4 images under a slant of $30^0$ used for finding parameters, as described in section \ref{sec:ParameterSetting}}
 \end{itemize}
 
-Similar results to that of Targhi's experiments have been replicated, but exact results are hard to obtain since the quality of the synthesized image data depends strongly on the input images for the photometric stereo. Targhi uses a pseudo-random selection procedure to obtain the $T1$ set, where pseudo-random is defined as selecting slant and tilt angles to be uniform over the hemisphere. Unfortunately this pseudo-random selection procedure is not explained in further detail, making it hard to obtain the similar training sets.
+Similar results to that of Targhi's experiments have been replicated, but exact results are hard to obtain since the quality of the synthetic image data depends strongly on the input images for the photometric stereo. Targhi uses a {\it pseudo-random} selection procedure to obtain the $T1$ set, where pseudo-random is defined as selecting slant and tilt angles to be uniform over the hemisphere. Unfortunately this pseudo-random selection procedure is not explained in further detail, making it hard to obtain the similar training sets.
 
 Pseudo-random in this research is defined as follows: for every slant, a number of tilts is available. There are three configurations of tilts possible such that the hemisphere is covered uniformly when using tilts in increments of $90^0$. To select the 20 images for each class, slants are chosen randomly, and for each slant, a configuration of 4 tilts is chosen randomly, making a total of 20. Note that in the case of a slant of $30^0$, there is only 1 configuration possible. 
 
 \subsection{Experiment A}
-In this experiment, we mimic the images from the $T1$ training set to obtain a synthetic training set. This means that for each training set ($T1$, $T3$ and $TT$) we recover the surface albedo and surface normals. With the recovered maps we create synthetic datasets using the slant and tilt angles from the $T1$ dataset for each of the reflection models. The training of the material models will be done using these synthetic datasets, and the test images --- images that are not in $T1$ --- are selected from the original {\it PhoTex} dataset.
+In this experiment, we mimic the images from the $T1$ training set to obtain a synthetic training set. This means that for each training set ($T1$, $T3$ and $TT$) we recover the surface albedo and surface normals. With the recovered maps we create synthetic datasets using the slant and tilt angles from the $T1$ dataset for each of the reflection models, creating a total of 20 synthetic images per material class. The training of the material models will be done using these synthetic datasets, and the test images --- images that are not in $T1$ --- are selected from the original {\it PhoTex} dataset.
 
 \subsection{Experiment B}
-To further investigate the quality of the synthetic image data, a similar experiment to that of A is conducted, but now instead of mimicking only the images in the $T1$ training set, we replicate all images in the diffuse and shiny/glossy dataset. We then measure classification performance of the different synthetic training sets by randomly selecting and increasing the number of images used for training the material models until all synthetic images are used for training. 
+To further investigate the quality of the synthetic image data, a similar experiment to that of A is conducted, but now instead of mimicking only the images in the $T1$ training set, we replicate all images from the original datasets. We then perform random sub-sampling validation by measuring classification performance of the models derived from synthetic image data and tested against the original dataset. Synthetic training sets are randomly selected from the synthetic data and a test set is randomly selected from the original data. This process of random sub-sampling validation is repeated a 1000 times to average the results. The training set will be increased in the number of images used for constructing the material models until all synthetic images are used for training. 
 
-The idea behind this experiment is as follows: when one would do this experiment using the original {\it PhoTex} image data, perfect classification accuracy is achieved when all images are used for training material models, and 20 images are used for testing. Clearly this is a case overfitting. However, if we would achieve perfect classification accuracy using only synthetic image data, we have found a model to perfectly mimic the original data.
+The idea behind this experiment is as follows: when one would do this experiment using the original {\it PhoTex} image data, perfect classification accuracy is achieved when all images are used for training material models, and 20 images are used for testing. Clearly this is a case overfitting. However, if we would achieve perfect classification accuracy using only synthetic image data, we have found a model that perfectly mimics the original data. 
 
 \section{Results}\label{sec:Results}
-\subsection{Diffuse materials}
-In table \ref{tab:DiffuseResultsA} the results for experiment A are shown. The results are averaged over 5 repetitions of the experiment. As can be seen, the original image data performs really well when training on one half of the dataset and testing on the other half with an average accuracy of \%95.1525. The accuracy for the synthetic data degrades by almost 15\%. Comparing the reflectance models we have to conclude that no significant improvements are made.
+\subsection{Diffuse material dataset}
+In table \ref{tab:DiffuseResultsA} the results for experiment A are shown. The results are averaged over 5 repetitions of the experiment. As can be seen, the original image data performs really well when training on one half of the dataset and testing on the other half with an average accuracy of \%95.1525. The accuracy for the synthetic data degrades by around 13\% - 16\% for the different training sets. There is a clear gap between the quality of the synthetic image data and the original image data that has not been covered by any of the reflection models. When comparing the reflection models we have to conclude that no significant improvements are made, not even when comparing the more sophisticated reflection models with the Lambertian reflection model. 
  
 \begin{table}
 	\center
@@ -121,25 +120,31 @@ In table \ref{tab:DiffuseResultsA} the results for experiment A are shown. The r
 	Torrance-Sparrow 	&	81.9465 &	79.8075 &	81.0487	\\
 	Oren-Nayar 			&	82.1475 &	79.8888 &	79.8187	\\
 	\end{tabular}
-	\caption{{\it Average accuracy over 5 repetitions for the diffuse material dataset for 20 images in the training set and 20 images in the test set}}
+	\caption{{\it Mean accuracy over 5 repetitions for the diffuse material dataset for 20 images in the training set and 20 images in the test set}}
 	\label{tab:DiffuseResultsA}
 \end{table}
 
-In figure \ref{fig:results_B}, we plotted the accuracy when increasing the number of images until all images from the original dataset are mimicked. Table \ref{tab:DiffuseResultsB} shows the average mean and standard deviation for 40 images in the training set and 20 images (that are not in $T1$) in the test set for the various reflection models.
+In figure \ref{fig:DiffusePlotB}, we plotted the averaged accuracy when increasing the number of images until all images from the original dataset are mimicked. As with experiment A, experiment B has been repeated 5 times to average results. 
+
+The plots suggest that again little to no improvement is made when comparing reflection models in the case of the $T3$ and $TT$ training sets. The fact no improvements are measured can be explained by how the photometric stereo does not recover the surface albedo and surface normals very well from the $T3$ and the $TT$ datasets. However, for the $T1$ training set we observe that an improvement of ~3\% is measured on top of the Lambertian reflectance for some of the reflectance models. 
+
+Table \ref{tab:DiffuseResultsB} shows the mean and standard deviation for 40 images in the training set and 20 randomly selected images in the test set when using the $T1$ training set for photometric stereo. In the first row, we show performance of the original data to construct the material models and report an almost perfect classification accuracy. This is to be expected since we are overfitting. When using only synthetic image data however, the accuracy drops about 11\% - 14\%. When comparing the reflection models, some improvements with respect to Lambertian reflectance are reported. 
+
+The best performing model is Blinn-Phong with an accuracy of 88.4347\%, followed up by Torrance-Sparrow with 87.8393\% accuracy , both performing better than Phong reflectance. Oren-Nayar for diffuse reflectance also performs better than Lambertian reflectance. The results of the three better performing reflection models have been positively tested on significance level of 5\% using a paired T-test. The results in the table and plots suggest that a more physically based approach can increase the quality of the synthetic images, since the purely empirical based Phong reflectance performs similar or worse than Lambertian reflectance in all experiments. It also suggests that using more images for photometric stereo improves the quality of the surface albedo and surface normals as long as the light sources are distributed uniformly over the hemisphere.
 
 \begin{table}
 	\center
-	\begin{tabular}{l|r}
-	Method 				&	T1 		\\
+	\begin{tabular}{l|c|r}
+	Method 				&	T1 - mean 	& T1 - std \\
 	\hline
-	Original			&	99.4912	\\
-	Lambertian 			&	85.7313	\\
-	Phong 				&	85.6222	\\
-	Blinn-Phong 		& 	88.4347 \\
-	Torrance-Sparrow 	&	87.8393 \\
-	Oren-Nayar 			&	87.6650 \\
+	Original			&	99.4912		& - \\
+	Lambertian 			&	85.3313		& 2.386 \\
+	Phong 				&	85.6222		& 2.451 \\
+	Blinn-Phong 		& 	88.4347 	& 1.839 \\
+	Torrance-Sparrow 	&	87.8393 	& 2.036 \\
+	Oren-Nayar 			&	87.6650 	& 2.322 \\
 	\end{tabular}
-	\caption{{\it Average accuracy over 5 repetitions for the diffuse material dataset for 40 images in the training set and 20 images in the test set}}
+	\caption{{\it Mean accuracy and standard deviation over 5 repetitions for the diffuse material dataset for 40 images in the training set and 20 images in the test set}}
 	\label{tab:DiffuseResultsB}
 \end{table}
 
@@ -150,23 +155,52 @@ In figure \ref{fig:results_B}, we plotted the accuracy when increasing the numbe
 		\subfigure[TT dataset]{\epsfig{file=images/results/TT.eps, width=0.75\linewidth}}
 	\end{center}
 	\caption{{\it Results on the T1, T3 and TT dataset for diffuse materials.}}
-	\label{fig:results_B}
+	\label{fig:DiffusePlotB}
 \end{figure}
 
+\subsection{Shiny/glossy material dataset}
+For the experiments on the shiny/glossy material dataset we dropped the Phong reflectance for further investigation because of the results found on the diffuse material dataset. We also do not report on results on the $T3$ and $TT$ training sets since these datasets resulted in no significant results in experiment B on the diffuse dataset.
 
-\begin{comment}
+In table \ref{tab:SpecularResultsA} we report the accuracy of the different reflectance models where we have 18 images in the training set and the remaining 18 images in the test set. We observe that the accuracy using synthetic image data has decreased drastically compared to the diffuse material dataset. The difference in accuracy is around 38\% between the original data and the synthetic data. We expect that these results are caused by the poor recovery of the surface albedo and surface normals, since our photometric stereo approach uses a Lambertian surface assumption and the materials in this dataset have a shiny/glossy nature. 
 
-The results for experiments T1 and TT are given in figure \ref{fig:results_A}. Although the increase in accuracy compared to the Lambertian accuracy is small, figure \ref{fig:results_A}(a) clearly shows that for dataset T1 the reflectance models with physical backgrounds perform better than both Phong and Lambertian reflectance. For datasets T3 and T4 however, the accuracy drops for all reflectance models to that of the Lambertian reflectance. This can be explained, since these datasets are created by randomly picking images from T1. As a result the slant/tilt angles used for the photometric stereo procedure are not necessarily uniformly distributed, causing big errors in the photometric estimations for the surface normals and surface albedo. The resulting synthesized images are of poor quality and 
+\begin{table}
+	\center
+	\begin{tabular}{l|c|r}
+	Method 				&	T1\\
+	\hline
+	Original			&	\todo{99.7133}\\
+	Lambertian 			&	61.2700\\
+	Blinn-Phong 		& 	60.3989\\
+	Torrance-Sparrow 	&	61.3722\\
+	Oren-Nayar 			&	61.4256\\
+	\end{tabular}
+	\caption{{\it Mean accuracy and standard deviation over 5 repetitions for the shiny/glossy material dataset for 18 images in the training set and 18 images in the test set}}
+	\label{tab:SpecularResultsA}
+\end{table}
 
-For the TT dataset, the physical reflectance models for specularity perform consistently better than Lambertian. This suggests that the addition of highlights indeed increase the quality of the synthesized images. However, it is difficult to see whether the addition of speculars on grayscale image correctly adds highlights to the material or balances out error measurements made by photometric stereo.
+Running experiment B on this dataset shows similar results even when increasing the amount of images used for the construction of models to the point that all images are used. The material models perform equally bad regardless of the number of images used for photometric stereo or the reflection model used for synthesis as can be observed in figure \ref{fig:SpecularPlotB}. These results stress the importance of having a photometric stereo method with assumptions beyond that of Lambertian surfaces for recovery. Different reflection models cannot improve image quality as they are limited in the recovery from the simple photometric stereo method.
 
-
+\begin{table}
+	\center
+	\begin{tabular}{l|c|r}
+	Method 				&	T1 - mean 	& T1 - std \\
+	\hline
+	Original			&	99.7133		& - \\
+	Lambertian 			&	60.9289		& 2.5450 \\
+	Blinn-Phong 		& 	61.9122 	& 2.6138 \\
+	Torrance-Sparrow 	&	61.1278 	& 2.4911 \\
+	Oren-Nayar 			&	61.1395 	& 2.6008 \\
+	\end{tabular}
+	\caption{{\it Mean accuracy and standard deviation over 5 repetitions for the shiny/glossy material dataset for 36 images in the training set and 18 images in the test set}}
+	\label{tab:SpecularResultsB}
+\end{table}
 \begin{figure}[H]
 	\begin{center}
 		\subfigure[T1 dataset]{\epsfig{file=images/results/T1_specular.eps, width=0.75\linewidth}}
 	\end{center}
 	\caption{{\it Results on the T1 dataset for specular materials}}
-	\label{fig:results_B}
+	\label{fig:SpecularPlotB}
 \end{figure}
 
-\end{comment}
+
+
