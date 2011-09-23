@@ -10,7 +10,7 @@ There are two possible methods to represent the random surface. Both methods use
 
 The second method uses distributions of primitive shapes to represent the surface. Asserting the assumption $\lambda^2 \ll da \ll dA$, where wavelength of light $\lambda$ is much smaller than the facet area $da$, and the facet area $da$ is much smaller than the area $dA$ (which is a pixel on the surface), geometric optics can be used to derive the reflectance models. 
 
-Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane. 
+Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane \cite{TorranceSparrow}. 
 
 \section{Geometric Optics}
 The idea of describing the surface as a collection of microfacets is originally developed in the field of optics and radiation transfer. Microfacets with respect to computer graphics has first been addressed by Blinn \cite{Blinn}. He proposed that a model for computer simulation could be composed from the following factors:
@@ -99,7 +99,7 @@ A simplified version of the Fresnel equations is given by Schlick \cite{Schlick}
 
 
 \section{Oren-Nayar Reflectance}\label{sec:OrenNayar}
-A big deficiency in approximating the body reflectance under the Lambertian assumption is that its view independent. This results in inaccurate approximations for several real-world objects, as experiments have demonstrated on rough diffuse surfaces such as plaster, sand and clothing \cite{OrenNayar}. The main issue with Lambertian reflection for diffuse objects is that it creates high contrasts around the occluding boundaries of an object (such as a clay vase). \todo{Figure \ref{fig:OrenNayarExplained}} explains with the use of microfacets why the occluding boundaries created by Lambertian reflectance tend to be too dark.
+A big deficiency in approximating the body reflectance under the Lambertian assumption is that its view independent. This results in inaccurate approximations for several real-world objects, as experiments have demonstrated on rough diffuse surfaces such as plaster, sand and clothing \cite{OrenNayar}. The main issue with Lambertian reflection for diffuse objects is that it creates high contrasts around the occluding boundaries of an object.
 
 To overcome this deficiency, M. Oren and S.K. Nayar propose a more general reflection model for diffuse surfaces \cite{OrenNayar} \cite{ImprovedDiffuse}, which borrows ideas from modeling the surface as a collection of microfacets as proposed for the Cook-Torrance or Torrance-Sparrow models. Microfacets are assumed to be perfectly Lambertian in reflection. This does not imply that surfaces are reflecting perfectly Lambertian however, since combination of all factors included produces accurate diffuse reflection also for non-Lambertian diffuse surfaces. 
 
