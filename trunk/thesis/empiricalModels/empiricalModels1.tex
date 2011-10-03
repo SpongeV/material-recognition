@@ -83,3 +83,18 @@ Replacing $\theta_s$ with $\theta_h$ doesn't give the same reflectance function 
 Another modification of Phong reflectance is Ashikhmin-Shirley Anisotropic Phong reflectance \cite{AshikhminShirley}, which includes a Fresnel term in the equations. The model also deals with conservation of energy and allows for anisotropic specular lobes.
 
 While these models can express more BRDFs than the models described in this chapter, they do need a lot more parameters to be set. Since these parameters are unknown for the materials in this research and are expensive to obtain by computation, these models are left for future research.
+
+\begin{figure}[htbp!]
+	\begin{center}
+		\subfigure[aab]{\epsfig{file=images/rendered/aab.0.75.330.PhoTex.eps, width=0.2\linewidth}}
+		\subfigure[acd]{\epsfig{file=images/rendered/acd.0.60.330.PhoTex.eps, width=0.2\linewidth}}
+		\subfigure[add]{\epsfig{file=images/rendered/add.0.75.270.PhoTex.eps, width=0.2\linewidth}}
+
+		\subfigure[Lambertian]{\epsfig{file=images/rendered/aab.0.75.330.Lambertian.eps, width=0.2\linewidth}}
+		\subfigure[Phong]{\epsfig{file=images/rendered/acd.0.60.330.Phong.eps, width=0.2\linewidth}}
+		\subfigure[Blinn-Phong]{\epsfig{file=images/rendered/add.0.75.270.Blinn.eps, width=0.2\linewidth}}
+	\end{center}
+	\caption{{\it Examples of original and their respective synthetic images. The top row shows the original images and the bottom row shows images the synthetic images.}}
+	\label{fig:RenderExamples1}
+\end{figure}
+

@@ -10,7 +10,15 @@ There are two possible methods to represent the random surface. Both methods use
 
 The second method uses distributions of primitive shapes to represent the surface. Asserting the assumption $\lambda^2 \ll da \ll dA$, where wavelength of light $\lambda$ is much smaller than the facet area $da$, and the facet area $da$ is much smaller than the area $dA$ (which is a pixel on the surface), geometric optics can be used to derive the reflectance models. 
 
-Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane \cite{TorranceSparrow}. 
+Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane \cite{TorranceSparrow}. In their original research, they used a simple Gaussian distribution:
+
+	\begin{eqnarray*}
+		D = e^{-(\alpha c_2)^2}
+	\end{eqnarray*}
+
+\noindent where D is the proportionate number of microfacets facing the direction in the direction of $\alpha$. In our case this would be the angle between the halfway vector $\vec{\mathbf{h}}$ and surface normal $\vec{\mathbf{n}}$.
+
+Different distributions models have been proposed by Blinn \cite{Blinn} and Cook and Torrance \cite{DigitalModeling}. However, in this research we only use the distribution model proposed by Blinn.
 
 \section{Geometric Optics}
 The idea of describing the surface as a collection of microfacets is originally developed in the field of optics and radiation transfer. Microfacets with respect to computer graphics has first been addressed by Blinn \cite{Blinn}. He proposed that a model for computer simulation could be composed from the following factors:
@@ -147,4 +155,15 @@ For the modeling of a surface, they propose to use a Gaussian Slope-Area distrib
 \noindent A more simplified version was proposed by the authors, leaving out the interreflection term, since the above equations are too complex to apply in rendering software in general. In this research however, the experimental setup for finding good parameter settings showed that the error in image quality is significantly smaller than when using the simplified equations. For this reason, the choice was made to use the original model for Gaussian Slope-Area distribution.
 
 
+\begin{figure}[htbp!]
+	\begin{center}
+		\subfigure[adb]{\epsfig{file=images/rendered/adb.0.60.210.PhoTex.eps, width=0.2\linewidth}}
+		\subfigure[adh]{\epsfig{file=images/rendered/adh.0.45.240.PhoTex.eps, width=0.2\linewidth}}
+
+		\subfigure[Oren-Nayar]{\epsfig{file=images/rendered/adb.0.60.210.OrenNayar.eps, width=0.2\linewidth}}\label{fig:acd1}
+		\subfigure[Torrance-Sparrow]{\epsfig{file=images/rendered/adh.0.45.240.TorranceSparrow.eps, width=0.2\linewidth}}\label{fig:aab1}
+	\end{center}
+	\caption{{\it Examples of original and their respective synthetic images. The top row shows the original images and the bottom row shows images the synthetic images.}}
+	\label{fig:RenderExamples2}
+\end{figure}
 
