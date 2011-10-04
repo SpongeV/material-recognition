@@ -3,20 +3,20 @@
 
 \noindent In the previous section, the reflection models were based on empirical observations. Research in optics found that these models deviate from reality in a number of aspects. In this section, a more physically correct class of reflection models will be outlined. They are called {\it first principles} models because they apply basic laws of physics on a microscopic scale. The interaction of light on this microscopic scale in turn determines how the light gets reflected from the surface. The light interaction could be described by either wave or geometric optics, but only geometric optics based models are discussed in this research.
 
-The models described here start by modeling the surface geometry at microscopic scale. Rather than providing an exact description of this structure, the assumption is made that the surface varies randomly in height and orientation of facets. With this assumption, its possible to use statistical models to model surface structures.
+The models described here start by modeling the surface geometry at microscopic scale. Rather than providing an exact description of this structure, the assumption is made that the surface varies randomly in height and orientation of facets. With this assumption, it is possible to use statistical models to model surface structures.
 
-\section{Surface Roughness Model}
-There are two possible methods to represent the random surface. Both methods use small differently oriented areas in their representation, also called microfacets. The first method is to model the surface using a random process such as described by Beckmann and Spizzichino \cite{BeckmannSpizzichino}. They suggest to build the surface by using coin-flipping a procedure to decide to increase, decrease one or two units or stay on the same level. Although the resulting surface will have a desirable randomness, it is very complex to derive reflectance models using this method. 
+\section{Surface Roughness Model}\label{sec:SRM}
+There are two possible methods to represent the random surface. Both methods use small differently oriented areas in their representation, also called microfacets. The first method is to model the surface using a random process such as described by Beckmann and Spizzichino \cite{BeckmannSpizzichino}. They suggest to build the surface by using coin-flipping as a procedure to decide whether to increase, decrease one or two units or stay on the same level. Although the resulting surface will have a desirable randomness, it is very complex to derive reflectance models using this method. 
 
-The second method uses distributions of primitive shapes to represent the surface. Asserting the assumption $\lambda^2 \ll da \ll dA$, where wavelength of light $\lambda$ is much smaller than the facet area $da$, and the facet area $da$ is much smaller than the area $dA$ (which is a pixel on the surface), geometric optics can be used to derive the reflectance models. 
+The second method uses distributions of primitive shapes to represent the surface. Asserting the assumption $\lambda^2 \ll da \ll dA$, where the wavelength of light $\lambda$, is much smaller than the facet area $da$, and the facet area $da$ is much smaller than the area $dA$ (which is a pixel on the surface), geometric optics can be used to derive the reflectance models. 
 
 Torrance and Sparrow suggest to represent the surface as a composition of symmetric V-cavities, where each microfacet has a height much bigger than their width and the upper edges are all laying in the same plane \cite{TorranceSparrow}. In their original research, they used a simple Gaussian distribution:
 
 	\begin{eqnarray*}
-		D = e^{-(\alpha c_2)^2}
+		D = e^{-(\alpha \sigma)^2}
 	\end{eqnarray*}
 
-\noindent where D is the proportionate number of microfacets facing the direction in the direction of $\alpha$. In our case this would be the angle between the halfway vector $\vec{\mathbf{h}}$ and surface normal $\vec{\mathbf{n}}$.
+\noindent where D is the proportionate number of microfacets oriented in the direction of $\alpha$ and $\sigma$ is the standard deviation. In our case this would be the angle between the halfway vector $\vec{\mathbf{h}}$ and surface normal $\vec{\mathbf{n}}$.
 
 Different distributions models have been proposed by Blinn \cite{Blinn} and Cook and Torrance \cite{DigitalModeling}. However, in this research we only use the distribution model proposed by Blinn.
 
@@ -24,13 +24,13 @@ Different distributions models have been proposed by Blinn \cite{Blinn} and Cook
 The idea of describing the surface as a collection of microfacets is originally developed in the field of optics and radiation transfer. Microfacets with respect to computer graphics has first been addressed by Blinn \cite{Blinn}. He proposed that a model for computer simulation could be composed from the following factors:
 
 \begin{itemize}
-	\item{ The number of microfacets that are facing the orientation of the viewing direction, and what is the projected area of the facets into the viewing direction. This is computed by the slope distribution function. }
-	\item{ How much can an unobstructed microfacet reflect? This is mainly dependent on a given reflectance function for the microfacet. This is general is either Lambertian or pure specular. See figure \ref{fig:GAF}(a) for an example using pure specular reflectance}
+	\item{ The number of microfacets that are facing the orientation of the viewing direction, and the projected area of the facets into the viewing direction. This is computed by the slope distribution function. }
+	\item{ How much can an unobstructed microfacet reflect? This is mainly dependent on a given reflectance function for the microfacet. Generally, this is  either Lambertian or pure specular. See figure \ref{fig:GAF}(a) for an example using pure specular reflectance}
 	\item{ How much incoming light on a microfacet gets blocked by other microfacets, causing shadows to appear on the blocked microfacet when observing the microfacet from certain angles (see figure \ref{fig:GAF}(b)).} 
 	\item{ How much reflected light into the viewing direction gets blocked by other microfacets, causing the amount of radiance reaching the viewer to be smaller than the amount of radiance that gets reflected from the microfacet. This phenomenon is called masking, and is also shown in figure \ref{fig:GAF}(c). }
 \end{itemize}
 
-The shadowing and masking of the microfacets need additional geometric analysis next to the slope distribution. The most common way to deal with this analysis is to assume that the microfacets form V-shaped cavities as shown in the example images. This approach has been challenged since the assumption is inconsistent with the assumption of a random looking surface, but it makes geometric analysis much easier.
+The shadowing and masking of the microfacets need additional geometric analysis next to the slope distribution. The most common way to deal with this analysis is to assume that the microfacets form V-shaped cavities as shown in the example images. This approach has been challenged since the assumption is inconsistent with the assumption of a random looking surface, but it simplifies geometric analysis.
 
 Another case of geometric analysis which can be included, is the phenomenon of interreflection. This happens when radiance is being exchanged between two diffuse surfaces, and causes the effect of color bleeding. The analysis is included in the reflection model proposed by Oren and Nayar, and is described in section \ref{sec:OrenNayar}.
 
@@ -41,13 +41,13 @@ Another case of geometric analysis which can be included, is the phenomenon of i
 		\subfigure[Masking]{\epsfig{file=images/MicroMasking.eps, width=0.4\linewidth}}
 		\subfigure[Interreflection]{\epsfig{file=images/MicroInterreflection.eps, width=0.4\linewidth}}
 	\end{center}
-	\caption{Four cases of light interaction on microfacets.}
+	\caption{{\it Four cases of light interaction on microfacets. The top-left of each image shows the direction of the viewer ($\vec{\mathbf{v}}$), surface normal ($\vec{\mathbf{n}}$) and light source ($\vec{\mathbf{l}}$).}}
 	\label{fig:GAF}
 \end{figure}
 
 
 \section{Torrance-Sparrow Reflectance}\label{sec:CookTorrance}
-	The results of experiments conducted by Sparrow and Torrance \cite{TorranceSparrow} showed that Phong reflectance does closely simulates the behavior of the specular component on shiny/glossy surfaces. However, some differences were reported, with the main difference being that the specular bump varies with the direction of the light source. Also, the specular reflection is not always reflected in the halfway vector H. 
+	The results of experiments conducted by Sparrow and Torrance \cite{TorranceSparrow} showed that Phong reflectance closely simulates the behavior of the specular component on shiny/glossy surfaces. However, some differences were reported, with the main difference being that the specular bump varies with the direction of the light source. Also, the specular reflection is not always reflected in the halfway vector H. 
 
 Torrance and Sparrow derived models to explain these differences, and Blinn translated these models to be useful in computer graphics. The specular component can be described as a function of four factors: 
 	
@@ -55,17 +55,17 @@ Torrance and Sparrow derived models to explain these differences, and Blinn tran
 		f_r = \frac{F(\theta_h)D(\theta_h)G(\theta_i,\theta_r)}{\vec{\mathbf{n}} \cdot \vec{\mathbf{e}}}
 	\end{eqnarray*}
 
-\noindent where $D$ is the distribution function of the directions of the microfacets. Each microfacet is assumed to be perfectly specular. $G$ contributes the amount of light that gets masked and/or shaded by other microfacets, and $F$ is the Fresnel reflection law.
+\noindent where $D$ is the distribution function of the directions of the microfacets. Each microfacet is assumed to be perfectly specular. $G$ contributes the amount of light that gets masked and/or shaded by other microfacets, and $F$ is the Fresnel reflection law. All three components will be addressed in this section.
 
 Taking into account that the observer sees more of the microfacet surface area when the surface is tilted, this tilt angle is included in the division in the above equation as $\vec{\mathbf{n}} \cdot \vec{\mathbf{e}}$, since this observed area is inversely proportional to the cosine of the tilt angle.
 
-The distribution function used by Torrance and Sparrow was a simple Gaussian function, $D = e^{-(\alpha c)^2}$, where $c$ is the standard deviation and $D$ is the amount of microfacets oriented at an angle $\alpha$, the angle between the facing direction of the microfacets and the surface normal. Since we are only interested in the microfacets pointing into the direction of $\vec{\mathbf{h}}$, the angle $\alpha = \theta_h$. Blinn used a different function however, developed by Trowbridge and Reitz, and suggests modeling the microfacet distribution as ellipsoids:
+The distribution function used by Torrance and Sparrow was a simple Gaussian function as explained in section \ref{sec:SRM}. Blinn used a different distribution function, developed by Trowbridge and Reitz \todo{cite}, and suggests modeling the microfacet distribution as ellipsoids:
 
 	\begin{eqnarray*}
 		D_{Blinn}(\theta_h) = \left({ \frac{m^2}{\cos^2(\theta_h)(m^2-1)+1} } \right)^2
 	\end{eqnarray*}
 
-\noindent In the above equation, the parameter $m$ controls the eccentricity of the ellipsoid. When set to 0, the distribution defines a shiny surface, and when set to 1, it defines a rough surface.
+\noindent In the above equation, the parameter $m$ controls the \todo{eccentricity} of the ellipsoid. When set to 0, the distribution defines a shiny surface, and when set to 1, it defines a rough surface.
 
 The factor $G$ in the specular reflection equation accounts for the effect of masking and shadowing of microfacets. This factor is also called the \textit{geometrical attenuation factor}, and gives a value between 0 and 1 to represent the amount of light remaining after shadowing/masking. The method described by Blinn to calculate this factor assumes symmetrical identical V-shaped cavities as stated earlier. 
 
@@ -107,9 +107,9 @@ A simplified version of the Fresnel equations is given by Schlick \cite{Schlick}
 
 
 \section{Oren-Nayar Reflectance}\label{sec:OrenNayar}
-A big deficiency in approximating the body reflectance under the Lambertian assumption is that its view independent. This results in inaccurate approximations for several real-world objects, as experiments have demonstrated on rough diffuse surfaces such as plaster, sand and clothing \cite{OrenNayar}. The main issue with Lambertian reflection for diffuse objects is that it creates high contrasts around the occluding boundaries of an object.
+A big deficiency in approximating the body reflectance under the Lambertian assumption is that it is view independent. This results in inaccurate approximations for several real-world objects, as experiments have demonstrated on rough diffuse surfaces such as plaster, sand and clothing \cite{OrenNayar}. The main issue with Lambertian reflection for diffuse objects is that it creates high contrasts around the occluding boundaries of an object.
 
-To overcome this deficiency, M. Oren and S.K. Nayar propose a more general reflection model for diffuse surfaces \cite{OrenNayar} \cite{ImprovedDiffuse}, which borrows ideas from modeling the surface as a collection of microfacets as proposed for the Cook-Torrance or Torrance-Sparrow models. Microfacets are assumed to be perfectly Lambertian in reflection. This does not imply that surfaces are reflecting perfectly Lambertian however, since combination of all factors included produces accurate diffuse reflection also for non-Lambertian diffuse surfaces. 
+To overcome this deficiency, M. Oren and S.K. Nayar propose a more general reflection model for diffuse surfaces \cite{OrenNayar} \cite{ImprovedDiffuse}, which borrows ideas from modeling the surface as a collection of microfacets as proposed for the Cook-Torrance or Torrance-Sparrow models. Microfacets are assumed to be perfectly Lambertian in reflection. This does not imply that surfaces are reflecting perfectly Lambertian however, since the combination of all factors included produces accurate diffuse reflection also for non-Lambertian diffuse surfaces. 
 
 The general form of the equation consists of two part:
 
@@ -121,7 +121,7 @@ The general form of the equation consists of two part:
 
 %In their original paper, Oren and Nayar discussed various slope distributions for the distribution of of microfacets. Using an uni-directional single-slope distribution (representing an anisotropic surface), they derive a geometric attenuation factor similar to that derived by Torrance and Sparrow. Their analysis continues by considering distributions for isotropic surfaces. However, those distribution models assume equal slopes for all microfacets, which isn't realistic. 
 
-For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turned out too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis:
+For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turned out to be too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis:
 
 	\begin{eqnarray*}
 		f_r^1 = \frac{\rho}{\pi}L_i\cos(\theta_i)\left[C_1+\cos(\phi_r-\phi_i)C_2\tan(\beta) 
