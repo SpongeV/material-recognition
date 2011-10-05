@@ -121,7 +121,8 @@ The general form of the equation consists of two part:
 
 %In their original paper, Oren and Nayar discussed various slope distributions for the distribution of of microfacets. Using an uni-directional single-slope distribution (representing an anisotropic surface), they derive a geometric attenuation factor similar to that derived by Torrance and Sparrow. Their analysis continues by considering distributions for isotropic surfaces. However, those distribution models assume equal slopes for all microfacets, which isn't realistic. 
 
-For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turned out to be too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis:
+For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turned out to be too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis: \todo{explain approximation done by using basis functions}
+
 
 	\begin{eqnarray*}
 		f_r^1 = \frac{\rho}{\pi}L_i\cos(\theta_i)\left[C_1+\cos(\phi_r-\phi_i)C_2\tan(\beta) 
@@ -152,8 +153,7 @@ For the modeling of a surface, they propose to use a Gaussian Slope-Area distrib
 		f_r^2 = 0.17\frac{\rho^2}{\pi}L_i\cos(\theta_i)\frac{\sigma^2}{\sigma^2+0.13}\left[1-\cos(\phi_r-\phi_i)\left( \frac{2\beta}{\pi} \right)^2 \right]
 	\end{eqnarray*}
 
-\noindent A more simplified version was proposed by the authors, leaving out the interreflection term, since the above equations are too complex to apply in rendering software in general. In this research however, the experimental setup for finding good parameter settings showed that the error in image quality is significantly smaller than when using the simplified equations. For this reason, the choice was made to use the original model for Gaussian Slope-Area distribution.
-
+\noindent A more simplified version was proposed by the authors, leaving out the interreflection term, since the above equations are too complex to apply in rendering software in general. In this research however, we aim at simulating reflection as close to real light interaction as possible, thus the choice was made to use the original model for Gaussian Slope-Area distribution.
 
 \begin{figure}[htbp!]
 	\begin{center}
