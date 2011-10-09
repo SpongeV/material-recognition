@@ -12,7 +12,7 @@ In general, for Lambertian reflectance, the amount of light observed by the view
 			L_o(\omega_i) = \frac{k_d}{\pi}I_p\cos\theta_i
 		\end{eqnarray*}
 
-Here, irradiance $E_L$ is defined as $I_p$, the intensity of the point light source, and the BRDF is given by $k_d$, also known as the {\it diffuse reflection coefficient}, which varies between 0 and 1 and is material dependent. The term $\pi$ in the denominator is a normalization factor for energy conservation. The cosine term is defined between $0^0$ and $90^0$. This means that the surface is treated as \todo{self-occluding} --- angles outside this range will result in negative values for the cosine term and are treated as $\max({0,\cos\theta_i})$, resulting in zero intensity falling on the surface. If both $\vec{\mathbf{n}}$ and $\vec{\mathbf{l}}$ are normalized, we can write the equation as:
+Here, irradiance $E_L$ is defined as $I_p$, the intensity of the point light source, and the BRDF is given by $k_d$, also known as the {\it diffuse reflection coefficient}, which varies between 0 and 1 and is material dependent. The term $\pi$ in the denominator is a normalization factor for energy conservation. The cosine term is defined between $0^0$ and $90^0$. This means that the surface is treated as self-occluding --- angles outside this range will result in negative values for the cosine term and are treated as $\max({0,\cos\theta_i})$, resulting in zero intensity falling on the surface. If both $\vec{\mathbf{n}}$ and $\vec{\mathbf{l}}$ are normalized, we can write the equation as:
 
 		\begin{eqnarray*}
 			L_o(\omega_i) = \frac{k_d}{\pi}I_p(\vec{\mathbf{n}} \cdot \vec{\mathbf{l}})

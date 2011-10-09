@@ -59,13 +59,13 @@ Torrance and Sparrow derived models to explain these differences, and Blinn tran
 
 Taking into account that the observer sees more of the microfacet surface area when the surface is tilted, this tilt angle is included in the division in the above equation as $\vec{\mathbf{n}} \cdot \vec{\mathbf{e}}$, since this observed area is inversely proportional to the cosine of the tilt angle.
 
-The distribution function used by Torrance and Sparrow was a simple Gaussian function as explained in section \ref{sec:SRM}. Blinn used a different distribution function, developed by Trowbridge and Reitz \todo{cite}, and suggests modeling the microfacet distribution as ellipsoids:
+The distribution function used by Torrance and Sparrow was a simple Gaussian function as explained in section \ref{sec:SRM}. Blinn used a different distribution function, developed by Trowbridge and Reitz \cite{TrowbridgeReitz}, and suggests modeling the microfacet distribution as ellipsoids:
 
 	\begin{eqnarray*}
 		D_{Blinn}(\theta_h) = \left({ \frac{m^2}{\cos^2(\theta_h)(m^2-1)+1} } \right)^2
 	\end{eqnarray*}
 
-\noindent In the above equation, the parameter $m$ controls the \todo{eccentricity} of the ellipsoid. When set to 0, the distribution defines a shiny surface, and when set to 1, it defines a rough surface.
+\noindent In the above equation, the parameter $m$ controls the eccentricity of the ellipsoids. When set to 0, the distribution defines a shiny surface, and when set to 1, it defines a rough surface.
 
 The factor $G$ in the specular reflection equation accounts for the effect of masking and shadowing of microfacets. This factor is also called the \textit{geometrical attenuation factor}, and gives a value between 0 and 1 to represent the amount of light remaining after shadowing/masking. The method described by Blinn to calculate this factor assumes symmetrical identical V-shaped cavities as stated earlier. 
 
@@ -121,7 +121,7 @@ The general form of the equation consists of two part:
 
 %In their original paper, Oren and Nayar discussed various slope distributions for the distribution of of microfacets. Using an uni-directional single-slope distribution (representing an anisotropic surface), they derive a geometric attenuation factor similar to that derived by Torrance and Sparrow. Their analysis continues by considering distributions for isotropic surfaces. However, those distribution models assume equal slopes for all microfacets, which isn't realistic. 
 
-For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turned out to be too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis: \todo{explain approximation done by using basis functions}
+For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turns out to be too difficult, approximations of this integral were made using numerical evaluations. By The resulting equations are therefore not a result of analysis: 
 
 
 	\begin{eqnarray*}
@@ -153,14 +153,31 @@ For the modeling of a surface, they propose to use a Gaussian Slope-Area distrib
 		f_r^2 = 0.17\frac{\rho^2}{\pi}L_i\cos(\theta_i)\frac{\sigma^2}{\sigma^2+0.13}\left[1-\cos(\phi_r-\phi_i)\left( \frac{2\beta}{\pi} \right)^2 \right]
 	\end{eqnarray*}
 
-\noindent A more simplified version was proposed by the authors, leaving out the interreflection term, since the above equations are too complex to apply in rendering software in general. In this research however, we aim at simulating reflection as close to real light interaction as possible, thus the choice was made to use the original model for Gaussian Slope-Area distribution.
+The main difference in diffuse reflection with respect to the Lambertian reflection model is that the Oren-Nayar model simulates incident light reflected back towards the light source. When light falls upon a diffuse rough surface with Lambertian microfacets, the microfacets oriented in the direction of the light source will receive more incident light than other the microfacets and would appear brighter when observed. In figure \ref{fig:Backscatter}(a) both microfacets are fully illuminated by the light source. However, since microfacet A receives more incident light than microfacet B, microfacet A will appear more bright and microfacet B more dark. When observing the surface from a point such that the angle between viewing direction and light source direction is relatively large, the observer perceives more of the dark microfacet B than the bright microfacet A, as shown in figure \ref{fig:Backscatter}(b). When the observers moves towards the direction of the light source, thus making the angle between the viewing direction and the light source direction smaller, the observer will gradually perceive more of the brighter microfacet A, as shown in figure \ref{fig:Backscatter}(c).
 
-\begin{figure}[htbp!]
+
+This phenomenon is called backscattering and causes the observation to have less contrast when angle between the viewpoint direction and light source direction is small. The Oren-Nayar model could potentially deal with the hard contrast that is created by Lambertian reflectance.
+
+A more simplified version was proposed by the authors \ref{OrenNayar}, leaving out the interreflection term, since the above equations are too complex to apply in rendering software in general. In this research however, we aim at simulating reflection as close to real light interaction as possible, thus the choice was made to use the original model for the Gaussian Slope-Area distribution.
+
+\begin{figure}[ht]
+	\begin{center}
+		\subfigure[]{\epsfig{file=images/Backscatter1.eps, width=0.3\linewidth}}
+
+		\subfigure[]{\epsfig{file=images/Backscatter2.eps, width=0.3\linewidth}}
+		\subfigure[]{\epsfig{file=images/Backscatter3.eps, width=0.3\linewidth}}
+	\end{center}
+	\caption{{\it Backscattering of light. The perceived radiant exitance increases when the viewer moves towards the light source direction.}}
+	\label{fig:Backscatter}
+\end{figure}
+
+
+\begin{figure}[ht]
 	\begin{center}
 		\subfigure[adb]{\epsfig{file=images/rendered/adb.0.60.210.PhoTex.eps, width=0.2\linewidth}}
 		\subfigure[adh]{\epsfig{file=images/rendered/adh.0.45.240.PhoTex.eps, width=0.2\linewidth}}
 
-		\subfigure[Oren-Nayar]{\epsfig{file=images/rendered/adb.0.60.210.OrenNayar.eps, width=0.2\linewidth}}\label{fig:acd1}
+		\subfigure[Oren-Nayar]{\epsfig{file=images/rendered/adb.0.60.210.OrenNayar.eps, width=0.2\linewidth}}
 		\subfigure[Torrance-Sparrow]{\epsfig{file=images/rendered/adh.0.45.240.TorranceSparrow.eps, width=0.2\linewidth}}\label{fig:aab1}
 	\end{center}
 	\caption{{\it Examples of original and their respective synthetic images. The top row shows the original images and the bottom row shows images the synthetic images.}}
