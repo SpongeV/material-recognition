@@ -32,463 +32,88 @@
 \frame{\tableofcontents}
 
 %==================================================================================================================================
-\section{Task Description}
+\section{Introduction}
 \frame{
-	\frametitle{Task Description}
-		\begin{description}
-			\item [What is the goal of this thesis?] 
-			\item \myemph{Orientation estimation} --- direction in which a person is looking --- using a \myemph{single ceiling-mounted camera}.
-		\end{description}
-		\begin{description}
-			\item [Why do we want to estimate orientations?] 
-			\item Useful for \myemph{analyzing social interaction} or as a part of a \myemph{surveillance system}, or even for \myemph{targeted advertisement}.
-		\end{description}
-		\begin{description}
-			\item [Why is this difficult?] 
-			\item The large \myemph{variance} in data due to the positioning of the camera, the changes in the \myemph{illumination}, the \myemph{low quality} of the images.
-		\end{description}
-		\transwipe
+	\frametitle{Material Recognition}
+}
+\frame{
+	\frametitle{Texture Synthesis}
+}
+\frame{
+	\frametitle{Goal of this thesis}
 }
 %==================================================================================================================================
-\section{Preliminary Steps}
-\subsection{People-detection System \& Camera Calibration}
+\section{Related Work}
 \frame{
-	\frametitle{People-detection System \& Camera Calibration}
-%	\begin{block}{Why do we want good camera calibration?}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/Calib.eps, width=1.0\linewidth}
-%		\end{figure}
-%	\end{block}	
-	\begin{itemize}
-		\item \myemph{Backproject} the feet location from \myemph{2D} to \myemph{3D}.
-		\item Build a \myemph{3D} bounding box in real-world considering the average human height.
-		\item \myemph{Project} the \myemph{3D} bounding box in the image plane.
-	\end{itemize}
-	\transwipe
+	\frametitle{Textons \& Filter Banks}
 }
+\frame{
+	\frametitle{Multivariate Gaussian Distributions}
+}
+\frame{
+	\frametitle{Minimal Training Images}
+}
+
 %==================================================================================================================================
-\subsection{Data Preprocessing}
+\section{Approach}
 \frame{
-	\frametitle{Data Preprocessing}
-	\label{fr:prerpocess}
-	We extract the foreground by thresholding the \myemph{background mask} or using the ground-truth annotations.	
-%	\begin{block}{We can use the \myemph{head area}, \myemph{upper half} or \myemph{complete} foreground area}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\hyperlink{fr:experiment5}{\epsfig{file=images/Preprocess2.eps, width=1.0\linewidth}}
-%		\end{figure}
-%	\end{block}	
-	\vspace*{7px}   
-	We rotate the foreground area and the target angles with $\theta^{\prime}$:
-	\begin{block}{}
-		\begin{equation*}
-			\theta^\prime = \frac{\pi}{2} + \theta
-			\quad\text{where}\quad\theta = \arctan(\frac{y_{head} - y_{feet} }{x_{head} - x_{feet}})
-		\end{equation*}
-	\end{block}	
-	\transwipe
+	\frametitle{Photometric Stereo}
 }
+\frame{
+	\frametitle{PhoTex Database}
+}
+\frame{
+	\frametitle{Generation of novel data}
+}
+
 %==================================================================================================================================
-\section{Feature Extraction}
+\section{Fundamentals}
 \frame{
-	\frametitle{Feature Extraction}
-	\begin{enumerate}
-		\item We can extend the data with the \myemph{horizontally flipped} versions of the rotated images.
-		\vspace*{10px}     
-		\item We add the \myemph{distance} between the projection of the camera coordinates and \myemph{the person} to each feature vector.
-		\vspace*{10px}     
-		\item The \myemph{motion direction} can also be added to the feature vector.
-		\vspace*{10px}     
-		\item \myemph{Multiple features} can be concatenated and \myemph{PCA} employed.	
-		\vspace*{10px}     
-		\item The feature vectors are normalized to have \myemph{zero mean and identity covariance}.
-	\end{enumerate}
-	\transwipe
+	\frametitle{Local Reflection}
 }
+\frame{
+	\frametitle{Lambert's Cosine Law}
+}
+
 %==================================================================================================================================
-\subsection{Description of the Extracted Features}
+\section{Reflection Models}
 \frame{
-	\frametitle{Gabor responses}
-	We convolve the input image with a set of symmetrical, small-scale \myemph{Gabor filters} with the orientations: $\frac{\pi}{6},\frac{\pi}{3},\frac{\pi}{2},\frac{2\pi}{3},\frac{5\pi}{6}$.
-%	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/GaborFilters.eps, width=0.9\linewidth}
-%		\end{figure}	
-%	\end{block}
-	\vspace*{15px}     
-	The resulted \myemph{Gabor responses} are horizontally concatenated.
-%	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/GaborResponses.eps, width=0.9\linewidth}
-%		\end{figure}	 	
-%	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Template Matching}
-	8 head-templates are created for the orientations: $0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}$.
-%	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/TemplateHeads.eps, width=0.9\linewidth}
-%		\end{figure}	 	
-%	\end{block}
-	\vspace*{10px}     
-	\begin{itemize}
-	\item They are resized to the head size given by the detection-templates.
-	\item Are matched against overlapping regions in the input image using the \myemph{OpenCV} template-matching function.
-	\end{itemize}
-%	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/TemplateResponses.eps, width=0.9\linewidth}
-%		\end{figure}	 	
-%	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Raw pixel values}
-		For this case multiple situations have been tested: 
-		\vspace*{10px}  
-		\begin{itemize}
-			\item Using the grayscale image.
-			\vspace*{5px}  
-			\item Using the \myemph{saturation channel} of the \myemph{HSV} colorspace 
-			\vspace*{5px}  
-			\item Using the concatenated color channels of the \myemph{BGR} colorspace.
-		\end{itemize}
-		\vspace*{10px}  
-	\begin{block}{Grayscale image, saturation channel \& concatenated color channels}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/RawPixels.eps, width=0.9\linewidth}
-%		\end{figure}	 	
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Other features}
-	Other implemented features are:
-	\vspace*{7px}  
-	\begin{itemize}
-	\item \myemph{Grid of interest points} --- uses \myemph{Harris corner} detector and \myemph{MSERs (maximally-stable extremal regions)} 
-	\item \myemph{Mask of skin pixels}
-	\item \myemph{Edges and contours} --- use \myemph{Canny edge detector}
-	\item \myemph{SURF (speeded up robust features)} descriptors --- rely on \myemph{Haar-wavelet} responses
-	\item \myemph{SIFT (scale invariant feature transform)} descriptors and the \myemph{codebook} method
-	\item \myemph{HoG (histograms of oriented gradients)} descriptors 
-	\end{itemize}
-	\transwipe
-}
-%==================================================================================================================================
-\section{Learners}
-\frame{
-	\frametitle{Classification vs. Regression}
-	\begin{description}
-		\item [Classification] 
-		\item Assigns each input vector to one of a finite number of \myemph{discrete classes}.
-	\end{description}
-	\begin{description}
-		\item [Regression] 
-		\item Learns to predict one or more \myemph{continuous variables}.
-	\end{description}
-	\vspace*{20px}  
-	The \myemph{longitudinal orientation} is a continuous variable in \myemph{[0, 360)}.\\	
-	\vspace*{15px}  
-	Due to the discontinuity between \myemph{360} degrees and \myemph{0} degrees, we learn on the \myemph{sine} and \myemph{cosine} of the target angles.
-	\transwipe	 
-}
-%==================================================================================================================================
-\subsection{Learners for classification and regression}
-\frame{
-	\frametitle{Learners for classification and regression}
-	Implemented learners for classification:
-	\vspace*{7px}  
-	\begin{itemize}
-	\item \myemph{K-nearest neighbor}, for the experiments \myemph{k} is set to \myemph{3}
-	\vspace*{7px}  
-	\item \myemph{Eigen-orientations}
-	\end{itemize}
-	\vspace*{20px}  
-	Implemented learners for regression:
-	\vspace*{7px}  
-	\begin{itemize}
-	\item \myemph{Multi-layer perceptron} --- 2 layers of hidden units, 100 nodes in each layer	
-	\vspace*{7px}  
-	\item \myemph{Gaussian process}
-	\end{itemize}
-	\transwipe	
-}
-\subsection{The Gaussian process}
-\frame{
-	\frametitle{Regression --- Gaussian Process}
-	\begin{block}{}
-		\begin{center}
-			\myemph{"The Gaussian process gives a prior probability to every possible function where higher probabilities are given to functions we consider 
-			more likely". [Rasmussen and Williams, 2006]}
-		\end{center}
-	\end{block}{}
-	\vspace*{5px}  	
-	A \myemph{Gaussian process} established a distribution over functions evaluated at a set of points $\boldsymbol{X}_*$: $\boldsymbol{f}^* \sim \mathcal{N}(0, \boldsymbol{K}(\boldsymbol{X}_*,\boldsymbol{X}_*))$.\\
-	\vspace*{20px}  	
-	A \myemph{Gaussian process} is completely specified by the:
-	\begin{itemize}
-		\item The \myemph{mean function}: $m(\boldsymbol{x})$ --- usually taken to be 0.
-		\item The \myemph{covariance function}: $k(\boldsymbol{x}_i,\boldsymbol{x}_j)$ --- the elements on row $i$ and column $j$ of the covariance matrix $\boldsymbol{K}$.	
-	\end{itemize}
-	\transwipe	
+	\frametitle{Lambertian}
 }
 \frame{
-	\frametitle{Regression --- Gaussian Process}
-	\label{fr:gp}
-	We train 2 \myemph{Gaussian processes} --- for the \myemph{sine} and the \myemph{cosine} of the prediction, $\alpha$, and the optimal prediction is $\arctan\frac{sin\alpha}{cos\alpha}$.\\
-	\vspace*{12px} 
-	The kernel function investigated are: \myemph{the squared-exponential}, \hyperlink{fr:maternFct}{\myemph{the exponential covariance (Mat\'ern covariance with $\nu = 0.5$)}}, \hyperlink{fr:maternFct}{\myemph{the}} \hyperlink{fr:maternFct}{\myemph{Mat\'ern covariance with $\nu = 1.5$}}, \hyperlink{fr:maternFct}{\myemph{the Mat\'ern covariance with}} \hyperlink{fr:maternFct}{\myemph{$\nu = 2.5$}}.\\
-	\vspace*{12px} 
-	Different \myemph{kernel functions} can be employed provided that they correspond to a \myemph{positive definite} covariance matrix.\\
-	\vspace*{12px} 
-	We weight the distance to the camera more than the rest of the feature by increasing the value of the \myemph{lengthscale}, in the covariance function, on the corresponding position in the feature vector.\\ 
-	\transwipe	
+	\frametitle{Phong}
+}
+\frame{
+	\frametitle{Blinn-Phong}
+}
+\frame{
+	\frametitle{Cook-Torrance}
+}
+\frame{
+	\frametitle{Oren-Nayar}
 }
 %==================================================================================================================================
 \section{Experiments}
 \frame{
-	\frametitle{Challenges of the Data}
-	\begin{enumerate}
-		\item The data is \myemph{noisy} and of \myemph{low quality}.
-		\item Usually, the \myemph{faces of the people} can not be observed.
-		\item People can be \myemph{occluded by background} objects and this makes the detection-system fail in the position estimation.
-		\item A large variance in the data is generated by the positions of the people \myemph{with respect to the camera}.	
-		\item It is difficult to correctly \myemph{align the foreground areas}.	
-	\end{enumerate}
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/Dataset2_var.eps, width=1.0\linewidth}
-%		\end{figure}
-	\end{block}
-	\transwipe
+	\frametitle{Two datasets}
 }
-\subsection{Data Description}
-\frame{\label{fr:dataset1}
-	\frametitle{Dataset 1}
-	It contains images of \myemph{2 people} at 4-5 locations in the ground plane and having orientations in the range [0, 360).\\ 
-	\begin{block}{A number of 1345 images are used in the experimental part}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\hyperlink{fr:experiment3}{\epsfig{file=images/Dataset1.eps, width=0.9\linewidth}}
-%		\end{figure}
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Dataset 2}
-	\label{fr:dataset2}
-	\begin{itemize}
-	\item \myemph{14 people} and \myemph{8 directions}: \{$0^o$, $45^o$, $90^o$, $135^o$, $180^o$, $225^o$, $270^o$, $315^o$\}
-	\item \myemph{72 images} annotated for each person --- \myemph{9 different positions} 
-	\item The camera is positioned at at higher altitude, thus \myemph{the quality} of the images \myemph{is lower}
-	\item Some of the people can be \myemph{very distinct} from the rest. 
-	\end{itemize}
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\hyperlink{fr:experiment2}{\epsfig{file=images/Dataset2.eps, width=0.9\linewidth}}
-%		\end{figure}
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Dataset 3}
-	Data used in \myemph{[Ozturk and Aizawa, 2009]} --- was recorded in \myemph{an airport} with a single \myemph{elevated sideway camera}.\\
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/Dataset3.eps, width=0.9\linewidth}
-%		\end{figure}
-	\end{block}
-	\vspace*{5px} 
-	Usually, the people are \myemph{walking in a specific direction} throughout the whole sequence in which they appear.\\
-	\transwipe
-}\frame{
-	\frametitle{Artificial dataset}
-	\label{fr:artificial}
-	Artificial data contains: \myemph{2} models of men and \myemph{2} models of women with 5 different appearances.\\ 
-	\vspace*{10px} 
-	\begin{itemize}	
-	\item \myemph{605} images close to camera\rq s position
-	\item \myemph{593} images farther from the camera\rq s position
-	\item \myemph{592} images far from the camera\rq s position
-	\end{itemize}	
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\hyperlink{fr:experiment5}{\epsfig{file=images/Artificial.eps, width=1.0\linewidth}}
-%		\end{figure}
-	\end{block}
-	\transwipe
+\frame{
+	\frametitle{Experiment A}
 }
+\frame{
+	\frametitle{Experiment B}
+}
+\frame{
+	\frametitle{Results}
+}
+
 %==================================================================================================================================
-\subsection{Experimental Setup \& Results}
+\section{Conclusion}
 \frame{
-	\frametitle{Experimental Setup}
-	The performance evaluation methods implemented are: 
-	\begin{itemize}
-		\item the \myemph{RMS (root-mean-squared error)}: $\sqrt{\frac{\sum_i \mid \theta_i - \theta^\prime_i\mid^2}{N}}$
-		\item the \myemph{normalized RMS}: $\sqrt{\frac{\sum_i \frac{\mid \theta_i - \theta^\prime_i\mid^2}{\pi^2}}{N}}$
-		\item the \myemph{average difference} between the target angles and the predictions: $\frac{\sum_i \mid \theta_i - \theta^\prime_i\mid}{N}$
-	\end{itemize}
-	\vspace*{25px}  
-	If $\Delta_i = \mid \theta_i - \theta^\prime_i\mid$ is larger than $\pi$, the quantity: $\Delta_i \leftarrow (2\pi - \Delta_i)$ is used instead.\\
-	\vspace*{7px}  	
-	These differences, $\Delta_i$, are binned in 18 bins and plotted.\\
-	\transwipe
+	\frametitle{Conclusion}
 }
-%==================================================================================================================================
-\frame{
-	\frametitle{Results 1 --- Comparison of learning methods}
-	\label{fr:experiment2}
-	\begin{block}{\centering \vspace*{5px}\myemph{Dataset 2} (\hyperlink{fr:dataset2}{12-fold cross-validation}), concatenated color channels on the upper half of the body\vspace*{5px}}
-	\begin{table}[htbp!]
-		\centering
-		\begin{tabular}{l l c}
-			\myemph{\mybf{Learner}} & \myemph{\mybf{Experimental Settings}} & \myemph{\mybf{RMS Error}}\\
-			& & \myemph{(Normalized RMS)}\\
-			\ghline
-			\myemph{NN}\tspace & \myemph{1 network, 2 outputs} & \myemph{\mybf{1.08} (0.34) --- 62 degrees}\\
-			\ghline
-			\myemph{NN}\tspace & \myemph{2 networks, 1 output each} & \myemph{\mybf{1.13} (0.36) --- 64 degrees}\\
-			\ghline
-			\myemph{NN}\tspace & \myemph{1 network, 4 outputs} & \myemph{\mybf{1.20} (0.38) --- 68 degrees}\\
-			\ghline	
-			\myemph{k-NN}\tspace & \myemph{2 separate classifiers} & \myemph{\mybf{1.08} (0.34) --- 60 degrees}\\
-			\ghline
-			\myemph{GP}\tspace & \myemph{2 separate learners} & \myemph{\mybf{1.01} (0.32) --- 57 degrees}\\
-		\end{tabular}
-	\end{table}
-	\end{block}
-	\transwipe
-}
-\frame{
-	\frametitle{Results 3 --- Generalization over people and positions}
-	\label{fr:experiment3}
-	\begin{block}{\centering \vspace*{5px}\myemph{Gaussian process} on the \myemph{concatenated color channels} over the \myemph{predicted head area}\vspace*{5px}}
-	\begin{table}[htbp!]
-		\centering
-		\begin{tabular}{l l l l}
-		\myemph{\mybf{Generalization}} & \myemph{\mybf{Dataset}} & \myemph{\mybf{Training\slash}} & \myemph{\mybf{RMS Error}}\\
-		& & \myemph{\mybf{Evaluation pts.}} & \myemph{(Normalized)}\\	
-		\ghline
-		\myemph{Over people}\tspace & \myemph{Dataset 2} & 11\slash1 (12-folds) & \myemph{\mybf{0.98} (0.31)}\\
-		& & & \myemph{56 degrees}\\
-		\ghline	
-		\myemph{Over positions}\tspace & \myemph{\hyperlink{fr:dataset1}{Dataset 1}} & 1\slash 1 (4 folds) & \myemph{\mybf{0.84} (0.26)}\\
-		& & & \myemph{48 degrees}\\
-		\ghline
-		\myemph{Over positions}\tspace & \myemph{Dataset 2} & 12\slash12 & \myemph{\mybf{0.82} (0.26)}\\
-		& & & \myemph{47 degrees}\\
-		\end{tabular}
-	\end{table}
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Results 5 --- Results for different setups}
-	\label{fr:experiment5}
-	\begin{block}{\centering \vspace*{5px}\myemph{Dataset 2} (12-fold cross-validation), learning on the \myemph{Gaussian process} over the \myemph{concatenated color channels} of the \myemph{head area}\vspace*{5px}}
-	\begin{table}[htbp!]
-		\centering
-		\begin{tabular}{l l}
-			\myemph{\mybf{Experimental setup}} & \myemph{\mybf{RMS Error} (Normalized RMS)}\\	
-			\ghline
-			\myemph{Baseline}\tspace & \myemph{\mybf{0.98} (0.31) --- 56 degrees}\\	
-			\ghline
-			\myemph{\hyperlink{fr:artificial}{Artificial data is added}}\tspace & \myemph{\mybf{1.03} (0.32) --- 59 degrees}\\
-			\ghline
-			\myemph{Horizontally flipped version}\tspace & \myemph{\mybf{0.98} (0.31) --- 56 degrees}\\
-			\myemph{of the images are added} &\\
-			\ghline
-			\myemph{\hyperlink{fr:prerpocess}{\mybf{The images \& targets are}}}\tspace & \myemph{\mybf{1.28} (0.40) --- 73 degrees}\\
-			\hyperlink{fr:prerpocess}{\mybf{not rotated wrt. camera}} &\\
-		\end{tabular}
-	\end{table}
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Results 6 --- Generalization over orientations}
-	\begin{itemize}
-		\item The training is done on \myemph{dataset 1}, the images are randomized and a \myemph{5-fold cross-validation} method is used.
-		\item The \myemph{concatenated color channels} corresponding to the \myemph{head area} are used.
-		\item Two \myemph{Gaussian processes} are used for learning the \myemph{sine}, respectively the \myemph{cosine}.
-	\end{itemize}
-	\begin{block}{}
-	\begin{table}[htbp!]
-		\centering
-		\begin{tabular}{l l l}
-			\myemph{\mybf{Training\slash}} & \myemph{\mybf{RMS Error}} & \myemph{\mybf{Standard}}\\	
-			\myemph{\mybf{evaluation points}} & \mybf{(Normalized RMS)} & \myemph{deviation}\\[5pt]
-			\ghline
-			1\slash 1 & \myemph{\mybf{0.59} (0.18)} & \myemph{\mybf{0.11} radians}\\
-			(5-fold cross-validation) & \myemph{34 degrees} & \myemph{6 degrees}\\
-		\end{tabular}
-	\end{table}
-	\end{block}
-	\transwipe
-}\frame{
-	\frametitle{Results 7 --- Performance on \myemph{dataset 3}}
-	\begin{block}{\centering \vspace*{3px}\myemph{Dataset 2} \& \myemph{Dataset 3}, learning on the \myemph{Gaussian process} over the \myemph{concatenated color channels} of the \myemph{head area}\vspace*{3px}}
-	\begin{table}[htbp!]
-		\begin{tabular}{l l}
-			\myemph{\mybf{Training\slash evaluation people}} & \myemph{\mybf{RMS Error} (Normalized RMS)}\\[5pt]	
-			\ghline
-			864\slash 150 people\tspace & \myemph{\mybf{1.07} (0.34) --- 61 degrees}
-		\end{tabular}
-	\end{table}
-	\end{block}
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/DatasetExp3.eps, width=0.7\linewidth}
-%		\end{figure}
-	\end{block}
-	\transwipe
-}
-%==================================================================================================================================
-\section{Conclusions}
-\frame{
-	\frametitle{Conclusions \& Future Work}
-	\begin{enumerate}
-		\item The experiments prove that learning is possible and that the correct solution to this problem is a \myemph{regression method}.
-		\item For this problem the \myemph{upper half} of the body and the \myemph{head area} are more indicated for feature extraction.
-		\item \myemph{Better quality} of the images, \myemph{a larger number of people} present in the data and images corresponding to
-\myemph{more orientations}, would definitely improve the results.
-		\item The ability of training both the \myemph{cosine} and the \myemph{sine} on the same \myemph{Gaussian process} (and maybe the latitudinal angles also) could improve the results.
-		\item Having an automatic way for determining \myemph{specialized lengthscales} for different parts of the features is another extension that could improve the performance.
-	\end{enumerate}
-	\transwipe
-}\frame{
-	\frametitle{Demo}
-	\begin{block}{}
-%		\begin{figure}[hbtp!]
-%			\centering
-%			\epsfig{file=images/Demo.eps, width=0.8\linewidth}
-%		\end{figure}
-	\end{block}
-	\transwipe
-}
-%==================================================================================================================================
-\frame{
-	\frametitle{\hyperlink{fr:gp}{The Mat\'ern covariance function}}
-	\label{fr:maternFct}
-	This function becomes simpler if the $\nu = 1/2 + p$ where $p\ge 0$.
-	\begin{equation*}
-		k_{\nu = p + 1/2}(r) = \exp\left(\frac{-\sqrt{2\nu}r}{l}\right)\frac{\Gamma(p+1)}{\Gamma(2p+1)}\sum_{i=0}^p\frac{(p+i)!}{i!(p-i)!}\left(\frac{\sqrt{8\nu}r}{l}\right)^{p-i}
-	\end{equation*}
-	where $r = \sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}$ and $\Gamma(n) = (n-1)!$.
-	\begin{itemize}
-	\item \myemph{Mat\'ern covariance with $\nu = 0.5$}\\[5px] $\exp(-\frac{1}{l}\sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2})$
-	\item \myemph{Mat\'ern covariance with $\nu = 1.5$}\\[5px] $(1 + \frac{\sqrt{3}\sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}}{l})\exp(-\frac{\sqrt{3}\sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}}{l})$
-	\item \myemph{Mat\'ern covariance with $\nu = 2.5$}\\[5px] $(1 + \frac{\sqrt{5}\sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}}{l} + \frac{5\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}{3l^2})\exp(-\frac{\sqrt{5}\sqrt{\sum_i (\boldsymbol{x}_i-\boldsymbol{x}_i^\prime)^2}}{l})$
-	\end{itemize}
-	\transwipe
-}
+
+
 %==================================================================================================================================
 \end{document}
 %==================================================================================================================================
