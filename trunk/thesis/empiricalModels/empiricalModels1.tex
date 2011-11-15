@@ -29,7 +29,7 @@ The general idea of Phong reflection is shown in figure \ref{fig:SPECULAR1}. Her
 	\begin{center}
 		\epsfig{file=images/SpecularReflection.eps, width=0.5\linewidth}
 	\end{center}
-	\caption{{\it Specular reflection. $\theta_i$ is the angle of the incoming light, and is equal to the reflected angle $\theta_r$. $\theta_s$ is the angle between the view direction and the reflected light.}}
+	\caption{{\it Phong reflection. $\theta_i$ is the angle of the incoming light, and is equal to the reflected angle $\theta_r$. $\theta_s$ is the angle between the view direction and the reflected light.}}
 	\label{fig:SPECULAR1}
 \end{figure}
 
@@ -76,6 +76,15 @@ The equation for Phong reflectance is simplified such that it does not involve m
 Models that are implemented using $\theta_h$ instead of $\theta_s$ are also known as Blinn-Phong reflection models. Blinn observed that mirror reflections only occur when the surface normal is aligned with the halfway-vector \cite{DigitalModeling}. When observing a material with glossy/shiny properties, the microscopic structure of the material is never entirely smooth and can be illustrated as microscopic small surfaces. The main normal of the surface is still $\vec{\mathbf{n}}$, but each micro-surface has its own surface normal as well. The distribution of the specular lobe can be expressed as the amount of microscopic surfaces with normals aligned with the halfway-vector, with a likelihood related to $\theta_h$.
 
 Replacing $\theta_s$ with $\theta_h$ does not give the same reflectance function as with Phong reflection, and as a result it produces slightly different speculars. Through experimental validation over a hundred empirically acquired BRDF models, it is shown that Blinn-Phong reflectance fits this measured data better than Phong reflectance \cite{ExperimentalValidation}. For this reason, Blinn-Phong reflectance is being used in most real-time systems these days.
+
+\begin{figure}[H]
+	\begin{center}
+		\epsfig{file=images/BlinnPhong.eps, width=0.5\linewidth}
+	\end{center}
+	\caption{{\it Blinn-Phong reflection. $\theta_h$ is the angle between the surface normal $\vec{\mathbf{n}}$ and the halfway-vector $\vec{\mathbf{h}}$ and replaces the angle $\theta_s$ in the original equation of Phong.}}
+	\label{fig:BLINNPHONG}
+\end{figure}
+
 
 	\section{Other Models}\label{sec:Other}
 		Many other reflection models exists, and they tend to be variations of Phong reflectance. They deal with the conservation of energy, which wasn't addressed by Phong in his original research. An example of a generalization of Phong reflectance is Lafortune reflectance \cite{Lafortune}. This model can produce a BRDF that consists of multiple lobes, and includes a generalized form of diffuse reflectance. In general, diffuse reflectance does not reflect radiance uniform over the hemisphere like in the case of Lambertian reflectance, but may peak into the direction of the surface normal and radiance falls off in directions other than that of the surface normal. The model also includes backscatter, the phenomenom of light reflected into the direction of the light source, and it allows for different configurations for the specular lobe (eg. anisotropic or isotropic).

@@ -92,6 +92,8 @@ To overcome this problem we tried various methods to decrease this error in the 
 
 Another way to overcome this problem is to construct the training sets in such a way that the tilt angles are chosen uniform over the hemisphere. With this approach, the perfect configuration of data is used for photometric stereo, and outliers such as speculars in the surface albedo will have a small influence.
 
+Ideally, other photometric stereo methods are employed that can deal with self cast shadows and speculars. Argyriou and Petrou \cite{RecursivePS} propose a reconstruction algorithm for areas that are identified as shadow or highlight with the assumption that areas outside shadows and highlights can be estimated using the Lambertian model. In other research, Higo {\it et al} \cite{ConsensusPS} propose a framework for photometric stereo which generalizes beyond parametric reflectance models such as the Lambertian model. However, this last method assumes color image data as input for the method.
+
 \section{Classification}\label{sec:Classification}
 
 In this research, the classification method of Broadhurst is adapted as described in section \ref{sec:MGD}. This section explains in detail how models for materials will be constructed and how these are used for classification.
