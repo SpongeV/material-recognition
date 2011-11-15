@@ -9,7 +9,7 @@ The {\it PhoTex} database consists of images recorded under a fixed point of vie
 After rendering new images for the materials and before extracting the features from the materials, the rendered images are set to zero-mean and unit-variance in order to make the features intensity-invariant. Since the diffuse and glossy/shiny materials have different image sizes, all images are cropped with respect to the center of the image to $200 \times 200$ pixels.
 
 \subsection{Diffuse material classes}
-Given that we are interested in reproducing some results from the experiments of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model he applied for synthesis, we need to select the same material classes he used in his experiment. These material classes are shown in figure \ref{fig:PhoTexData}. These classes represent materials such as plaster and paper, but also repeating primitives such as pebbles and peas.
+Given that we are interested in reproducing some results from the experiments of Targhi, and measure performance of more complex reflection models with respect to the Lambertian reflection model he applied for synthesis, we need to select the same material classes he used in his experiment. The material classes are shown in figure \ref{fig:PhoTexData}. These classes represent materials such as plaster and paper, but also repeating primitives such as pebbles and peas.
 
 From each material class, 40 images with certain slant and tilt angles are selected. The selected slant angles are $\{30^0, 45^0,60^0,75^0\}$. The images under a slant of $30^0$ have four different tilts, $\{0^0, 90^0, 180^0, 270^0\}$. The images with slants $\{45^0,60^0,75^0\}$ have tilts of $\{0^0,30^0,60^0,..., 300^0,330^0\}$. 
 
@@ -81,7 +81,7 @@ Where $A$ is the original image from the {\it PhoTex} database, and $A'$ is the 
 
 Because the number of materials and the number of parameters to be estimated for each reflection model turn out to be large in total and the error for gradient descend needs to be computed over sets of images, a simplified gradient descend is done. Each parameter is estimated using a defined range of possible values. For the microfacet models, the roughness of a material is $m \in \{0.1, 0.3, 0.5, 0.7, 0.9\}$. The Fresnel coefficient is $R_f \in \{0.01, 0.03, 0.05, 0.07, 0.09\}$ for the diffuse material set and $R_f \in \{0.1, 0.3, 0.5, 0.7, 0.9\}$ for the shiny/glossy material dataset. The shininess constant $\alpha$ for Phong and Blinn-Phong reflection corresponds to a value in $\{0.001, 0.01, 1.0, 5.0 10.0, 40.0\}$ and the specular reflection coefficient $k_s$ corresponds to a value in $\{0.001 0.01 0.1 0.25 0.5 0.75 1.0\}$. 
 
-The surface albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^0$ and tilts of $\{0^0, 90^0, 180^0, 270^0\}$. The choice for this configuration of angles over the hemisphere is based on the quality of the recovered surface albedo since a non-uniform configuration of tilts gives rise to specularity in the surface albedo. With a uniform choice of angles over the hemisphere, these outliers have minimal influence.
+The surface albedo and surface normals needed for this procedure are derived for each material from images with light directions registered with a slant of $30^0$ and tilts of $\{0^0, 90^0, 180^0, 270^0\}$. The choice for this configuration of angles over the hemisphere is based on the quality of the recovered surface albedo since a non-uniform configuration of tilts gives rise to specularity in the surface albedo. With a uniform choice of angles over the hemisphere, these outliers have minimal influence. Both RANSAC and surface normal smoothing are discarded from the experiments since applying these methods showed significant bigger accumulated errors in the recovery of the surface albedo and surface normals with respect to the accumulated error of the uniform configuration.
 
 \section{Experimental Setup}\label{sec:Experiments}
 In this section, two experiments are described that will be applied on both the diffuse and glossy/shiny material dataset. Three different training sets are considered. These training sets are meant to be used for photometric stereo to compute the surface albedo and surface normals. Listed are the training sets for this procedure and are taken from each class separately:
@@ -132,7 +132,17 @@ The plots suggest that again little to no improvement is made when comparing ref
 
 Table \ref{tab:DiffuseResultsB} shows the mean and standard deviation for 40 images in the training set and 20 randomly selected images in the test set when using the $T1$ training set for photometric stereo. In the first row, we show performance of the original data to construct the material models and report an almost perfect classification accuracy. This is to be expected since we are overfitting. When using only synthetic image data however, the accuracy drops about 11\% - 14\%. When comparing the reflection models, some improvements with respect to Lambertian reflectance are reported. 
 
-The best performing model is Blinn-Phong with an accuracy of 88.4347\%, followed up by Torrance-Sparrow with 87.8393\% accuracy , both performing better than Phong reflectance. Oren-Nayar for diffuse reflectance also performs better than Lambertian reflectance. The results of the three better performing reflection models have been positively tested on significance level of 5\% using a paired T-test. The results in the table and plots suggest that a more physically based approach can increase the quality of the synthetic images, since the purely empirical based Phong reflectance performs similar or worse than Lambertian reflectance in all experiments. It also suggests that using more images for photometric stereo improves the quality of the surface albedo and surface normals as long as the light sources are distributed uniformly over the hemisphere.
+The best performing model is Blinn-Phong with an accuracy of 88.4347\%, followed up by Torrance-Sparrow with 87.8393\% accuracy , both performing better than Phong reflectance. Oren-Nayar for diffuse reflectance also performs better than Lambertian reflectance. The results of the three better performing reflection models have been positively tested on significance level of 5\% using a paired T-test. The results in the table and plots suggest that a more physically based approach can increase the quality of the synthetic images, since the purely empirical based Phong reflectance performs similar or worse than Lambertian reflectance in all experiments. It also suggests that using more images for photometric stereo improves the quality of the surface albedo and surface normals recovery, provided that the light sources are distributed uniformly over the hemisphere.
+
+\begin{figure}[H]
+	\begin{center}
+		\subfigure[T1 dataset]{\epsfig{file=images/results/T1.eps, width=0.75\linewidth}}
+		\subfigure[T3 dataset]{\epsfig{file=images/results/T3.eps, width=0.75\linewidth}}
+		\subfigure[TT dataset]{\epsfig{file=images/results/TT.eps, width=0.75\linewidth}}
+	\end{center}
+	\caption{{\it Results on the T1, T3 and TT dataset for diffuse materials.}}
+	\label{fig:DiffusePlotB}
+\end{figure}
 
 \begin{table}
 	\center
@@ -149,16 +159,6 @@ The best performing model is Blinn-Phong with an accuracy of 88.4347\%, followed
 	\caption{{\it Mean accuracy and standard deviation over 5 repetitions for the diffuse material dataset for 40 images in the training set and 20 images in the test set}}
 	\label{tab:DiffuseResultsB}
 \end{table}
-
-\begin{figure}[H]
-	\begin{center}
-		\subfigure[T1 dataset]{\epsfig{file=images/results/T1.eps, width=0.75\linewidth}}
-		\subfigure[T3 dataset]{\epsfig{file=images/results/T3.eps, width=0.75\linewidth}}
-		\subfigure[TT dataset]{\epsfig{file=images/results/TT.eps, width=0.75\linewidth}}
-	\end{center}
-	\caption{{\it Results on the T1, T3 and TT dataset for diffuse materials.}}
-	\label{fig:DiffusePlotB}
-\end{figure}
 
 \subsection{Shiny/glossy material dataset}
 For the experiments on the shiny/glossy material dataset we dropped the Phong reflectance for further investigation because of the results found on the diffuse material dataset. We also do not report on results on the $T3$ and $TT$ training sets since these datasets resulted in no significant results in experiment B on the diffuse dataset.
@@ -180,7 +180,9 @@ In table \ref{tab:SpecularResultsA} we report the accuracy of the different refl
 	\label{tab:SpecularResultsA}
 \end{table}
 
-Running experiment B on this dataset shows similar results even when increasing the amount of images used for the construction of models to the point that all images are used. The material models perform equally bad regardless of the number of images used for photometric stereo or the reflection model used for synthesis as can be observed in figure \ref{fig:SpecularPlotB}. These results stress the importance of having a photometric stereo method with assumptions beyond that of Lambertian surfaces for recovery. Different reflection models cannot improve image quality as they are limited by the recovery performed with the simple photometric stereo method.
+Running experiment B on this dataset shows similar results even when increasing the amount of images used for the construction of models to the point that all images are used. The material models perform equally bad regardless of the number of images used for photometric stereo or the reflection model used for synthesis as can be observed in figure \ref{fig:SpecularPlotB}. These results stress the importance of having a photometric stereo method that deals with self cast shadows and highlights in image data. 
+
+Because of the great amount of specular information present in the images, treating the surface as purely Lambertian for recovery results in great errors in the surface albedo and surface normals. In turn, the different reflection models cannot generate quality images as they are limited by the recovery of the surface albedo and surface normals from the simple photometric stereo method. The recursive photometric stereo method proposed by Argyriou and Petrou \cite{RecursivePS} could help identifying the unreliable areas and improve recovery. Their method still assumes the reliable areas to be perfectly Lambertian, but can be applied on grayscale images. Most other photometric stereo methods need color information, but can generalize beyond Lambertian surfaces \cite{ConsensusPS}.
 
 \begin{table}
 	\center
