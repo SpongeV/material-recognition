@@ -25,7 +25,7 @@
 \title{Texture Synthesis for Material Recognition\\
 \normalsize{Master\rq s Thesis in Articial Intelligence --- Intelligent Systems}}
 \author{Jasper van Turnhout\\Student no. 0312649\\jturnhou@science.uva.nl}
-\date{November 15, 2011}
+\date{November 25, 2011}
 \begin{document}
 \frame{\titlepage}
 \section[Outline]{}
@@ -35,20 +35,48 @@
 \section{Introduction}
 \frame{
 	\frametitle{Material Recognition}
+	\begin{itemize}
+		\item The task of classifying single novel images to material classes 
+		\item Material models largely dependent on the intra-class variation of training data
+		\item Data can be sparse/hard to obtain
+	\end{itemize}
+	ADD IMAGE
 }
 \frame{
 	\frametitle{Texture Synthesis}
+	\begin{itemize}
+		\item The task of creating synthetic images
+		\item Different reflection models simulate different light behavior
+		\item Diffuse reflection models to generate diffuse surfaces
+		\item Specular reflection models to generate shiny/glossy surfaces
+	\end{itemize}
+	ADD IMAGE
 }
 \frame{
 	\frametitle{Goal of this thesis}
+	\begin{itemize}
+		\item Investigate how synthetic image data can support the field of material recognition
+		\item What reflection models can be employed to obtain highly realistic synthetic data
+		\item What are potential bottlenecks in the creation and usage of synthetic data
+	\end{itemize}
 }
 %==================================================================================================================================
 \section{Related Work}
 \frame{
 	\frametitle{Textons \& Filter Banks}
+	\begin{itemize}
+		\item Different filter banks are used to obtain image responses
+		\item A pixel in an image becomes a vector describing bumps, ridges, edges and illumination properties such as specularity
+		\item A texton dictionary is formed by clustering the vectors: each cluster center represents a texton
+		\item Material models are obtained by labeling the pixels to the nearest textons
+		\item Novel images are quantized to texton representation. 
+	\end{itemize}
 }
 \frame{
 	\frametitle{Multivariate Gaussian Distributions}
+	\begin{itemize}
+		\item Investigage how synthetic image data can support the field of material recognition
+	\end{itemize}
 }
 \frame{
 	\frametitle{Minimal Training Images}
