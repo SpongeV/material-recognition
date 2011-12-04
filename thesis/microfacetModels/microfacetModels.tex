@@ -16,7 +16,7 @@ Torrance and Sparrow suggest to represent the surface as a composition of symmet
 		D = e^{-(\alpha \sigma)^2}
 	\end{eqnarray*}
 
-\noindent where D is the proportionate number of microfacets oriented in the direction of $\alpha$ and $\sigma$ is the standard deviation. In our case this would be the angle between the halfway vector $\vec{\mathbf{h}}$ and surface normal $\vec{\mathbf{n}}$.
+\noindent where D is the proportionate number of microfacets oriented in the direction of $\alpha$ and $\sigma$ is the standard deviation. In our case,  the angle $\alpha$ would be the angle between the halfway vector $\vec{\mathbf{h}}$ and surface normal $\vec{\mathbf{n}}$.
 
 Different distributions models have been proposed by Blinn \cite{Blinn} and Cook and Torrance \cite{DigitalModeling}. However, in this research we only use the distribution model proposed by Blinn.
 
@@ -47,12 +47,12 @@ Another case of geometric analysis which can be included, is the phenomenon of i
 
 
 \section{Torrance-Sparrow Reflectance}\label{sec:CookTorrance}
-	The results of experiments conducted by Sparrow and Torrance \cite{TorranceSparrow} showed that Phong reflectance closely simulates the behavior of the specular component on shiny/glossy surfaces. However, some differences were reported, with the main difference being that the specular bump varies with the direction of the light source. Also, the specular reflection is not always reflected in the halfway vector H. 
+	The results of experiments conducted by Sparrow and Torrance \cite{TorranceSparrow} showed that Phong reflectance closely simulates the behavior of the specular component on shiny/glossy surfaces. However, some differences were reported, with the main difference being that the specular bump varies with the direction of the light source. Also, the specular reflection is not always reflected in the halfway vector $\vec{\mathbf{h}}$. 
 
 Torrance and Sparrow derived models to explain these differences, and Blinn translated these models to be useful in computer graphics. The specular component can be described as a function of four factors: 
 	
 	\begin{eqnarray*}
-		f_r = \frac{F(\theta_h)D(\theta_h)G(\theta_i,\theta_r)}{\vec{\mathbf{n}} \cdot \vec{\mathbf{e}}}
+		f_r = \frac{F(\theta_h)D(\theta_h)G(\theta_i,\theta_r)}{\vec{\mathbf{n}} \cdot \vec{\mathbf{v}}}
 	\end{eqnarray*}
 
 \noindent where $D$ is the distribution function of the directions of the microfacets. Each microfacet is assumed to be perfectly specular. $G$ contributes the amount of light that gets masked and/or shaded by other microfacets, and $F$ is the Fresnel reflection law. All three components will be addressed in this section.
@@ -121,7 +121,7 @@ The general form of the equation consists of two part:
 
 %In their original paper, Oren and Nayar discussed various slope distributions for the distribution of of microfacets. Using an uni-directional single-slope distribution (representing an anisotropic surface), they derive a geometric attenuation factor similar to that derived by Torrance and Sparrow. Their analysis continues by considering distributions for isotropic surfaces. However, those distribution models assume equal slopes for all microfacets, which isn't realistic. 
 
-For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turns out to be too difficult, approximations of this integral were made using numerical evaluations. By The resulting equations are therefore not a result of analysis: 
+For the modeling of a surface, they propose to use a Gaussian Slope-Area distribution $P(\phi_a, \theta_a)$, where the parameter $\theta_a$ is the standard deviation, and is a measurement for the roughness of the material. Because evaluating the complete integral using the Gaussian Slope-Area distribution turns out to be too difficult, approximations of this integral were made using numerical evaluations. The resulting equations are therefore not a result of analysis: 
 
 
 	\begin{eqnarray*}
@@ -147,7 +147,9 @@ For the modeling of a surface, they propose to use a Gaussian Slope-Area distrib
 		C_3 = 0.125 \left( \frac{\sigma^2}{\sigma^2+0.09} \right)\left( \frac{4\alpha\beta}{\pi^2} \right)
 	\end{eqnarray*}
 
-\noindent Since the energy of a light ray diminishes quickly on Lambertian surfaces, they consider interreflection up to two bounces. The same approach of finding a good approximation accounts for defining the interreflection term:
+\noindent In these equations $\sigma$ is the coefficient controlling the surface roughness. A low $\sigma$ models a smooth surface, with $\sigma=0$ giving a perfect Lambertian surface and a high $\sigma$ models a rough surface with $\sigma=1$ being the maximum roughness value. $\alpha$ is defined as $\max(\theta_r, \theta_i)$ and $\beta$ is defined as $\min(\theta_r, \theta_i)$.
+
+Since the energy of a light ray diminishes quickly on Lambertian surfaces, they consider interreflection up to two bounces. The same approach of finding a good approximation accounts for defining the interreflection term:
 
 	\begin{eqnarray*}
 		f_r^2 = 0.17\frac{\rho^2}{\pi}L_i\cos(\theta_i)\frac{\sigma^2}{\sigma^2+0.13}\left[1-\cos(\phi_r-\phi_i)\left( \frac{2\beta}{\pi} \right)^2 \right]
